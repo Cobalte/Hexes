@@ -187,12 +187,11 @@ public class GameController : MonoBehaviour {
         }
         
         if (Input.GetKeyDown(KeyCode.Keypad7)) return BoardDirection.UpLeft;
+        if (Input.GetKeyDown(KeyCode.Keypad8)) return BoardDirection.Up;
         if (Input.GetKeyDown(KeyCode.Keypad9)) return BoardDirection.UpRight;
-        if (Input.GetKeyDown(KeyCode.Keypad6)) return BoardDirection.Right;
-        if (Input.GetKeyDown(KeyCode.Keypad3)) return BoardDirection.DownRight;
         if (Input.GetKeyDown(KeyCode.Keypad1)) return BoardDirection.DownLeft;
-        if (Input.GetKeyDown(KeyCode.Keypad4)) return BoardDirection.Left;
-        if (Input.GetKeyDown(KeyCode.Keypad7)) return BoardDirection.UpLeft;
+        if (Input.GetKeyDown(KeyCode.Keypad2)) return BoardDirection.Down;
+        if (Input.GetKeyDown(KeyCode.Keypad3)) return BoardDirection.DownRight;
         return BoardDirection.Null;
     }
     
@@ -200,10 +199,10 @@ public class GameController : MonoBehaviour {
     private static BoardDirection Opposite(BoardDirection dir) {
         switch (dir) {
             case BoardDirection.UpLeft: return BoardDirection.DownRight;
-            case BoardDirection.UpRight: return BoardDirection.DownLeft;
-            case BoardDirection.Left: return BoardDirection.Right;
-            case BoardDirection.Right: return BoardDirection.Left;
+            case BoardDirection.Up: return BoardDirection.Down;
             case BoardDirection.DownLeft: return BoardDirection.UpRight;
+            case BoardDirection.UpRight: return BoardDirection.DownLeft;
+            case BoardDirection.Down: return BoardDirection.Up;
             case BoardDirection.DownRight: return BoardDirection.UpLeft;
         }
 

@@ -1,9 +1,9 @@
 ﻿public enum BoardDirection {
     UpLeft,
+    Up,
     UpRight,
-    Right,
     DownRight,
+    Down,
     DownLeft,
-    Left,
     Null
 }
