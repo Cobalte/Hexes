@@ -11,6 +11,13 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Hex.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/Hex.cs" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectId" id="1RoAKYQU9fDpRwh78AGIfFid8hM" />
   <component name="PropertiesComponent">
     <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
@@ -58,10 +65,15 @@
       <option name="presentableId" value="Default" />
       <updated>1570323011730</updated>
       <workItem from="1570323013020" duration="18000" />
+      <workItem from="1573438930710" duration="166000" />
+      <workItem from="1573439111418" duration="171000" />
+      <workItem from="1574017194650" duration="599000" />
+      <workItem from="1574308959920" duration="115000" />
+      <workItem from="1574309083897" duration="9000" />
     </task>
     <servers />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />

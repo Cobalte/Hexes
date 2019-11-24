@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Block : MonoBehaviour {
 
-    private const float slideSpeed = 600f;
+    private const float slideSpeed = 800f;
 
     public int Level;
     public BlockKind Kind;
