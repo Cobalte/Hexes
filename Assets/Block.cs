@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class Block : MonoBehaviour {
 
-    private const float slideSpeed = 800f;
+    private const float slideSpeed = 5f;
+    private const float arrivalDist = 0.1f;
 
     public int Level;
     public BlockKind Kind;
@@ -14,37 +15,23 @@ public class Block : MonoBehaviour {
     public bool SuicideOnArrival;
     public bool IsMoving => swipeDestPos != null;
     public List<Block> BlocksToEat;
-    
+    public Image DisplayImage;
+
     private Vector3? swipeDestPos;
     private Hex swipeDestHex;
     private bool isInitialized;
-    private Text displayText;
+    private GameController gameController;
 
     //--------------------------------------------------------------------------------------------------------
     public void Initialize(Hex dropHex, int startLevel, BlockKind blockKind) {
         Level = startLevel;
         swipeDestHex = null;
         swipeDestPos = null;
-        displayText = GetComponent<Text>();
         Kind = blockKind;
         BlocksToEat = new List<Block>();
+        gameController = GameObject.Find("Game Controller").GetComponent<GameController>();
         name = "Block on " + dropHex.name + ", Level " + Level + " (" + Kind + ")";
-
-        switch (blockKind) {
-            case BlockKind.WildCard:
-                displayText.text = "wild";
-                break;
-            case BlockKind.Anvil:
-                displayText.text = "anvl";
-                break;
-            case BlockKind.Plant:
-                displayText.text = "plnt";
-                break;
-            default:
-                displayText.text = Level.ToString();
-                break;
-        }
-        
+        UpdateDisplayImage();
         isInitialized = true;
     }
     
@@ -55,7 +42,7 @@ public class Block : MonoBehaviour {
         }
 
         Block food = BlocksToEat.FirstOrDefault(
-            b => Vector3.Distance(transform.position, b.transform.position) < 10f);
+            b => Vector3.Distance(transform.position, b.transform.position) < arrivalDist);
 
         if (food != null) {
             Eat(food);
@@ -63,7 +50,7 @@ public class Block : MonoBehaviour {
         }
         
         if (swipeDestPos != null) {
-            if (Vector3.Distance(transform.position, (Vector3)swipeDestPos) < 10f) {
+            if (Vector3.Distance(transform.position, (Vector3)swipeDestPos) < arrivalDist) {
                 Arrive();
             }
             else {
@@ -75,14 +62,9 @@ public class Block : MonoBehaviour {
     }
 
     //--------------------------------------------------------------------------------------------------------
-    public void SetGlowing(bool glow) {
-        displayText.color = glow ? Color.red : Color.black;
-    } 
-    
-    //--------------------------------------------------------------------------------------------------------
     public void SlideTo(Hex destHex) {
         swipeDestHex = destHex;
-        swipeDestPos = destHex.UiPosition;
+        swipeDestPos = destHex.transform.position;
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -93,15 +75,15 @@ public class Block : MonoBehaviour {
    
     //--------------------------------------------------------------------------------------------------------
     private void Arrive() {
-        transform.position = (Vector3)swipeDestPos;
-
         if (swipeDestHex != null) {
             name = "Block on " + swipeDestHex.name + ", Level " + Level + " (" + Kind + ")";
             swipeDestHex = null;    
         }
         
+        transform.position = (Vector3)swipeDestPos;
         swipeDestPos = null;
         BlocksToEat.Clear();
+        UpdateDisplayImage();
         
         if (SuicideAfterEating || SuicideOnArrival) {
             Destroy(gameObject);
@@ -110,14 +92,35 @@ public class Block : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void Eat(Block food) {
-        if (Kind == BlockKind.Normal) {
-            displayText.text = Level.ToString();
-        }
+//        if (Kind == BlockKind.Normal) {
+//            Level++;
+//            UpdateDisplayImage();
+//        }
+        
         Debug.Log("Ate block: " + food.name);
         BlocksToEat.Remove(food);
         Destroy(food.gameObject);
+        
         if (Kind == BlockKind.Plant) {
             Destroy(gameObject);
+        }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private void UpdateDisplayImage() {
+        switch (Kind) {
+            case BlockKind.WildCard:
+                DisplayImage.sprite = gameController.ImageForWildCard;
+                break;
+            case BlockKind.Anvil:
+                DisplayImage.sprite = gameController.ImageForAnvil;
+                break;
+            case BlockKind.Plant:
+                DisplayImage.sprite = gameController.ImageForPlant;
+                break;
+            default:
+                DisplayImage.sprite = gameController.ImageForBlockProgression[Level - 1];
+                break;
         }
     }
 }

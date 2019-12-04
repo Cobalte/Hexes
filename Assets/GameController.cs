@@ -1,16 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
     public GameObject BoardObj;
     public GameObject UiCanvasObj;
     public GameObject BlockPrefab;
-    public CheatMenu CheatMenuObj;
     public int TurnCount { get; private set; }
     public int Score { get; private set; }
-    
+    public List<Sprite> ImageForBlockProgression;
+    public Sprite ImageForWildCard;
+    public Sprite ImageForAnvil;
+    public Sprite ImageForPlant;
+
     private List<Hex> hexes;
     private List<Block> blocks;
     private BoardDirection swipeDir;
@@ -46,6 +50,7 @@ public class GameController : MonoBehaviour {
         
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Application.Quit();
+            return;
         }
         
         if (!allowInput && !IsAnyBlockMoving) {
@@ -93,7 +98,7 @@ public class GameController : MonoBehaviour {
                     continue;
                 }
 
-                int newHex = DeliciousEmptyBlock(column, curHex);
+                int newHex = DeliciousEmptyHex(column, curHex);
 
                 if (newHex > 0
                     && (column[curHex].CurrentLevel == column[newHex - 1].CurrentLevel
@@ -105,8 +110,8 @@ public class GameController : MonoBehaviour {
                     // this is a normal block about to combine with an equal-level normal block
                     newHex -= 1;
                     int newLevel = column[curHex].Occupant.Kind == BlockKind.WildCard
-                        ? column[newHex].Occupant.Level * 2
-                        : column[curHex].Occupant.Level * 2;
+                        ? column[newHex].Occupant.Level + 1
+                        : column[curHex].Occupant.Level + 1;
                     
                     column[curHex].Occupant.SlideTo(column[newHex]);
                     column[curHex].Occupant.BlocksToEat.Add(column[newHex].Occupant);
@@ -118,7 +123,7 @@ public class GameController : MonoBehaviour {
                 }
                 else if (newHex > 0 && column[newHex - 1].Occupant.Kind == BlockKind.Plant) {
                     // this is a block that's about to fall into a plant
-                    column[curHex].Occupant.SlideTo(column[newHex - 1].UiPosition);
+                    column[curHex].Occupant.SlideTo(column[newHex - 1].transform.position);
                     column[newHex - 1].Occupant.BlocksToEat.Add(column[curHex].Occupant);
                     column[newHex - 1].Occupant.SuicideAfterEating = true;
                     column[curHex].Occupant = null;
@@ -138,12 +143,6 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void DropBlocks() {
-        foreach (Block block in blocks) {
-            if (block != null) {
-                block.SetGlowing(false);    
-            }
-        }
-        
         for (int i = 0; i < dropsPerTurn; i++) {
             if (IsBoardFull) {
                 Debug.Log("OMAE WA MO SHINDEIRU");
@@ -155,7 +154,7 @@ public class GameController : MonoBehaviour {
             } while (newDropHex.CurrentLevel != 0);
 
             newBlock = Instantiate(BlockPrefab, UiCanvasObj.transform).GetComponent<Block>();
-            newBlock.transform.position = newDropHex.UiPosition;
+            newBlock.transform.position = newDropHex.transform.position;
 
             float rand = Random.Range(0f, 100f);
             
@@ -169,10 +168,9 @@ public class GameController : MonoBehaviour {
                 newBlock.Initialize(newDropHex, 1, BlockKind.Plant);
             }
             else {
-                newBlock.Initialize(newDropHex, 2, BlockKind.Normal);
+                newBlock.Initialize(newDropHex, 1, BlockKind.Normal);
             }
             
-            newBlock.SetGlowing(true);
             newDropHex.Occupant = newBlock;
             blocks.Add(newBlock);
         }
@@ -181,11 +179,7 @@ public class GameController : MonoBehaviour {
     }
     
     //--------------------------------------------------------------------------------------------------------
-    private BoardDirection GetSwipeDirection() {
-        if (!allowInput) {
-            return BoardDirection.Null;
-        }
-        
+    private static BoardDirection GetSwipeDirection() {
         if (Input.GetKeyDown(KeyCode.Keypad7)) return BoardDirection.UpLeft;
         if (Input.GetKeyDown(KeyCode.Keypad8)) return BoardDirection.Up;
         if (Input.GetKeyDown(KeyCode.Keypad9)) return BoardDirection.UpRight;
@@ -227,11 +221,12 @@ public class GameController : MonoBehaviour {
     private static Vector3 GetAnvilDestination(List<Hex> column) {
         Vector3 pos0 = column[0].transform.position;
         Vector3 pos1 = column[1].transform.position;
-        return Camera.main.WorldToScreenPoint(pos0 + (pos0 - pos1));
+        //return Camera.main.WorldToScreenPoint(pos0 + (pos0 - pos1));
+        return pos0 + (pos0 - pos1);
     }
     
     //--------------------------------------------------------------------------------------------------------
-    private static int DeliciousEmptyBlock(List<Hex> column, int curHex) {
+    private static int DeliciousEmptyHex(List<Hex> column, int curHex) {
         // returns the index at which the block in curHex will fall using normal gravity rules, i.e.
         // by ignoring combine rules and special blocks
         for (int restHex = curHex - 1; restHex >= 0; restHex--) {
