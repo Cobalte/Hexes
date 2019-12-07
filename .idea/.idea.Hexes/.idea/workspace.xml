@@ -1,21 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ab70222d-e230-4ae3-9526-a8d33f7949c2" name="Default Changelist" comment="" />
+    <list default="true" id="ab70222d-e230-4ae3-9526-a8d33f7949c2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Hexes/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hexes/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockAnvil.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockAnvil.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker01.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker02.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker03.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker03.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker04.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker04.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker05.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker05.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker06.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker06.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker07.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker07.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker08.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker08.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker09.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker09.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker10.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker11.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockMarker12.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockPlant.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockPlant.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockWildCard.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Block Markers/BlockWildCard.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CheatMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CheatMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/CheatMenu.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="700">
+              <caret line="28" column="38" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+              <folding>
+                <marker date="1575751247288" expanded="true" signature="6:53" ph="..." />
+                <marker date="1575751247288" expanded="true" signature="94:1096" ph="{...}" />
+                <marker date="1575751247288" expanded="true" signature="519:1084" ph="{...}" />
+                <marker date="1575751247288" expanded="true" signature="680:977" ph="{...}" />
+                <marker date="1575751247288" expanded="true" signature="735:967" ph="{...}" />
+                <marker date="1575751247288" expanded="true" signature="868:953" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/GameController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="395">
+              <caret line="121" column="25" selection-start-line="121" selection-start-column="20" selection-end-line="121" selection-end-column="25" />
+              <folding>
+                <marker date="1575742981465" expanded="false" signature="6:93" ph="..." />
+                <marker date="1575742981465" expanded="true" signature="139:10152" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="1226:1458" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="1597:2123" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="1696:1759" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="1815:1883" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="1978:2009" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="2272:5876" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="2481:5829" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="2619:5819" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="2746:2847" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="2934:3575" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="3072:3323" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="3130:3301" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="4076:4922" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="5015:5472" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="5515:5805" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="6023:7293" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="6072:7265" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="6103:6193" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="6624:6711" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="6795:6879" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="6977:7061" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="7061:7164" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="7464:7969" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="8149:8646" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="8172:8603" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="8841:9197" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="8992:9167" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="9379:9600" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="9788:10150" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="9798:9946" ph="/* returns the index at which the block in curHex will fall using normal gravity rules, i.e. ... */" />
+                <marker date="1575742981465" expanded="true" signature="10011:10125" ph="{...}" />
+                <marker date="1575742981465" expanded="true" signature="10064:10115" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Score</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Block.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/BlockKind.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/BoardDirection.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/CheatMenu.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Hex.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/GameController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/HexConnection.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/BlockKind.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Block.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/GameController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Hex.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/CheatMenu.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -27,12 +137,23 @@
         <option value="$PROJECT_DIR$/Assets/Hex.cs" />
         <option value="$PROJECT_DIR$/Assets/BlockKind.cs" />
         <option value="$PROJECT_DIR$/Assets/Block.cs" />
-        <option value="$PROJECT_DIR$/Assets/CheatMenu.cs" />
         <option value="$PROJECT_DIR$/Assets/GameController.cs" />
+        <option value="$PROJECT_DIR$/Assets/CheatMenu.cs" />
       </list>
     </option>
   </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="750" />
+    <option name="width" value="1929" />
+    <option name="height" value="1059" />
+  </component>
   <component name="ProjectId" id="1RoAN7KZYD4raYpsQ9Z0c944yna" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes />
+  </component>
   <component name="PropertiesComponent">
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
@@ -60,14 +181,12 @@
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
-      <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
     <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="10732">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
       <option name="pid" value="10732" />
-      <option name="userSelectedPid" value="false" />
       <method v="2" />
     </configuration>
   </component>
@@ -107,8 +226,56 @@
       <workItem from="1571809693518" duration="492000" />
       <workItem from="1571810353234" duration="2349000" />
       <workItem from="1572804400930" duration="5000" />
+      <workItem from="1575746125376" duration="3374000" />
     </task>
     <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="3374000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="2575" height="1415" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Image Layers" />
+      <window_info id="Capture Tool" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="NuGet" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Unity" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Unit Tests" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Errors In Solution" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
@@ -145,5 +312,65 @@
         <watch expression="Vector3.Distance(transform.position, BlocksToEat[0].transform.position)" language="C#" custom="RiderImportsList:" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Assets/GameController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="121" column="25" selection-start-line="121" selection-start-column="20" selection-end-line="121" selection-end-column="25" />
+          <folding>
+            <marker date="1575742981465" expanded="false" signature="6:93" ph="..." />
+            <marker date="1575742981465" expanded="true" signature="139:10152" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="1226:1458" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="1597:2123" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="1696:1759" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="1815:1883" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="1978:2009" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="2272:5876" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="2481:5829" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="2619:5819" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="2746:2847" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="2934:3575" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="3072:3323" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="3130:3301" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="4076:4922" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="5015:5472" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="5515:5805" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="6023:7293" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="6072:7265" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="6103:6193" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="6624:6711" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="6795:6879" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="6977:7061" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="7061:7164" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="7464:7969" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="8149:8646" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="8172:8603" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="8841:9197" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="8992:9167" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="9379:9600" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="9788:10150" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="9798:9946" ph="/* returns the index at which the block in curHex will fall using normal gravity rules, i.e. ... */" />
+            <marker date="1575742981465" expanded="true" signature="10011:10125" ph="{...}" />
+            <marker date="1575742981465" expanded="true" signature="10064:10115" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/CheatMenu.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="700">
+          <caret line="28" column="38" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+          <folding>
+            <marker date="1575751247288" expanded="true" signature="6:53" ph="..." />
+            <marker date="1575751247288" expanded="true" signature="94:1096" ph="{...}" />
+            <marker date="1575751247288" expanded="true" signature="519:1084" ph="{...}" />
+            <marker date="1575751247288" expanded="true" signature="680:977" ph="{...}" />
+            <marker date="1575751247288" expanded="true" signature="735:967" ph="{...}" />
+            <marker date="1575751247288" expanded="true" signature="868:953" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>
