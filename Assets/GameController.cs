@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour {
 
@@ -21,6 +23,10 @@ public class GameController : MonoBehaviour {
     private Hex newDropHex;
     private Block newBlock;
     private bool allowInput;
+    private static Touch currentTouch;
+    private static float swipeMinDist;
+    private static Vector3 swipeStartPos;
+    private static Vector3 swipeEndPos;
 
     private bool IsBoardFull => hexes.All(h => h.Occupant != null);
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
@@ -32,9 +38,11 @@ public class GameController : MonoBehaviour {
     private const int anvilChance = 8;
     private const int plantTurnReq = 30;
     private const int plantChance = 8;
+    private const float minSwipeDistScreenFration = 0.2f;
     
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
+        swipeMinDist = Screen.height * minSwipeDistScreenFration;
         swipeDir = BoardDirection.Null;
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
         blocks = new List<Block>();
@@ -59,6 +67,7 @@ public class GameController : MonoBehaviour {
         }
         
         swipeDir = GetSwipeDirection();
+        
         if (swipeDir == BoardDirection.Null) {
             return;
         }
@@ -180,12 +189,55 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private static BoardDirection GetSwipeDirection() {
+        // get keyboard input from PC
         if (Input.GetKeyDown(KeyCode.Keypad7)) return BoardDirection.UpLeft;
         if (Input.GetKeyDown(KeyCode.Keypad8)) return BoardDirection.Up;
         if (Input.GetKeyDown(KeyCode.Keypad9)) return BoardDirection.UpRight;
         if (Input.GetKeyDown(KeyCode.Keypad1)) return BoardDirection.DownLeft;
         if (Input.GetKeyDown(KeyCode.Keypad2)) return BoardDirection.Down;
         if (Input.GetKeyDown(KeyCode.Keypad3)) return BoardDirection.DownRight;
+        
+        // get touch input from device
+        if (Input.touchCount != 1) {
+            return BoardDirection.Null;
+        }
+        
+        currentTouch = Input.GetTouch(0);
+        
+        switch (currentTouch.phase) {
+            case TouchPhase.Began:
+                // we just put our finer on the screen 
+                swipeStartPos = currentTouch.position;
+                swipeEndPos = currentTouch.position;
+                break;
+            
+            case TouchPhase.Ended:
+                // we just pulled our finger off the screen
+                swipeEndPos = currentTouch.position;
+                float swipeDist = Math.Abs(Vector3.Distance(swipeStartPos, swipeEndPos));
+                
+                if (swipeDist < swipeMinDist) {
+                    break;
+                }
+
+                float swipeAngle = Vector3.Angle(Vector3.up, swipeEndPos - swipeStartPos);
+                bool swipingRightish = swipeEndPos.x > swipeStartPos.x;
+
+                if (swipeAngle < 30f) {
+                    return BoardDirection.Up;
+                }
+                else if (30f <= swipeAngle && swipeAngle <= 90f) {
+                    return swipingRightish ? BoardDirection.UpRight : BoardDirection.UpLeft;
+                }
+                else if (90f <= swipeAngle && swipeAngle <= 150f) {
+                    return swipingRightish ? BoardDirection.DownRight : BoardDirection.DownLeft;
+                }
+                else {
+                    return BoardDirection.Down;
+                }
+        }
+        
+        // no input detected
         return BoardDirection.Null;
     }
     
@@ -199,7 +251,6 @@ public class GameController : MonoBehaviour {
             case BoardDirection.Down: return BoardDirection.Up;
             case BoardDirection.DownRight: return BoardDirection.UpLeft;
         }
-
         return BoardDirection.Null;
     }
     
@@ -221,7 +272,6 @@ public class GameController : MonoBehaviour {
     private static Vector3 GetAnvilDestination(List<Hex> column) {
         Vector3 pos0 = column[0].transform.position;
         Vector3 pos1 = column[1].transform.position;
-        //return Camera.main.WorldToScreenPoint(pos0 + (pos0 - pos1));
         return pos0 + (pos0 - pos1);
     }
     
