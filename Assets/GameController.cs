@@ -110,6 +110,8 @@ public class GameController : MonoBehaviour {
                 int newHex = DeliciousEmptyHex(column, curHex);
 
                 if (newHex > 0
+                    && column[curHex].CurrentLevel != ImageForBlockProgression.Count
+                    && column[newHex - 1].CurrentLevel != ImageForBlockProgression.Count
                     && (column[curHex].CurrentLevel == column[newHex - 1].CurrentLevel
                         || column[curHex].Occupant.Kind == BlockKind.WildCard
                         || column[newHex - 1].Occupant.Kind == BlockKind.WildCard)
