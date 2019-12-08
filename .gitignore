@@ -23,6 +23,7 @@ ExportedObj/
 *.svd
 *.pdb
 *.opendb
+*.idea
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -34,11 +35,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-/.idea/.idea.Hexes/.idea/encodings.xml
-/.idea/.idea.Hexes/.idea/misc.xml
-/.idea/.idea.Hexes/.idea/vcs.xml
-/Assets/Plugins.meta
-/Assets/Plugins/Editor.meta
-/Assets/Plugins/Editor/JetBrains.meta
-/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll
-/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll.meta
+
+# Other
+/Assets/Plugins.meta 
+/Assets/Plugins/
