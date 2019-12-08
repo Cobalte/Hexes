@@ -88,7 +88,7 @@ public class GameController : MonoBehaviour {
             for (int curHex = 0; curHex < column.Count; curHex++) {
                 if (column[curHex].CurrentLevel == 0 ||
                     column[curHex].Occupant.Kind == BlockKind.Plant) {
-                    // this is a plant - do nothing
+                    // this is an empty hex or a plant - do nothing
                     continue;
                 }
                 
@@ -106,10 +106,18 @@ public class GameController : MonoBehaviour {
                     column[curHex].Occupant = null;
                     continue;
                 }
-
+                
                 int newHex = DeliciousEmptyHex(column, curHex);
 
-                if (newHex > 0
+                if (newHex > 0 && column[newHex - 1].Occupant.Kind == BlockKind.Plant) {
+                    // this is a non-anvil block that's about to fall into a plant
+                    column[curHex].Occupant.SlideTo(column[newHex - 1].transform.position);
+                    column[newHex - 1].Occupant.BlocksToEat.Add(column[curHex].Occupant);
+                    column[newHex - 1].Occupant.SuicideAfterEating = true;
+                    column[curHex].Occupant = null;
+                    column[newHex - 1].Occupant = null;
+                }
+                else if (newHex > 0
                     && column[curHex].CurrentLevel != ImageForBlockProgression.Count
                     && column[newHex - 1].CurrentLevel != ImageForBlockProgression.Count
                     && (column[curHex].CurrentLevel == column[newHex - 1].CurrentLevel
@@ -117,8 +125,8 @@ public class GameController : MonoBehaviour {
                         || column[newHex - 1].Occupant.Kind == BlockKind.WildCard)
                     && (column[curHex].Occupant.Kind == BlockKind.Normal
                         || column[newHex - 1].Occupant.Kind == BlockKind.Normal)) {
-                    
-                    // this is a normal block about to combine with an equal-level normal block
+                    // this is a block that's about to combine with another block - either both blocks are
+                    // the same level or one of them is a wild card (bot not both)
                     newHex -= 1;
                     int newLevel = column[curHex].Occupant.Kind == BlockKind.WildCard
                         ? column[newHex].Occupant.Level + 1
@@ -131,14 +139,6 @@ public class GameController : MonoBehaviour {
                     column[newHex].Occupant = column[curHex].Occupant;
                     column[curHex].Occupant = null;
                     Score += newLevel;
-                }
-                else if (newHex > 0 && column[newHex - 1].Occupant.Kind == BlockKind.Plant) {
-                    // this is a block that's about to fall into a plant
-                    column[curHex].Occupant.SlideTo(column[newHex - 1].transform.position);
-                    column[newHex - 1].Occupant.BlocksToEat.Add(column[curHex].Occupant);
-                    column[newHex - 1].Occupant.SuicideAfterEating = true;
-                    column[curHex].Occupant = null;
-                    column[newHex - 1].Occupant = null;
                 }
                 else if (newHex < curHex) {
                     // this is a block that's just sliding with no interaction
