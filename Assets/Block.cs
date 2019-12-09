@@ -21,6 +21,7 @@ public class Block : MonoBehaviour {
     private Hex swipeDestHex;
     private bool isInitialized;
     private GameController gameController;
+    private GameObject uiCanvas;
 
     //--------------------------------------------------------------------------------------------------------
     public void Initialize(Hex dropHex, int startLevel, BlockKind blockKind) {
@@ -30,6 +31,7 @@ public class Block : MonoBehaviour {
         Kind = blockKind;
         BlocksToEat = new List<Block>();
         gameController = GameObject.Find("Game Controller").GetComponent<GameController>();
+        uiCanvas = GameObject.Find("UI Canvas");
         name = "Block on " + dropHex.name + ", Level " + Level + " (" + Kind + ")";
         UpdateDisplayImage();
         isInitialized = true;
@@ -92,15 +94,16 @@ public class Block : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void Eat(Block food) {
-//        if (Kind == BlockKind.Normal) {
-//            Level++;
-//            UpdateDisplayImage();
-//        }
-        
-        Debug.Log("Ate block: " + food.name);
+        Debug.Log(name + " ate " + food.name);
         BlocksToEat.Remove(food);
         Destroy(food.gameObject);
-        
+
+        GameObject celebration = Instantiate(
+            original: gameController.CombineCelebrationObj,
+            parent: uiCanvas.transform,
+            worldPositionStays: false);
+        celebration.transform.position = transform.position + Vector3.back;
+
         if (Kind == BlockKind.Plant) {
             Destroy(gameObject);
         }

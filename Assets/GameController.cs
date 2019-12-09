@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour {
     public Sprite ImageForWildCard;
     public Sprite ImageForAnvil;
     public Sprite ImageForPlant;
+    public GameObject CombineCelebrationObj;
 
     private List<Hex> hexes;
     private List<Block> blocks;
