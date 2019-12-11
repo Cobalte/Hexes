@@ -1,17 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ParticleSystemAutoDestroy : MonoBehaviour {
 
-    private ParticleSystem partSys;
+    private List<ParticleSystem> particleSystems;
 
     private void Awake() {
-        partSys = GetComponent<ParticleSystem>();
+        particleSystems = transform.GetComponentsInChildren<ParticleSystem>().ToList();
     }
 
     private void Update() {
-        if (!partSys.IsAlive()) {
+        if (particleSystems.All(sys => !sys.IsAlive())) {
             Destroy(gameObject);
         }
     }
