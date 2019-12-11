@@ -98,11 +98,12 @@ public class Block : MonoBehaviour {
         BlocksToEat.Remove(food);
         Destroy(food.gameObject);
 
-        GameObject celebration = Instantiate(
+        Celebration celebration = Instantiate(
             original: gameController.CombineCelebrationObj,
             parent: uiCanvas.transform,
-            worldPositionStays: false);
+            worldPositionStays: false).GetComponent<Celebration>();
         celebration.transform.position = transform.position + Vector3.back;
+        celebration.SetSprite(gameController.ImageForBlockProgression[Level - 1]);
 
         if (Kind == BlockKind.Plant) {
             Destroy(gameObject);
