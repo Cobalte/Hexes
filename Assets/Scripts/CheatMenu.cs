@@ -5,7 +5,6 @@ using TMPro;
 public class CheatMenu : MonoBehaviour {
 
     public GameController gameController;
-    public TextMeshProUGUI turnCounter;
     public TextMeshProUGUI scoreCounter;
     public float animationTime;
 
@@ -16,7 +15,6 @@ public class CheatMenu : MonoBehaviour {
 
     //--------------------------------------------------------------------------------------------------------
     private void Update() {
-        turnCounter.text = gameController.TurnCount.ToString();
         desiredScore = gameController.Score;
         
         if (currentScore != desiredScore)
