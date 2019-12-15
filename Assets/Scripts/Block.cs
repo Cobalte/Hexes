@@ -99,11 +99,14 @@ public class Block : MonoBehaviour {
         Destroy(food.gameObject);
 
         Celebration celebration = Instantiate(
-            original: gameController.CombineCelebrationObj,
+            original: (Kind == BlockKind.Anvil || Kind == BlockKind.Plant)
+                ? gameController.DestroyCelebrationPrefab
+                : gameController.CombineCelebrationPrefab ,
             parent: uiCanvas.transform,
             worldPositionStays: false).GetComponent<Celebration>();
         celebration.transform.position = transform.position + Vector3.back;
         celebration.SetSprite(gameController.ImageForBlockProgression[Level - 1]);
+        gameController.Score += (Kind == BlockKind.Anvil || Kind == BlockKind.Plant) ? -food.Level : Level-1;
 
         if (Kind == BlockKind.Plant) {
             Destroy(gameObject);

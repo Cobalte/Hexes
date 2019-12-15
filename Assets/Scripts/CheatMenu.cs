@@ -11,27 +11,18 @@ public class CheatMenu : MonoBehaviour {
     private float currentScore;
     private float desiredScore;
     private int displayScore;
-    private int dropsPerTurn = 1;
-
-    //--------------------------------------------------------------------------------------------------------
+    
     private void Update() {
         desiredScore = gameController.Score;
         
-        if (currentScore != desiredScore)
-        {
-            if (currentScore < desiredScore)
-            {
-                currentScore += (animationTime * Time.deltaTime) * 1;
-                if (currentScore > desiredScore)
-                {
-                    currentScore = desiredScore;
-                }
+        if (currentScore != desiredScore) {
+            currentScore += (animationTime * Time.deltaTime) * 1;
+            if (currentScore > desiredScore) {
+                currentScore = desiredScore;
             }
         }
 
         displayScore = (int) currentScore;
         scoreCounter.text = displayScore.ToString("D6");
     }
-    
-    
 }

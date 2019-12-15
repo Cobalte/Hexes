@@ -10,13 +10,13 @@ public class GameController : MonoBehaviour {
     public GameObject BoardObj;
     public GameObject UiCanvasObj;
     public GameObject BlockPrefab;
-    public int TurnCount { get; private set; }
-    public int Score { get; private set; }
+    public int Score;
     public List<Sprite> ImageForBlockProgression;
     public Sprite ImageForWildCard;
     public Sprite ImageForAnvil;
     public Sprite ImageForPlant;
-    public GameObject CombineCelebrationObj;
+    public GameObject CombineCelebrationPrefab;
+    public GameObject DestroyCelebrationPrefab;
 
     private List<Hex> hexes;
     private List<Block> blocks;
@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour {
     private static float swipeMinDist;
     private static Vector3 swipeStartPos;
     private static Vector3 swipeEndPos;
+    private int turnCount;
 
     private bool IsBoardFull => hexes.All(h => h.Occupant != null);
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
@@ -47,7 +48,7 @@ public class GameController : MonoBehaviour {
         swipeDir = BoardDirection.Null;
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
         blocks = new List<Block>();
-        TurnCount = 0;
+        turnCount = 0;
 
         DropBlocks();
         allowInput = true;
@@ -145,7 +146,6 @@ public class GameController : MonoBehaviour {
                     column[curHex].Occupant.Kind = BlockKind.Normal;
                     column[newHex].Occupant = column[curHex].Occupant;
                     column[curHex].Occupant = null;
-                    Score += newLevel;
                     somethingMoved = true;
                 }
                 else if (newHex < curHex) {
@@ -178,13 +178,13 @@ public class GameController : MonoBehaviour {
 
             float rand = Random.Range(0f, 100f);
             
-            if (TurnCount >= wildTurnReq && rand < wildChance) {
+            if (turnCount >= wildTurnReq && rand < wildChance) {
                 newBlock.Initialize(newDropHex, 1, BlockKind.WildCard);
             }
-            else if (TurnCount >= anvilTurnReq && rand < wildChance + anvilChance) {
+            else if (turnCount >= anvilTurnReq && rand < wildChance + anvilChance) {
                 newBlock.Initialize(newDropHex, 1, BlockKind.Anvil);
             }
-            else if (TurnCount >= plantTurnReq && rand < wildChance + anvilChance + plantChance) {
+            else if (turnCount >= plantTurnReq && rand < wildChance + anvilChance + plantChance) {
                 newBlock.Initialize(newDropHex, 1, BlockKind.Plant);
             }
             else {
@@ -195,7 +195,7 @@ public class GameController : MonoBehaviour {
             blocks.Add(newBlock);
         }
 
-        TurnCount++;
+        turnCount++;
     }
     
     //--------------------------------------------------------------------------------------------------------

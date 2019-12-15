@@ -431,7 +431,7 @@ PrefabInstance:
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2.4999695
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
@@ -2295,6 +2295,7 @@ MonoBehaviour:
   UiCanvasObj: {fileID: 1631828391}
   BlockPrefab: {fileID: 3635918561961362836, guid: f61765d5b0e79014fb6228e205058e64,
     type: 3}
+  Score: 0
   ImageForBlockProgression:
   - {fileID: 21300000, guid: 9eb504d4cd5da044188cbc4994473e50, type: 3}
   - {fileID: 21300000, guid: f51e8efdda4decf4e943451c68217b29, type: 3}
@@ -2311,7 +2312,9 @@ MonoBehaviour:
   ImageForWildCard: {fileID: 21300000, guid: 2d8f1a5ee14edbf438f8836f0901afcf, type: 3}
   ImageForAnvil: {fileID: 21300000, guid: 8eb25a4a94f0b7a41998b67f93285a2e, type: 3}
   ImageForPlant: {fileID: 21300000, guid: 1ac09cf2e5f2ba1409da868b9940d3dc, type: 3}
-  CombineCelebrationObj: {fileID: 5086884584025849981, guid: f758c78e1894ccf4a83d8c7a0d9da79f,
+  CombineCelebrationPrefab: {fileID: 5086884584025849981, guid: f758c78e1894ccf4a83d8c7a0d9da79f,
+    type: 3}
+  DestroyCelebrationPrefab: {fileID: 5086884584025849981, guid: ff63be445f454dd44a60779a0312cda1,
     type: 3}
 --- !u!4 &608002475
 Transform:
@@ -3360,7 +3363,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00002946059, y: 0}
+  m_AnchoredPosition: {x: 31.043594, y: 0}
   m_SizeDelta: {x: 0, y: -10}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1020723876
@@ -4059,8 +4062,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1312346799}
   m_HandleRect: {fileID: 1312346798}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.44839212
+  m_Value: -0.045221455
+  m_Size: 0.39595747
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
