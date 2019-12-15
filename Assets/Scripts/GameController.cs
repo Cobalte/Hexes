@@ -73,15 +73,19 @@ public class GameController : MonoBehaviour {
             return;
         }
 
-        allowInput = false;
-        Debug.Log("Swiping in direction " + swipeDir);
-        ExecuteSwipe();
+        ExecuteSwipe(out bool somethingMoved);
+
+        if (somethingMoved) {
+            Debug.Log("Swiping in direction " + swipeDir);
+            allowInput = false;
+        }
     }
     
     //--------------------------------------------------------------------------------------------------------
-    private void ExecuteSwipe() {
+    private void ExecuteSwipe(out bool somethingMoved) {
         IEnumerable<Hex> captains = from h in hexes where !h.NeighborDirections.Contains(swipeDir) select h;
         BoardDirection searchDir = Opposite(swipeDir);
+        somethingMoved = false;
 
         foreach (Hex captain in captains) {
             List<Hex> column = HexesInDirection(captain, searchDir);
@@ -105,6 +109,7 @@ public class GameController : MonoBehaviour {
                     column[curHex].Occupant.SlideTo(GetAnvilDestination(column));
                     column[curHex].Occupant.SuicideOnArrival = true;
                     column[curHex].Occupant = null;
+                    somethingMoved = true;
                     continue;
                 }
                 
@@ -117,6 +122,7 @@ public class GameController : MonoBehaviour {
                     column[newHex - 1].Occupant.SuicideAfterEating = true;
                     column[curHex].Occupant = null;
                     column[newHex - 1].Occupant = null;
+                    somethingMoved = true;
                 }
                 else if (newHex > 0
                     && column[curHex].CurrentLevel != ImageForBlockProgression.Count
@@ -140,12 +146,14 @@ public class GameController : MonoBehaviour {
                     column[newHex].Occupant = column[curHex].Occupant;
                     column[curHex].Occupant = null;
                     Score += newLevel;
+                    somethingMoved = true;
                 }
                 else if (newHex < curHex) {
                     // this is a block that's just sliding with no interaction
                     column[newHex].Occupant = column[curHex].Occupant;
                     column[curHex].Occupant = null;
                     column[newHex].Occupant.SlideTo(column[newHex]);
+                    somethingMoved = true;
                 }
             }
         }
