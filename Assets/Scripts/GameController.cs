@@ -169,28 +169,36 @@ public class GameController : MonoBehaviour {
                 return;
             }
 
-            do {
-                newDropHex = hexes[Random.Range(0, hexes.Count)];
-            } while (newDropHex.CurrentLevel != 0);
-
-            newBlock = Instantiate(BlockPrefab, UiCanvasObj.transform).GetComponent<Block>();
-            newBlock.transform.position = newDropHex.transform.position;
-
+            List<Hex> openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();
+            BlockKind newBlockKind = BlockKind.Normal;
             float rand = Random.Range(0f, 100f);
             
             if (turnCount >= wildTurnReq && rand < wildChance) {
-                newBlock.Initialize(newDropHex, 1, BlockKind.WildCard);
+                newBlockKind = BlockKind.WildCard;
             }
             else if (turnCount >= anvilTurnReq && rand < wildChance + anvilChance) {
-                newBlock.Initialize(newDropHex, 1, BlockKind.Anvil);
+                newBlockKind = BlockKind.Anvil;
             }
             else if (turnCount >= plantTurnReq && rand < wildChance + anvilChance + plantChance) {
-                newBlock.Initialize(newDropHex, 1, BlockKind.Plant);
+                newBlockKind = BlockKind.Plant;
+            }
+
+            if (newBlockKind == BlockKind.Anvil || newBlockKind == BlockKind.Plant) {
+                List<Hex> openInteriorHexes = (from hex in openHexes 
+                    where hex.Neighbors.Count == 6
+                    select hex).ToList();
+
+                newDropHex = openInteriorHexes.Count > 0
+                    ? openInteriorHexes[Random.Range(0, openInteriorHexes.Count - 1)]
+                    : openHexes[Random.Range(0, openHexes.Count - 1)];
             }
             else {
-                newBlock.Initialize(newDropHex, 1, BlockKind.Normal);
+                newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
             }
             
+            newBlock = Instantiate(BlockPrefab, UiCanvasObj.transform).GetComponent<Block>();
+            newBlock.transform.position = newDropHex.transform.position;
+            newBlock.Initialize(newDropHex, 1, newBlockKind);
             newDropHex.Occupant = newBlock;
             blocks.Add(newBlock);
         }
