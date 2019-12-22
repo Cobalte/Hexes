@@ -40,7 +40,7 @@ public class GameController : MonoBehaviour {
     private const int anvilChance = 8;
     private const int plantTurnReq = 30;
     private const int plantChance = 8;
-    private const float minSwipeDistScreenFration = 0.2f;
+    private const float minSwipeDistScreenFration = 0.1f;
     
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
