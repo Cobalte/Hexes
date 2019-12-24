@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour {
     public GameObject DestroyCelebrationPrefab;
     public ScoreMultiplierPanel ScoreMultPanel;
     public bool SomethingJustPromoted;
+    public GameObject GameOverPanel;
 
     private List<Hex> hexes;
     private List<Block> blocks;
@@ -34,6 +35,7 @@ public class GameController : MonoBehaviour {
 
     private bool IsBoardFull => hexes.All(h => h.Occupant != null);
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
+    private bool IsGameOver => GameOverPanel.activeSelf;
 
     private const int dropsPerTurn = 1;
     private const int wildTurnReq = 10;
@@ -47,15 +49,31 @@ public class GameController : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
         swipeMinDist = Screen.height * minSwipeDistScreenFration;
-        swipeDir = BoardDirection.Null;
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
         blocks = new List<Block>();
-        turnCount = 0;
+        StartNewGame();
+    }
 
+    //--------------------------------------------------------------------------------------------------------
+    private void StartNewGame() {
+        foreach (Block block in blocks) {
+            Destroy(block.gameObject);
+        }
+        
+        blocks = new List<Block>();
+        swipeDir = BoardDirection.Null;
+        turnCount = 0;
+        GameOverPanel.SetActive(false);
         DropBlocks();
         allowInput = true;
     }
-
+    
+    //--------------------------------------------------------------------------------------------------------
+    private void EnterGameOverState() {
+        Debug.Log("Game is over.");
+        GameOverPanel.SetActive(true);
+    }
+    
     //--------------------------------------------------------------------------------------------------------
     private void Update() {
         blocks.RemoveAll(b => b == null);
@@ -167,7 +185,7 @@ public class GameController : MonoBehaviour {
     private void DropBlocks() {
         for (int i = 0; i < dropsPerTurn; i++) {
             if (IsBoardFull) {
-                Debug.Log("OMAE WA MO SHINDEIRU");
+                EnterGameOverState();
                 return;
             }
 
@@ -209,7 +227,7 @@ public class GameController : MonoBehaviour {
     }
     
     //--------------------------------------------------------------------------------------------------------
-    private static BoardDirection GetSwipeDirection() {
+    private BoardDirection GetSwipeDirection() {
         // get keyboard input from PC
         if (Input.GetKeyDown(KeyCode.Keypad7)) return BoardDirection.UpLeft;
         if (Input.GetKeyDown(KeyCode.Keypad8)) return BoardDirection.Up;
@@ -227,7 +245,13 @@ public class GameController : MonoBehaviour {
         
         switch (currentTouch.phase) {
             case TouchPhase.Began:
-                // we just put our finer on the screen 
+                // we just put our finer on the screen
+
+                if (IsGameOver) {
+                    StartNewGame();
+                    return BoardDirection.Null;
+                }
+                
                 swipeStartPos = currentTouch.position;
                 swipeEndPos = currentTouch.position;
                 break;
