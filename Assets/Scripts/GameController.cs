@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour {
     public Sprite ImageForPlant;
     public GameObject CombineCelebrationPrefab;
     public GameObject DestroyCelebrationPrefab;
+    public ScoreMultiplierPanel ScoreMultPanel;
+    public bool SomethingJustPromoted;
 
     private List<Hex> hexes;
     private List<Block> blocks;
@@ -58,14 +60,14 @@ public class GameController : MonoBehaviour {
     private void Update() {
         blocks.RemoveAll(b => b == null);
         
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Application.Quit();
-            return;
-        }
-        
         if (!allowInput && !IsAnyBlockMoving) {
+            if (!SomethingJustPromoted) {
+                ScoreMultPanel.ResetLevel();
+            }
+            
             DropBlocks();
             allowInput = true;
+            SomethingJustPromoted = false;
         }
         
         swipeDir = GetSwipeDirection();

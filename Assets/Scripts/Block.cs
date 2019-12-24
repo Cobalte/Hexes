@@ -106,8 +106,16 @@ public class Block : MonoBehaviour {
             worldPositionStays: false).GetComponent<Celebration>();
         celebration.transform.position = transform.position + Vector3.back;
         celebration.SetSprite(gameController.ImageForBlockProgression[Level - 1]);
-        gameController.Score += (Kind == BlockKind.Anvil || Kind == BlockKind.Plant) ? -food.Level : Level-1;
 
+        if (Kind == BlockKind.Anvil || Kind == BlockKind.Plant) {
+            gameController.Score -= food.Level;
+        }
+        else {
+            gameController.Score += Level * gameController.ScoreMultPanel.GetCurrentMultiplier();
+            gameController.ScoreMultPanel.TryToIncrementLevel();
+            gameController.SomethingJustPromoted = true;
+        }
+        
         if (Kind == BlockKind.Plant) {
             Destroy(gameObject);
         }
