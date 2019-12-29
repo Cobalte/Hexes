@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
     public Sprite ImageForWildCard;
     public Sprite ImageForAnvil;
     public Sprite ImageForPlant;
+    public GameObject CreateCelebrationPrefab;
     public GameObject CombineCelebrationPrefab;
     public GameObject DestroyCelebrationPrefab;
     public ScoreMultiplierPanel ScoreMultPanel;
@@ -38,12 +39,12 @@ public class GameController : MonoBehaviour {
     private bool IsGameOver => GameOverPanel.activeSelf;
 
     private const int dropsPerTurn = 1;
-    private const int wildTurnReq = 10;
-    private const int wildChance = 10;
-    private const int anvilTurnReq = 20;
-    private const int anvilChance = 8;
-    private const int plantTurnReq = 30;
-    private const int plantChance = 8;
+    private const int wildTurnReq = 20;
+    private const int wildChance = 8;
+    private const int anvilTurnReq = 30;
+    private const int anvilChance = 7;
+    private const int plantTurnReq = 40;
+    private const int plantChance = 6;
     private const float minSwipeDistScreenFration = 0.1f;
     private const int doubleDropScoreThreshold = 2000;
     private const int tripleDropScoreThreshold = 6000;
@@ -225,6 +226,12 @@ public class GameController : MonoBehaviour {
             newBlock.Initialize(newDropHex, 1, newBlockKind);
             newDropHex.Occupant = newBlock;
             blocks.Add(newBlock);
+
+            Instantiate(
+                CreateCelebrationPrefab,
+                newBlock.transform.position,
+                Quaternion.identity,
+                UiCanvasObj.transform);
         }
 
         turnCount++;
