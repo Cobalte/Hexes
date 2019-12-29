@@ -45,6 +45,8 @@ public class GameController : MonoBehaviour {
     private const int plantTurnReq = 30;
     private const int plantChance = 8;
     private const float minSwipeDistScreenFration = 0.1f;
+    private const int doubleDropScoreThreshold = 2000;
+    private const int tripleDropScoreThreshold = 6000;
     
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
@@ -84,6 +86,8 @@ public class GameController : MonoBehaviour {
             }
             
             DropBlocks();
+            if (Score > doubleDropScoreThreshold) { DropBlocks(); }
+            //if (Score > tripleDropScoreThreshold) { DropBlocks(); } 
             allowInput = true;
             SomethingJustPromoted = false;
         }
