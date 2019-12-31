@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour {
     public GameObject GameOverPanel;
 
     private List<Hex> hexes;
+    private List<Hex> openHexes;
     private List<Block> blocks;
     private BoardDirection swipeDir;
     private Hex newDropHex;
@@ -33,21 +34,24 @@ public class GameController : MonoBehaviour {
     private static Vector3 swipeStartPos;
     private static Vector3 swipeEndPos;
     private int turnCount;
+    private float d100Roll;
 
     private bool IsBoardFull => hexes.All(h => h.Occupant != null);
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
     private bool IsGameOver => GameOverPanel.activeSelf;
 
-    private const int dropsPerTurn = 1;
-    private const int wildTurnReq = 20;
-    private const int wildChance = 8;
-    private const int anvilTurnReq = 30;
-    private const int anvilChance = 7;
-    private const int plantTurnReq = 40;
-    private const int plantChance = 6;
+    private const int scoreForWilds = 1000;
+    private const int scoreForAnvils = 2000;
+    private const int scoreForDoubles = 3000;
+    private const int scoreForPlants = 6000;
+    private const int scoreForTriples = 10000;
+    
+    private const int chanceOfDouble = 10;
+    private const int chanceOfTriple = 10;
+    private const int chanceOfWild = 10;
+    private const int chanceOfAnvil = 0;
+    private const int chanceOfPlant = 0;
     private const float minSwipeDistScreenFration = 0.1f;
-    private const int doubleDropScoreThreshold = 2000;
-    private const int tripleDropScoreThreshold = 6000;
     
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
@@ -67,7 +71,7 @@ public class GameController : MonoBehaviour {
         swipeDir = BoardDirection.Null;
         turnCount = 0;
         GameOverPanel.SetActive(false);
-        DropBlocks();
+        CreateNewBlocks();
         allowInput = true;
     }
     
@@ -85,10 +89,8 @@ public class GameController : MonoBehaviour {
             if (!SomethingJustPromoted) {
                 ScoreMultPanel.ResetLevel();
             }
-            
-            DropBlocks();
-            if (Score > doubleDropScoreThreshold) { DropBlocks(); }
-            //if (Score > tripleDropScoreThreshold) { DropBlocks(); } 
+
+            CreateNewBlocks();
             allowInput = true;
             SomethingJustPromoted = false;
         }
@@ -187,40 +189,44 @@ public class GameController : MonoBehaviour {
     }
     
     //--------------------------------------------------------------------------------------------------------
-    private void DropBlocks() {
-        for (int i = 0; i < dropsPerTurn; i++) {
+    private void CreateNewBlocks() {
+        // how many blocks are we supposed to create?
+        d100Roll = Random.Range(0f, 100f);
+        int newBlockCount = 1;
+        if (Score >= scoreForDoubles && d100Roll < chanceOfDouble) { newBlockCount = 2; }
+        else if (Score >= scoreForTriples && d100Roll < chanceOfTriple + chanceOfDouble) { newBlockCount = 3; }
+
+        // create that many blocks
+        for (int i = 0; i < newBlockCount; i++) {
             if (IsBoardFull) {
                 EnterGameOverState();
                 return;
             }
 
-            List<Hex> openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();
+            openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();
             BlockKind newBlockKind = BlockKind.Normal;
-            float rand = Random.Range(0f, 100f);
-            
-            if (turnCount >= wildTurnReq && rand < wildChance) {
+            d100Roll = Random.Range(0f, 100f);
+
+            if (Score >= scoreForWilds && d100Roll < chanceOfWild) {
                 newBlockKind = BlockKind.WildCard;
             }
-            else if (turnCount >= anvilTurnReq && rand < wildChance + anvilChance) {
+            else if (Score >= scoreForAnvils && d100Roll < chanceOfWild + chanceOfAnvil) {
                 newBlockKind = BlockKind.Anvil;
             }
-            else if (turnCount >= plantTurnReq && rand < wildChance + anvilChance + plantChance) {
+            else if (Score >= scoreForPlants && d100Roll < chanceOfWild + chanceOfAnvil + chanceOfPlant) {
                 newBlockKind = BlockKind.Plant;
             }
 
             if (newBlockKind == BlockKind.Anvil || newBlockKind == BlockKind.Plant) {
-                List<Hex> openInteriorHexes = (from hex in openHexes 
-                    where hex.Neighbors.Count == 6
-                    select hex).ToList();
-
-                newDropHex = openInteriorHexes.Count > 0
-                    ? openInteriorHexes[Random.Range(0, openInteriorHexes.Count - 1)]
+                List<Hex> interior = (from hex in openHexes where hex.Neighbors.Count == 6 select hex).ToList();
+                newDropHex = interior.Count > 0
+                    ? interior[Random.Range(0, interior.Count - 1)]
                     : openHexes[Random.Range(0, openHexes.Count - 1)];
             }
             else {
                 newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
             }
-            
+        
             newBlock = Instantiate(BlockPrefab, UiCanvasObj.transform).GetComponent<Block>();
             newBlock.transform.position = newDropHex.transform.position;
             newBlock.Initialize(newDropHex, 1, newBlockKind);
@@ -228,12 +234,12 @@ public class GameController : MonoBehaviour {
             blocks.Add(newBlock);
 
             Instantiate(
-                CreateCelebrationPrefab,
-                newBlock.transform.position,
-                Quaternion.identity,
-                UiCanvasObj.transform);
+                original: CreateCelebrationPrefab,
+                position: newBlock.transform.position,
+                rotation: Quaternion.identity,
+                parent: UiCanvasObj.transform);
         }
-
+        
         turnCount++;
     }
     
@@ -342,5 +348,9 @@ public class GameController : MonoBehaviour {
         }
 
         return 0;
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    public void UnlockProgress() {
     }
 }
