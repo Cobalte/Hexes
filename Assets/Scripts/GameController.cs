@@ -104,7 +104,6 @@ public class GameController : MonoBehaviour {
         ExecuteSwipe(out bool somethingMoved);
 
         if (somethingMoved) {
-            Debug.Log("Swiping in direction " + swipeDir);
             allowInput = false;
         }
     }
