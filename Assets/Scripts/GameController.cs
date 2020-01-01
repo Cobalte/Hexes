@@ -349,8 +349,4 @@ public class GameController : MonoBehaviour {
 
         return 0;
     }
-    
-    //--------------------------------------------------------------------------------------------------------
-    public void UnlockProgress() {
-    }
 }
