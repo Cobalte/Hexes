@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UnlockProgressBar : MonoBehaviour {
-
-    public Image BackgroundImage;
-    public Image FillerImage;
+public class UnlockProgressBar : MonoBehaviour
+{
     public Image IconImage;
     public GameController GameControllerObj;
     public List<int> UnlockScores;
     public List<Sprite> UnlockIcons;
-    
+    public Slider mProgressSlider;
+    public Slider mReflectionSlider;
+
     private RectTransform fillerRect;
     private float fillerMaxSize;
     private float scoreFloor;
@@ -22,35 +22,47 @@ public class UnlockProgressBar : MonoBehaviour {
     private bool isProgressComplete;
 
     //--------------------------------------------------------------------------------------------------------
-    private void Awake() {
-        fillerRect = FillerImage.GetComponent<RectTransform>();
-        float backgroundImageWidth = BackgroundImage.GetComponent<RectTransform>().sizeDelta.x;
-        float fillerImageOffset = fillerRect.position.x;
-        fillerMaxSize = backgroundImageWidth - (2 * fillerImageOffset);
-
+    private void Awake()
+    {
+        //Set the value to 0 when we start.
+        mProgressSlider.value = 0;
         currentUnlock = -1;
         IncrementUnlock();
     }
 
     //--------------------------------------------------------------------------------------------------------
-    private void Update() {
-        if (isProgressComplete) {
+    private void Update()
+    {
+        if (isProgressComplete)
+        {
             return;
         }
 
         progress = (GameControllerObj.Score - scoreFloor) / (scoreCeiling - scoreFloor);
 
-        if (progress < 1f) {
-            fillerRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, progress * fillerMaxSize);
+        if (progress < 1f)
+        {
+            //Take our new score and subtract our current score from it.
+            float scoreDifference = progress - mProgressSlider.value;
+            //Divide that number by how many frames we want to it to take to count. 30 is a rough guess, feels ok.
+            float progressIncrementAmt = scoreDifference / 30;
+            //Add that number to the display score each frame. *2 to make it feel faster. Can increase this.
+            mProgressSlider.value += progressIncrementAmt * 2;
+            
+            //Extra line here to sync the reflection and the main sliders together.
+            mReflectionSlider.value = mProgressSlider.value;
         }
-        else {
+        else
+        {
             IncrementUnlock();
         }
     }
-    
+
     //--------------------------------------------------------------------------------------------------------
-    private void IncrementUnlock() {
-        if (currentUnlock < UnlockScores.Count - 1) {
+    private void IncrementUnlock()
+    {
+        if (currentUnlock < UnlockScores.Count - 1)
+        {
             // onto the next unlock!
             currentUnlock++;
             scoreFloor = scoreCeiling;
@@ -58,9 +70,9 @@ public class UnlockProgressBar : MonoBehaviour {
             IconImage.sprite = UnlockIcons[currentUnlock];
             Debug.Log("Score reward " + currentUnlock + " unlocked!");
         }
-        else {
+        else
+        {
             // we've unlocked everything!
-            fillerRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, fillerMaxSize);
             isProgressComplete = true;
             IconImage.sprite = null;
             Debug.Log("All score rewards unlocked!");

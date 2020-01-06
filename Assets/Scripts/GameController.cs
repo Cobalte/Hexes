@@ -71,6 +71,8 @@ public class GameController : MonoBehaviour {
         swipeDir = BoardDirection.Null;
         turnCount = 0;
         GameOverPanel.SetActive(false);
+        // Jim added this line to assure the grid objects are built and positioned before placing the first block.
+        Canvas.ForceUpdateCanvases();
         CreateNewBlocks();
         allowInput = true;
     }
