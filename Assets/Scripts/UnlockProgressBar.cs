@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UnlockProgressBar : MonoBehaviour
-{
+public class UnlockProgressBar : MonoBehaviour {
+    
     public Image IconImage;
     public GameController GameControllerObj;
     public List<int> UnlockScores;
     public List<Sprite> UnlockIcons;
-    public Slider mProgressSlider;
-    public Slider mReflectionSlider;
+    public Slider ProgressSlider;
+    public Slider ReflectionSlider;
 
+    private const float sliderGrowSpeed = 30f;
+    
     private RectTransform fillerRect;
     private float fillerMaxSize;
     private float scoreFloor;
@@ -22,38 +24,27 @@ public class UnlockProgressBar : MonoBehaviour
     private bool isProgressComplete;
 
     //--------------------------------------------------------------------------------------------------------
-    private void Awake()
-    {
-        //Set the value to 0 when we start.
-        mProgressSlider.value = 0;
+    private void Awake() {
+        ProgressSlider.value = 0;
         currentUnlock = -1;
         IncrementUnlock();
     }
 
     //--------------------------------------------------------------------------------------------------------
-    private void Update()
-    {
-        if (isProgressComplete)
-        {
+    private void Update() {
+        if (isProgressComplete) {
             return;
         }
 
         progress = (GameControllerObj.Score - scoreFloor) / (scoreCeiling - scoreFloor);
 
-        if (progress < 1f)
-        {
-            //Take our new score and subtract our current score from it.
-            float scoreDifference = progress - mProgressSlider.value;
-            //Divide that number by how many frames we want to it to take to count. 30 is a rough guess, feels ok.
-            float progressIncrementAmt = scoreDifference / 30;
-            //Add that number to the display score each frame. *2 to make it feel faster. Can increase this.
-            mProgressSlider.value += progressIncrementAmt * 2;
-            
-            //Extra line here to sync the reflection and the main sliders together.
-            mReflectionSlider.value = mProgressSlider.value;
+        if (progress < 1f) {
+            float scoreDifference = progress - ProgressSlider.value;
+            float progressIncrementAmt = scoreDifference / sliderGrowSpeed;
+            ProgressSlider.value += progressIncrementAmt * 2;
+            ReflectionSlider.value = ProgressSlider.value;
         }
-        else
-        {
+        else {
             IncrementUnlock();
         }
     }

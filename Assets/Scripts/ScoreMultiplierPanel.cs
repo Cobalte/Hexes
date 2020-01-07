@@ -6,56 +6,53 @@ using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreMultiplierPanel : MonoBehaviour
-{
-    public List<GameObject> mComboPrefabs;
-    public GameObject mActiveComboObj;
+public class ScoreMultiplierPanel : MonoBehaviour {
+    
+    public List<GameObject> ComboPrefabs;
+    public GameObject ActiveComboObj;
 
     private int currentLevel;
     private Image displayImage;
 
     //--------------------------------------------------------------------------------------------------------
-    private void Start()
-    {
+    private void Start() {
         currentLevel = 0;
-        mActiveComboObj = null;
+        ActiveComboObj = null;
         CreateComboPrefab();
     }
 
     //--------------------------------------------------------------------------------------------------------
-    public void TryToIncrementLevel()
-    {
-        if (currentLevel < mComboPrefabs.Count - 1)
-        {
+    public void TryToIncrementLevel() {
+        if (currentLevel < ComboPrefabs.Count - 1) {
             currentLevel++;
             CreateComboPrefab();
         }
     }
 
-    public void CreateComboPrefab()
-    {
-        if (mActiveComboObj)
-        {
-            Destroy(mActiveComboObj);
+    //--------------------------------------------------------------------------------------------------------
+    private void CreateComboPrefab() {
+        if (ActiveComboObj) {
+            Destroy(ActiveComboObj);
         }
-        mActiveComboObj = null;
-        mActiveComboObj = Instantiate(mComboPrefabs[currentLevel]);
-        mActiveComboObj.transform.SetParent(this.transform);
-        mActiveComboObj.transform.localPosition = Vector3.zero;
-        mActiveComboObj.transform.localScale = Vector3.one;
-        Debug.Log(mComboPrefabs[currentLevel] + " created.");
+        
+        ActiveComboObj = null;
+        ActiveComboObj = Instantiate(
+            original: ComboPrefabs[currentLevel],
+            parent: transform,
+            worldPositionStays: true);
+        ActiveComboObj.transform.localPosition = Vector3.zero;
+        ActiveComboObj.transform.localScale = Vector3.one;
+        Debug.Log(ComboPrefabs[currentLevel] + " created.");
     }
 
     //--------------------------------------------------------------------------------------------------------
-    public void ResetLevel()
-    {
+    public void ResetLevel() {
         currentLevel = 0;
         CreateComboPrefab();
     }
 
     //--------------------------------------------------------------------------------------------------------
-    public int GetCurrentMultiplier()
-    {
+    public int GetCurrentMultiplier() {
         // returns 2, 4, 8, etc until all sprite are used
         return (int) Math.Pow(2, currentLevel);
     }

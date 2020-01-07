@@ -4351,8 +4351,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7baf4c24488b5fa42879624effcd3557, type: 3}
   - {fileID: 21300000, guid: cdc4a32b8b9d64142bdea87a1ddacbb3, type: 3}
   - {fileID: 21300000, guid: d2e2edb9c9d2d734a8e6c1e8d9bb3300, type: 3}
-  mProgressSlider: {fileID: 955930001}
-  mReflectionSlider: {fileID: 1832859968}
+  ProgressSlider: {fileID: 955930001}
+  ReflectionSlider: {fileID: 1832859968}
 --- !u!222 &1029461411
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6574,13 +6574,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1941551f70d40040b059302f054386e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mComboPrefabs:
+  ComboPrefabs:
   - {fileID: 1329376334428383800, guid: 1acf77457e8c4d44f90ee8841e4a4428, type: 3}
   - {fileID: 1329376334428383800, guid: 50a4702e98a7d0f489ac854668155b36, type: 3}
   - {fileID: 1329376334428383800, guid: 059038ba47afd974f8f8b9ef4d50eaa3, type: 3}
   - {fileID: 1329376334428383800, guid: b91f53c4d3e579c429ba9b1866364656, type: 3}
   - {fileID: 1329376334428383800, guid: 7a65dcaf07b0bb2419ee9a8ac9c19f52, type: 3}
-  mActiveComboObj: {fileID: 0}
+  ActiveComboObj: {fileID: 0}
 --- !u!114 &2099983000
 MonoBehaviour:
   m_ObjectHideFlags: 0
