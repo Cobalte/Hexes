@@ -16,6 +16,7 @@ public class Block : MonoBehaviour {
     public bool IsMoving => swipeDestPos != null;
     public List<Block> BlocksToEat;
     public Image DisplayImage;
+    public Animator blockAnimator;
 
     private Vector3? swipeDestPos;
     private Hex swipeDestHex;
@@ -114,6 +115,7 @@ public class Block : MonoBehaviour {
             gameController.Score += Level * gameController.ScoreMultPanel.GetCurrentMultiplier();
             gameController.ScoreMultPanel.TryToIncrementLevel();
             gameController.SomethingJustPromoted = true;
+            blockAnimator.Play("Block_Birth");
         }
         
         if (Kind == BlockKind.Plant) {
