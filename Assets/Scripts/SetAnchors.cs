@@ -2,6 +2,8 @@
 using UnityEngine;
 using System.Collections;
  
+#if UNITY_EDITOR
+
 public class UGUIMenu : MonoBehaviour
 {
     [MenuItem ("UI/Anchor Around Object &b")]
@@ -36,3 +38,5 @@ public class UGUIMenu : MonoBehaviour
         }
     }
 }
+
+#endif
