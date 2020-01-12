@@ -10,7 +10,6 @@ public class GameController : MonoBehaviour {
     public GameObject BoardObj;
     public GameObject UiCanvasObj;
     public GameObject BlockPrefab;
-    public int Score;
     public List<Sprite> ImageForBlockProgression;
     public Sprite ImageForWildCard;
     public Sprite ImageForAnvil;
@@ -24,6 +23,10 @@ public class GameController : MonoBehaviour {
     public float CurrentWildChance;
     public float CurrentDoubleChance;
     public float CurrentTripleChance;
+    public int HighScore;
+    public GameObject HighScoreIndicator;
+    
+    public int Score { get; private set; }
     
     private List<Hex> hexes;
     private List<Hex> openHexes;
@@ -43,6 +46,7 @@ public class GameController : MonoBehaviour {
     private bool IsGameOver => GameOverPanel.activeSelf;
 
     private const float minSwipeDistScreenFration = 0.1f;
+    private const string playerPrefHighScoreKey = "HighScore";
     
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
@@ -60,12 +64,16 @@ public class GameController : MonoBehaviour {
             Destroy(block.gameObject);
         }
         
+        // reset various things for a new game
         blocks = new List<Block>();
         swipeDir = BoardDirection.Null;
         GameOverPanel.SetActive(false);
         CurrentWildChance = 0f;
         CurrentDoubleChance = 0f;
         CurrentTripleChance = 0f;
+        HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
+        
+        // start the game
         CreateNewBlocks();
         allowInput = true;
     }
@@ -342,5 +350,20 @@ public class GameController : MonoBehaviour {
         }
 
         return 0;
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    public void ChangeScore(int change) {
+        Score += change;
+
+        if (HighScore < Score) {
+            HighScore = Score;
+            PlayerPrefs.SetInt(playerPrefHighScoreKey, Score);
+            PlayerPrefs.Save();
+            
+            if (!HighScoreIndicator.activeSelf) {
+                HighScoreIndicator.SetActive(true);
+            }
+        }
     }
 }

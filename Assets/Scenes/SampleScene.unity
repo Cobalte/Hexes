@@ -2864,6 +2864,8 @@ MonoBehaviour:
   CurrentWildChance: 0
   CurrentDoubleChance: 0
   CurrentTripleChance: 0
+  HighScore: 0
+  HighScoreIndicator: {fileID: 728306577}
 --- !u!4 &608002475
 Transform:
   m_ObjectHideFlags: 0
@@ -3415,7 +3417,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.83537364, y: 0.05933147}
   m_AnchorMax: {x: 1, y: 0.1987141}
-  m_AnchoredPosition: {x: 0.000579834, y: 0.0000076293945}
+  m_AnchoredPosition: {x: 0.00061035156, y: 0.000015258789}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &724984144
@@ -3551,7 +3553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &728306578
 RectTransform:
   m_ObjectHideFlags: 0

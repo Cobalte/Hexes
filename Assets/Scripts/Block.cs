@@ -136,10 +136,10 @@ public class Block : MonoBehaviour {
         celebration.SetSprite(gameController.ImageForBlockProgression[Level - 1]);
 
         if (Kind == BlockKind.Anvil || Kind == BlockKind.Plant) {
-            gameController.Score -= food.Level;
+            gameController.ChangeScore(food.Level * -1);
         }
         else {
-            gameController.Score += Level * gameController.ScoreMultPanel.GetCurrentMultiplier();
+            gameController.ChangeScore(Level * gameController.ScoreMultPanel.GetCurrentMultiplier());
             gameController.ScoreMultPanel.TryToIncrementLevel();
             gameController.SomethingJustPromoted = true;
             BlockAnimator.Play("Block_Birth");
