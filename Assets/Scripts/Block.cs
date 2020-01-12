@@ -109,13 +109,13 @@ public class Block : MonoBehaviour {
                 BlockAnimator.Play("Block_NE");
                 break;
             case BoardDirection.DownRight:
-                BlockAnimator.Play("Block_SW");
+                BlockAnimator.Play("Block_SE");
                 break;
             case BoardDirection.Down:
                 BlockAnimator.Play("Block_S");
                 break;
             case BoardDirection.DownLeft:
-                BlockAnimator.Play("Block_SE");
+                BlockAnimator.Play("Block_SW");
                 break;
         }
     }

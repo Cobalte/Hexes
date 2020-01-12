@@ -180,6 +180,10 @@ public class GameController : MonoBehaviour {
                     column[newHex].Occupant.SlideTo(column[newHex], swipeDir);
                     somethingMoved = true;
                 }
+                else if (newHex == curHex) {
+                    // this block has nowhere to go
+                    column[newHex].Occupant.SlideTo(column[newHex], swipeDir);
+                }
             }
         }
 
