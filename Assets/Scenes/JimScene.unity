@@ -2889,9 +2889,6 @@ MonoBehaviour:
   ScoreMultPanel: {fileID: 2099982999}
   SomethingJustPromoted: 0
   GameOverPanel: {fileID: 1449525659}
-  CurrentWildChance: 0
-  CurrentDoubleChance: 0
-  CurrentTripleChance: 0
 --- !u!4 &608002475
 Transform:
   m_ObjectHideFlags: 0
@@ -4660,16 +4657,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IconImage: {fileID: 1054437718}
   GameControllerObj: {fileID: 608002474}
+  UnlockScores: e8030000d0070000b80b00007017000010270000
+  UnlockIcons:
+  - {fileID: 21300000, guid: 79a69ff18ccd6a94fb00b5b8d97e340b, type: 3}
+  - {fileID: 21300000, guid: 2be2df3ae99a2c342ae7b8ff1b6ff63e, type: 3}
+  - {fileID: 21300000, guid: 7baf4c24488b5fa42879624effcd3557, type: 3}
+  - {fileID: 21300000, guid: cdc4a32b8b9d64142bdea87a1ddacbb3, type: 3}
+  - {fileID: 21300000, guid: d2e2edb9c9d2d734a8e6c1e8d9bb3300, type: 3}
   ProgressSlider: {fileID: 955930001}
   ReflectionSlider: {fileID: 1832859968}
-  LevelRewards:
-  - {fileID: 11400000, guid: b7f252bf7d1907b4fbd628d7a693a8a6, type: 2}
-  - {fileID: 11400000, guid: b360c7c884349214a800bf0d9bd6aae0, type: 2}
-  - {fileID: 11400000, guid: c5e573ab0a5c82d408548df98894b121, type: 2}
-  - {fileID: 11400000, guid: 8fc6dfa6a80dfda47867296d8a587bd1, type: 2}
-  - {fileID: 11400000, guid: c26b0c140281dad46b7fd1e3d9157d68, type: 2}
-  - {fileID: 11400000, guid: 8551077faa0c62f49aec154904936409, type: 2}
-  - {fileID: 11400000, guid: b67000d9e30169d428170f6947747018, type: 2}
 --- !u!222 &1029461411
 CanvasRenderer:
   m_ObjectHideFlags: 0
