@@ -21,7 +21,10 @@ public class GameController : MonoBehaviour {
     public ScoreMultiplierPanel ScoreMultPanel;
     public bool SomethingJustPromoted;
     public GameObject GameOverPanel;
-
+    public float CurrentWildChance;
+    public float CurrentDoubleChance;
+    public float CurrentTripleChance;
+    
     private List<Hex> hexes;
     private List<Hex> openHexes;
     private List<Block> blocks;
@@ -39,17 +42,6 @@ public class GameController : MonoBehaviour {
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
     private bool IsGameOver => GameOverPanel.activeSelf;
 
-    private const int scoreForWilds = 1000;
-    private const int scoreForAnvils = 2000;
-    private const int scoreForDoubles = 3000;
-    private const int scoreForPlants = 6000;
-    private const int scoreForTriples = 10000;
-    
-    private const int chanceOfDouble = 10;
-    private const int chanceOfTriple = 10;
-    private const int chanceOfWild = 10;
-    private const int chanceOfAnvil = 0;
-    private const int chanceOfPlant = 0;
     private const float minSwipeDistScreenFration = 0.1f;
     
     //--------------------------------------------------------------------------------------------------------
@@ -58,6 +50,7 @@ public class GameController : MonoBehaviour {
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
         blocks = new List<Block>();
         Canvas.ForceUpdateCanvases();
+
         StartNewGame();
     }
 
@@ -70,6 +63,9 @@ public class GameController : MonoBehaviour {
         blocks = new List<Block>();
         swipeDir = BoardDirection.Null;
         GameOverPanel.SetActive(false);
+        CurrentWildChance = 0f;
+        CurrentDoubleChance = 0f;
+        CurrentTripleChance = 0f;
         CreateNewBlocks();
         allowInput = true;
     }
@@ -196,10 +192,10 @@ public class GameController : MonoBehaviour {
         int newBlockCount = 1;
         d100Roll = Random.Range(0f, 100f);
         
-        if (Score >= scoreForDoubles && d100Roll <= chanceOfDouble) {
+        if (d100Roll <= CurrentDoubleChance) {
             newBlockCount = 2;
         }
-        else if (Score >= scoreForTriples && d100Roll <= chanceOfTriple + chanceOfDouble) {
+        else if (d100Roll <= CurrentDoubleChance + CurrentTripleChance) {
             newBlockCount = 3;
         }
 
@@ -211,18 +207,8 @@ public class GameController : MonoBehaviour {
             }
 
             openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();
-            BlockKind newBlockKind = BlockKind.Normal;
             d100Roll = Random.Range(0f, 100f);
-
-            if (Score >= scoreForWilds && d100Roll < chanceOfWild) {
-                newBlockKind = BlockKind.WildCard;
-            }
-            else if (Score >= scoreForAnvils && d100Roll < chanceOfWild + chanceOfAnvil) {
-                newBlockKind = BlockKind.Anvil;
-            }
-            else if (Score >= scoreForPlants && d100Roll < chanceOfWild + chanceOfAnvil + chanceOfPlant) {
-                newBlockKind = BlockKind.Plant;
-            }
+            BlockKind newBlockKind = d100Roll <= CurrentWildChance ? BlockKind.WildCard : BlockKind.Normal;
 
             if (newBlockKind == BlockKind.Anvil || newBlockKind == BlockKind.Plant) {
                 List<Hex> interior = (from hex in openHexes where hex.Neighbors.Count == 6 select hex).ToList();

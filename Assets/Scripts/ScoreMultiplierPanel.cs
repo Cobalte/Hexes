@@ -42,7 +42,6 @@ public class ScoreMultiplierPanel : MonoBehaviour {
             worldPositionStays: true);
         ActiveComboObj.transform.localPosition = Vector3.zero;
         ActiveComboObj.transform.localScale = Vector3.one;
-        Debug.Log(ComboPrefabs[currentLevel] + " created.");
     }
 
     //--------------------------------------------------------------------------------------------------------

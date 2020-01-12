@@ -8,10 +8,9 @@ public class UnlockProgressBar : MonoBehaviour {
     
     public Image IconImage;
     public GameController GameControllerObj;
-    public List<int> UnlockScores;
-    public List<Sprite> UnlockIcons;
     public Slider ProgressSlider;
     public Slider ReflectionSlider;
+    public List<LevelReward> LevelRewards;
 
     private const float sliderGrowSpeed = 30f;
     
@@ -52,17 +51,29 @@ public class UnlockProgressBar : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     private void IncrementUnlock()
     {
-        if (currentUnlock < UnlockScores.Count - 1)
-        {
+        if (currentUnlock < LevelRewards.Count - 1) {
+            if (currentUnlock >= 0) {
+                switch (LevelRewards[currentUnlock].Type) {
+                    case LevelRewardType.WildDropChance:
+                        GameControllerObj.CurrentWildChance = LevelRewards[currentUnlock].Chance;
+                        break;
+                    case LevelRewardType.DoubleDropChance:
+                        GameControllerObj.CurrentDoubleChance = LevelRewards[currentUnlock].Chance;
+                        break;
+                    case LevelRewardType.TripleDropChance:
+                        GameControllerObj.CurrentTripleChance = LevelRewards[currentUnlock].Chance;
+                        break;
+                }
+            }
+            
             // onto the next unlock!
             currentUnlock++;
             scoreFloor = scoreCeiling;
-            scoreCeiling = UnlockScores[currentUnlock];
-            IconImage.sprite = UnlockIcons[currentUnlock];
+            scoreCeiling = LevelRewards[currentUnlock].Experience;
+            IconImage.sprite = LevelRewards[currentUnlock].Icon;
             Debug.Log("Score reward " + currentUnlock + " unlocked!");
         }
-        else
-        {
+        else {
             // we've unlocked everything!
             isProgressComplete = true;
             IconImage.sprite = null;
