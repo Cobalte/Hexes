@@ -173,7 +173,7 @@ MonoBehaviour:
   SuicideOnArrival: 0
   BlocksToEat: []
   DisplayImage: {fileID: 2706280104366367718}
-  blockAnimator: {fileID: 6686425158822751347}
+  BlockAnimator: {fileID: 5978946419708288669}
 --- !u!1 &7934626265280351116
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,7 +256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3635686024918253032}
-  - component: {fileID: 6686425158822751347}
+  - component: {fileID: 5978946419708288669}
   m_Layer: 5
   m_Name: BlockGroup
   m_TagString: Untagged
@@ -285,7 +285,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &6686425158822751347
+--- !u!95 &5978946419708288669
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0

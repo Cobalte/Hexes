@@ -16,13 +16,14 @@ public class Block : MonoBehaviour {
     public bool IsMoving => swipeDestPos != null;
     public List<Block> BlocksToEat;
     public Image DisplayImage;
-    public Animator blockAnimator;
+    public Animator BlockAnimator;
 
     private Vector3? swipeDestPos;
     private Hex swipeDestHex;
     private bool isInitialized;
     private GameController gameController;
     private GameObject uiCanvas;
+    private BoardDirection swipeDirection;
 
     //--------------------------------------------------------------------------------------------------------
     public void Initialize(Hex dropHex, int startLevel, BlockKind blockKind) {
@@ -44,7 +45,7 @@ public class Block : MonoBehaviour {
             return;
         }
 
-        Block food = BlocksToEat.FirstOrDefault(
+        Block food = BlocksToEat.FirstOrDefault( 
             b => Vector3.Distance(transform.position, b.transform.position) < arrivalDist);
 
         if (food != null) {
@@ -65,15 +66,17 @@ public class Block : MonoBehaviour {
     }
 
     //--------------------------------------------------------------------------------------------------------
-    public void SlideTo(Hex destHex) {
+    public void SlideTo(Hex destHex, BoardDirection direction) {
         swipeDestHex = destHex;
         swipeDestPos = destHex.transform.position;
+        swipeDirection = direction;
     }
     
     //--------------------------------------------------------------------------------------------------------
-    public void SlideTo(Vector3 destUiPos) {
+    public void SlideTo(Vector3 destUiPos, BoardDirection direction) {
         swipeDestHex = null;
         swipeDestPos = destUiPos;
+        swipeDirection = direction;
     }
    
     //--------------------------------------------------------------------------------------------------------
@@ -88,8 +91,32 @@ public class Block : MonoBehaviour {
         BlocksToEat.Clear();
         UpdateDisplayImage();
         
+        // do we die now?
         if (SuicideAfterEating || SuicideOnArrival) {
             Destroy(gameObject);
+            return;
+        }
+
+        // play arrival anim
+        switch (swipeDirection) {
+            case BoardDirection.UpLeft:
+                BlockAnimator.Play("Block_NW");
+                break;
+            case BoardDirection.Up:
+                BlockAnimator.Play("Block_N");
+                break;
+            case BoardDirection.UpRight:
+                BlockAnimator.Play("Block_NE");
+                break;
+            case BoardDirection.DownRight:
+                BlockAnimator.Play("Block_SW");
+                break;
+            case BoardDirection.Down:
+                BlockAnimator.Play("Block_S");
+                break;
+            case BoardDirection.DownLeft:
+                BlockAnimator.Play("Block_SE");
+                break;
         }
     }
     
@@ -115,7 +142,7 @@ public class Block : MonoBehaviour {
             gameController.Score += Level * gameController.ScoreMultPanel.GetCurrentMultiplier();
             gameController.ScoreMultPanel.TryToIncrementLevel();
             gameController.SomethingJustPromoted = true;
-            blockAnimator.Play("Block_Birth");
+            BlockAnimator.Play("Block_Birth");
         }
         
         if (Kind == BlockKind.Plant) {

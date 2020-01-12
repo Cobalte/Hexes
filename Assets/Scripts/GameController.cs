@@ -33,10 +33,9 @@ public class GameController : MonoBehaviour {
     private static float swipeMinDist;
     private static Vector3 swipeStartPos;
     private static Vector3 swipeEndPos;
-    private int turnCount;
     private float d100Roll;
 
-    private bool IsBoardFull => hexes.All(h => h.Occupant != null);
+    private bool IsBoardFull => blocks.Count >= hexes.Count;
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
     private bool IsGameOver => GameOverPanel.activeSelf;
 
@@ -58,6 +57,7 @@ public class GameController : MonoBehaviour {
         swipeMinDist = Screen.height * minSwipeDistScreenFration;
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
         blocks = new List<Block>();
+        Canvas.ForceUpdateCanvases();
         StartNewGame();
     }
 
@@ -69,10 +69,7 @@ public class GameController : MonoBehaviour {
         
         blocks = new List<Block>();
         swipeDir = BoardDirection.Null;
-        turnCount = 0;
         GameOverPanel.SetActive(false);
-        // Jim added this line to assure the grid objects are built and positioned before placing the first block.
-        Canvas.ForceUpdateCanvases();
         CreateNewBlocks();
         allowInput = true;
     }
@@ -135,7 +132,7 @@ public class GameController : MonoBehaviour {
                         }
                     }
 
-                    column[curHex].Occupant.SlideTo(GetAnvilDestination(column));
+                    column[curHex].Occupant.SlideTo(GetAnvilDestination(column), swipeDir);
                     column[curHex].Occupant.SuicideOnArrival = true;
                     column[curHex].Occupant = null;
                     somethingMoved = true;
@@ -146,7 +143,7 @@ public class GameController : MonoBehaviour {
 
                 if (newHex > 0 && column[newHex - 1].Occupant.Kind == BlockKind.Plant) {
                     // this is a non-anvil block that's about to fall into a plant
-                    column[curHex].Occupant.SlideTo(column[newHex - 1].transform.position);
+                    column[curHex].Occupant.SlideTo(column[newHex - 1].transform.position, swipeDir);
                     column[newHex - 1].Occupant.BlocksToEat.Add(column[curHex].Occupant);
                     column[newHex - 1].Occupant.SuicideAfterEating = true;
                     column[curHex].Occupant = null;
@@ -168,7 +165,7 @@ public class GameController : MonoBehaviour {
                         ? column[newHex].Occupant.Level + 1
                         : column[curHex].Occupant.Level + 1;
                     
-                    column[curHex].Occupant.SlideTo(column[newHex]);
+                    column[curHex].Occupant.SlideTo(column[newHex], swipeDir);
                     column[curHex].Occupant.BlocksToEat.Add(column[newHex].Occupant);
                     column[curHex].Occupant.Level  = newLevel;
                     column[curHex].Occupant.Kind = BlockKind.Normal;
@@ -180,7 +177,7 @@ public class GameController : MonoBehaviour {
                     // this is a block that's just sliding with no interaction
                     column[newHex].Occupant = column[curHex].Occupant;
                     column[curHex].Occupant = null;
-                    column[newHex].Occupant.SlideTo(column[newHex]);
+                    column[newHex].Occupant.SlideTo(column[newHex], swipeDir);
                     somethingMoved = true;
                 }
             }
@@ -192,10 +189,15 @@ public class GameController : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     private void CreateNewBlocks() {
         // how many blocks are we supposed to create?
-        d100Roll = Random.Range(0f, 100f);
         int newBlockCount = 1;
-        if (Score >= scoreForDoubles && d100Roll < chanceOfDouble) { newBlockCount = 2; }
-        else if (Score >= scoreForTriples && d100Roll < chanceOfTriple + chanceOfDouble) { newBlockCount = 3; }
+        d100Roll = Random.Range(0f, 100f);
+        
+        if (Score >= scoreForDoubles && d100Roll <= chanceOfDouble) {
+            newBlockCount = 2;
+        }
+        else if (Score >= scoreForTriples && d100Roll <= chanceOfTriple + chanceOfDouble) {
+            newBlockCount = 3;
+        }
 
         // create that many blocks
         for (int i = 0; i < newBlockCount; i++) {
@@ -228,8 +230,11 @@ public class GameController : MonoBehaviour {
                 newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
             }
         
-            newBlock = Instantiate(BlockPrefab, UiCanvasObj.transform).GetComponent<Block>();
-            newBlock.transform.position = newDropHex.transform.position;
+            newBlock = Instantiate(
+                original: BlockPrefab,
+                position: newDropHex.transform.position,
+                rotation: Quaternion.identity,
+                parent: UiCanvasObj.transform).GetComponent<Block>();
             newBlock.Initialize(newDropHex, 1, newBlockKind);
             newDropHex.Occupant = newBlock;
             blocks.Add(newBlock);
@@ -240,8 +245,6 @@ public class GameController : MonoBehaviour {
                 rotation: Quaternion.identity,
                 parent: UiCanvasObj.transform);
         }
-        
-        turnCount++;
     }
     
     //--------------------------------------------------------------------------------------------------------
