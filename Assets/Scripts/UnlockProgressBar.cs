@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UnlockProgressBar : MonoBehaviour {
     
@@ -11,6 +12,7 @@ public class UnlockProgressBar : MonoBehaviour {
     public Slider ProgressSlider;
     public Slider ReflectionSlider;
     public List<LevelReward> LevelRewards;
+    public TextMeshProUGUI levelLabel;
 
     private const float sliderGrowSpeed = 30f;
     
@@ -27,6 +29,7 @@ public class UnlockProgressBar : MonoBehaviour {
         ProgressSlider.value = 0;
         currentUnlock = -1;
         IncrementUnlock();
+        
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -72,12 +75,14 @@ public class UnlockProgressBar : MonoBehaviour {
             scoreCeiling = LevelRewards[currentUnlock].Experience;
             IconImage.sprite = LevelRewards[currentUnlock].Icon;
             Debug.Log("Score reward " + currentUnlock + " unlocked!");
+            levelLabel.text = "Level " + (currentUnlock + 1);
         }
         else {
             // we've unlocked everything!
             isProgressComplete = true;
             IconImage.sprite = null;
             Debug.Log("All score rewards unlocked!");
+            levelLabel.text = "Level " + (currentUnlock + 1);
         }
     }
 }
