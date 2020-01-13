@@ -62,7 +62,7 @@ public class GameController : MonoBehaviour {
     }
 
     //--------------------------------------------------------------------------------------------------------
-    private void StartNewGame() {
+    public void StartNewGame() {
         foreach (Block block in blocks) {
             Destroy(block.gameObject);
         }
@@ -75,9 +75,12 @@ public class GameController : MonoBehaviour {
         CurrentDoubleChance = 0f;
         CurrentTripleChance = 0f;
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
+        Score = 0;
+        ScoreMultPanel.ResetLevel();
         
         // start the game
         CreateNewBlocks();
+        SaveGameState();
         allowInput = true;
     }
     
@@ -393,6 +396,8 @@ public class GameController : MonoBehaviour {
         FileStream file = System.IO.File.Create(Application.persistentDataPath + saveFileName);
         formatter.Serialize(file, saveState);
         file.Close();
+        
+        // update high score
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -419,7 +424,8 @@ public class GameController : MonoBehaviour {
         ScoreDisplayObj.Snap();
         swipeDir = BoardDirection.Null;
         allowInput = true;
-        
+        HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
+
         Debug.Log("Game loaded.");
     }
 }

@@ -15,16 +15,14 @@ public class ScoreMultiplierPanel : MonoBehaviour
     private Image displayImage;
 
     //--------------------------------------------------------------------------------------------------------
-    private void Start()
-    {
+    private void Start() {
         currentLevel = 0;
         ActiveComboObj = null;
         CreateComboPrefab();
     }
 
     //--------------------------------------------------------------------------------------------------------
-    public void TryToIncrementLevel()
-    {
+    public void TryToIncrementLevel() {
         if (currentLevel < ComboPrefabs.Count - 1)
         {
             currentLevel++;
@@ -33,8 +31,7 @@ public class ScoreMultiplierPanel : MonoBehaviour
     }
 
     //--------------------------------------------------------------------------------------------------------
-    private void CreateComboPrefab()
-    {
+    private void CreateComboPrefab() {
         if (ActiveComboObj)
         {
             Destroy(ActiveComboObj);
@@ -54,15 +51,13 @@ public class ScoreMultiplierPanel : MonoBehaviour
     }
 
     //--------------------------------------------------------------------------------------------------------
-    public void ResetLevel()
-    {
+    public void ResetLevel() {
         currentLevel = 0;
         CreateComboPrefab();
     }
 
     //--------------------------------------------------------------------------------------------------------
-    public int GetCurrentMultiplier()
-    {
+    public int GetCurrentMultiplier() {
         // returns 2, 4, 8, etc until all sprite are used
         return (int) Math.Pow(2, currentLevel);
     }
