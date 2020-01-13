@@ -13,10 +13,11 @@ public class Block : MonoBehaviour {
     public BlockKind Kind;
     public bool SuicideAfterEating;
     public bool SuicideOnArrival;
-    public bool IsMoving => swipeDestPos != null;
     public List<Block> BlocksToEat;
     public Image DisplayImage;
     public Animator BlockAnimator;
+    
+    public bool IsMoving => swipeDestPos != null;
 
     private Vector3? swipeDestPos;
     private Hex swipeDestHex;

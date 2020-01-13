@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -17,6 +19,7 @@ public class GameController : MonoBehaviour {
     public GameObject CreateCelebrationPrefab;
     public GameObject CombineCelebrationPrefab;
     public GameObject DestroyCelebrationPrefab;
+    public ScoreDisplay ScoreDisplayObj;
     public ScoreMultiplierPanel ScoreMultPanel;
     public bool SomethingJustPromoted;
     public GameObject GameOverPanel;
@@ -47,6 +50,7 @@ public class GameController : MonoBehaviour {
 
     private const float minSwipeDistScreenFration = 0.1f;
     private const string playerPrefHighScoreKey = "HighScore";
+    private const string saveFileName = "/savegame.save";
     
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
@@ -54,8 +58,7 @@ public class GameController : MonoBehaviour {
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
         blocks = new List<Block>();
         Canvas.ForceUpdateCanvases();
-
-        StartNewGame();
+        LoadGameStateOrStartNewGame();
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -94,6 +97,7 @@ public class GameController : MonoBehaviour {
             }
 
             CreateNewBlocks();
+            SaveGameState();
             allowInput = true;
             SomethingJustPromoted = false;
         }
@@ -228,14 +232,7 @@ public class GameController : MonoBehaviour {
                 newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
             }
         
-            newBlock = Instantiate(
-                original: BlockPrefab,
-                position: newDropHex.transform.position,
-                rotation: Quaternion.identity,
-                parent: UiCanvasObj.transform).GetComponent<Block>();
-            newBlock.Initialize(newDropHex, 1, newBlockKind);
-            newDropHex.Occupant = newBlock;
-            blocks.Add(newBlock);
+            CreateBlock(newDropHex, newBlockKind, 1);
 
             Instantiate(
                 original: CreateCelebrationPrefab,
@@ -243,6 +240,18 @@ public class GameController : MonoBehaviour {
                 rotation: Quaternion.identity,
                 parent: UiCanvasObj.transform);
         }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private void CreateBlock(Hex location, BlockKind kind, int level) {
+        newBlock = Instantiate(
+            original: BlockPrefab,
+            position: location.transform.position,
+            rotation: Quaternion.identity,
+            parent: UiCanvasObj.transform).GetComponent<Block>();
+        newBlock.Initialize(location, level, kind);
+        location.Occupant = newBlock;
+        blocks.Add(newBlock);
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -365,5 +374,52 @@ public class GameController : MonoBehaviour {
                 HighScoreIndicator.SetActive(true);
             }
         }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private void SaveGameState() {
+        // put all of the blocks on the board (and the current score) into a serializable state
+        SaveState saveState = new SaveState {Score = this.Score};
+        for (int i = 0; i < hexes.Count; i++) {
+            if (hexes[i].Occupant != null) {
+                saveState.BlockLocations.Add(i);
+                saveState.BlockKinds.Add(hexes[i].Occupant.Kind);
+                saveState.BlockLevels.Add(hexes[i].Occupant.Level);    
+            }
+        }
+        
+        // save the state to a file
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file = System.IO.File.Create(Application.persistentDataPath + saveFileName);
+        formatter.Serialize(file, saveState);
+        file.Close();
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private void LoadGameStateOrStartNewGame() {
+        // if this device has no saved game, just start a new game
+        if (!System.IO.File.Exists(Application.persistentDataPath + saveFileName)) {
+            StartNewGame();
+            return;
+        }
+        
+        // fetch the save state from the save file
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file = System.IO.File.Open(Application.persistentDataPath + saveFileName, FileMode.Open);
+        SaveState saveState = (SaveState)formatter.Deserialize(file);
+        file.Close();
+        
+        // populate the board according to the saved state
+        Score = saveState.Score;
+        for (int i = 0; i < saveState.BlockLocations.Count; i++) {
+            CreateBlock(hexes[saveState.BlockLocations[i]], saveState.BlockKinds[i], saveState.BlockLevels[i]);
+        }
+        
+        // misc initialization tasks
+        ScoreDisplayObj.Snap();
+        swipeDir = BoardDirection.Null;
+        allowInput = true;
+        
+        Debug.Log("Game loaded.");
     }
 }

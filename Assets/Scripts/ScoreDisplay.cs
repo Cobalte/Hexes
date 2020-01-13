@@ -13,16 +13,15 @@ public class ScoreDisplay : MonoBehaviour
     private float newAnimTime;
     private float lastAnimTime;
 
-    void Start()
-    {
+    //--------------------------------------------------------------------------------------------------------
+    private void Start() {
         //Set the score to 0 when we start
         ScoreCounter.text = ((int) displayedScore).ToString("D6");
     }
 
-    private void Update()
-    {
-        if (Math.Abs(displayedScore - GameController.Score) <= float.Epsilon)
-        {
+    //--------------------------------------------------------------------------------------------------------
+    private void Update() {
+        if (Math.Abs(displayedScore - GameController.Score) <= float.Epsilon) {
             return;
         }
 
@@ -36,11 +35,16 @@ public class ScoreDisplay : MonoBehaviour
         //Add that number to the display score each frame.
         displayedScore += scoreIncrementAmt;
 
-        if (displayedScore > GameController.Score)
-        {
+        if (displayedScore > GameController.Score) {
             displayedScore = GameController.Score;
         }
 
+        ScoreCounter.text = ((int) displayedScore).ToString("D6");
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    public void Snap() {
+        displayedScore = GameController.Score;
         ScoreCounter.text = ((int) displayedScore).ToString("D6");
     }
 }
