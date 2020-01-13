@@ -133,7 +133,7 @@ public class Block : MonoBehaviour {
                 : gameController.CombineCelebrationPrefab ,
             parent: uiCanvas.transform,
             worldPositionStays: false).GetComponent<Celebration>();
-        celebration.transform.position = transform.position + Vector3.back;
+        celebration.transform.position = (Vector3)swipeDestPos;
         celebration.SetSprite(gameController.ImageForBlockProgression[Level - 1]);
 
         if (Kind == BlockKind.Anvil || Kind == BlockKind.Plant) {
@@ -174,7 +174,7 @@ public class Block : MonoBehaviour {
     private void RandomizeSpeed()
     {
         //Fun bit of code that sets a multiplier to be applied to the animator's playback speed. Adds some visual variety.
-        float speed = UnityEngine.Random.Range(7f, 13f) / 10;
+        float speed = UnityEngine.Random.Range(10f, 14f) / 10;
         BlockAnimator.SetFloat("speedMultiplier", speed);
         Debug.Log("Random speed " + speed);
     }

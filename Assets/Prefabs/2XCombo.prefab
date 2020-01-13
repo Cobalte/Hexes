@@ -9989,7 +9989,7 @@ GameObject:
   - component: {fileID: 5592810730881872814}
   - component: {fileID: 6256983189353906068}
   m_Layer: 5
-  m_Name: Glow
+  m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10035,7 +10035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39599997, g: 0.79156077, b: 1, a: 1}
+  m_Color: {r: 0.11454254, g: 0.6149955, b: 0.9339623, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -10063,7 +10063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0.41176474, b: 0.64705884, a: 1}
-  m_EffectDistance: {x: 0, y: -2}
+  m_EffectDistance: {x: 2, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!1 &5726992424259273775
 GameObject:

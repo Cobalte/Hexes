@@ -23,6 +23,6 @@ public class Celebration : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     public void SetSprite(Sprite sprite) {
-        SparkleParticles.textureSheetAnimation.SetSprite(0, sprite);
+        //SparkleParticles.textureSheetAnimation.SetSprite(0, sprite);
     }
 }
