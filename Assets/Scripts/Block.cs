@@ -37,6 +37,7 @@ public class Block : MonoBehaviour {
         uiCanvas = GameObject.Find("UI Canvas");
         name = "Block on " + dropHex.name + ", Level " + Level + " (" + Kind + ")";
         UpdateDisplayImage();
+        RandomizeSpeed();
         isInitialized = true;
     }
     
@@ -133,7 +134,7 @@ public class Block : MonoBehaviour {
                 : gameController.CombineCelebrationPrefab ,
             parent: uiCanvas.transform,
             worldPositionStays: false).GetComponent<Celebration>();
-        celebration.transform.position = transform.position + Vector3.back;
+        celebration.transform.position = (Vector3)swipeDestPos;
         celebration.SetSprite(gameController.ImageForBlockProgression[Level - 1]);
 
         if (Kind == BlockKind.Anvil || Kind == BlockKind.Plant) {
@@ -143,6 +144,7 @@ public class Block : MonoBehaviour {
             gameController.ChangeScore(Level * gameController.ScoreMultPanel.GetCurrentMultiplier());
             gameController.ScoreMultPanel.TryToIncrementLevel();
             gameController.SomethingJustPromoted = true;
+            RandomizeSpeed();
             BlockAnimator.Play("Block_Birth");
         }
         
@@ -167,5 +169,14 @@ public class Block : MonoBehaviour {
                 DisplayImage.sprite = gameController.ImageForBlockProgression[Level - 1];
                 break;
         }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private void RandomizeSpeed()
+    {
+        //Fun bit of code that sets a multiplier to be applied to the animator's playback speed. Adds some visual variety.
+        float speed = UnityEngine.Random.Range(10f, 14f) / 10;
+        BlockAnimator.SetFloat("speedMultiplier", speed);
+        Debug.Log("Random speed " + speed);
     }
 }
