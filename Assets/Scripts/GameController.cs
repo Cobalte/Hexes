@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
 
     public GameObject BoardObj;
     public GameObject UiCanvasObj;
+    public GameObject SushiAnchor;
     public GameObject BlockPrefab;
     public List<Sprite> ImageForBlockProgression;
     public Sprite ImageForWildCard;
@@ -241,7 +242,7 @@ public class GameController : MonoBehaviour {
                 original: CreateCelebrationPrefab,
                 position: newBlock.transform.position,
                 rotation: Quaternion.identity,
-                parent: UiCanvasObj.transform);
+                parent: SushiAnchor.transform);
         }
     }
     
@@ -251,7 +252,7 @@ public class GameController : MonoBehaviour {
             original: BlockPrefab,
             position: location.transform.position,
             rotation: Quaternion.identity,
-            parent: UiCanvasObj.transform).GetComponent<Block>();
+            parent: SushiAnchor.transform).GetComponent<Block>();
         newBlock.Initialize(location, level, kind);
         location.Occupant = newBlock;
         blocks.Add(newBlock);
