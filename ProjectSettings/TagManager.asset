@@ -47,3 +47,6 @@ TagManager:
   - name: pFX
     uniqueID: 365618165
     locked: 0
+  - name: Loading Screen
+    uniqueID: 2031739341
+    locked: 0
