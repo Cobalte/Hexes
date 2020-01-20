@@ -14,6 +14,7 @@ public class OptionsMenuController : MonoBehaviour
         if (optionsMenuObj != null)
         {
             optionsMenuAnimator.SetBool("Status", false);
+            optionsMenuObj.SetActive(false);
         }
     }
 
@@ -25,6 +26,7 @@ public class OptionsMenuController : MonoBehaviour
 
     public void ToggleOptionsMenu()
     {
+        optionsMenuObj.SetActive(true);
         optionsMenuAnimator.SetBool("Status", !optionsMenuAnimator.GetBool("Status"));
     }
     
