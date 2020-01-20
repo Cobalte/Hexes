@@ -13,6 +13,7 @@ public class UnlockProgressBar : MonoBehaviour {
     public Slider ReflectionSlider;
     public List<LevelReward> LevelRewards;
     public TextMeshProUGUI levelLabel;
+    public int currentUnlock;
 
     private const float sliderGrowSpeed = 30f;
     
@@ -21,7 +22,6 @@ public class UnlockProgressBar : MonoBehaviour {
     private float scoreFloor;
     private float scoreCeiling;
     private float progress;
-    private int currentUnlock;
     private bool isProgressComplete;
 
     //--------------------------------------------------------------------------------------------------------

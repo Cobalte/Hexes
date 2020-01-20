@@ -175,8 +175,7 @@ public class Block : MonoBehaviour {
     private void RandomizeSpeed()
     {
         //Fun bit of code that sets a multiplier to be applied to the animator's playback speed. Adds some visual variety.
-        float speed = UnityEngine.Random.Range(10f, 14f) / 10;
+        float speed = UnityEngine.Random.Range(0.9f, 1.4f);
         BlockAnimator.SetFloat("speedMultiplier", speed);
-        Debug.Log("Random speed " + speed);
     }
 }

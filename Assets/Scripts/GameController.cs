@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour {
     public GameObject DestroyCelebrationPrefab;
     public ScoreDisplay ScoreDisplayObj;
     public ScoreMultiplierPanel ScoreMultPanel;
+    public UnlockProgressBar UnlockProgressBar;
     public bool SomethingJustPromoted;
     public GameObject GameOverPanel;
     public float CurrentWildChance;
@@ -78,6 +79,8 @@ public class GameController : MonoBehaviour {
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
         Score = 0;
         ScoreMultPanel.ResetLevel();
+        UnlockProgressBar.currentUnlock = 0;
+        UnlockProgressBar.levelLabel.text = "Level " + (UnlockProgressBar.currentUnlock + 1);
         
         // start the game
         CreateNewBlocks();

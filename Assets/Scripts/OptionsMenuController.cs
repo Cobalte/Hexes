@@ -6,14 +6,14 @@ public class OptionsMenuController : MonoBehaviour
 {
     public GameObject optionsMenuObj;
     public bool optionsMenuStatus;
+    public Animator optionsMenuAnimator;
     
     // Start is called before the first frame update
     void Start()
     {
         if (optionsMenuObj != null)
         {
-            optionsMenuObj.SetActive(false);
-            optionsMenuStatus = false;
+            optionsMenuAnimator.SetBool("Status", false);
         }
     }
 
@@ -25,8 +25,7 @@ public class OptionsMenuController : MonoBehaviour
 
     public void ToggleOptionsMenu()
     {
-        optionsMenuObj.SetActive(!optionsMenuStatus);
-        optionsMenuStatus = !optionsMenuStatus;
+        optionsMenuAnimator.SetBool("Status", !optionsMenuAnimator.GetBool("Status"));
     }
     
 }
