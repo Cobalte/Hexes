@@ -73,15 +73,11 @@ public class UnlockProgressBar : MonoBehaviour {
             currentUnlock++;
             scoreFloor = scoreCeiling;
             scoreCeiling = LevelRewards[currentUnlock].Experience;
-            //IconImage.sprite = LevelRewards[currentUnlock].Icon;
-            Debug.Log("Score reward " + currentUnlock + " unlocked!");
             levelLabel.text = "Level " + (currentUnlock + 1);
         }
         else {
             // we've unlocked everything!
             isProgressComplete = true;
-            //IconImage.sprite = null;
-            Debug.Log("All score rewards unlocked!");
             levelLabel.text = "Level " + (currentUnlock + 1);
         }
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoHide : MonoBehaviour {
+public class LoadingScreen : MonoBehaviour {
 
     public float HideDelay;
     public float HideAnimDuration;

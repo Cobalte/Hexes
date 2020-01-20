@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour {
     public float CurrentTripleChance;
     public int HighScore;
     public GameObject HighScoreIndicator;
+    public PremiumController PremiumControllerObj;
     
     public int Score { get; private set; }
     
@@ -409,6 +410,8 @@ public class GameController : MonoBehaviour {
         allowInput = true;
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
 
-        Debug.Log("Game loaded. High score: " + HighScore + ", Games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey));
+        Debug.Log("Game loaded. High score: " + HighScore +
+                  ", Games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey) +
+                  ", Premium status: " + PremiumControllerObj.GameIsPremium);
     }
 }
