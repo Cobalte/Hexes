@@ -4,30 +4,19 @@ using UnityEngine;
 
 public class OptionsMenuController : MonoBehaviour
 {
-    public GameObject optionsMenuObj;
-    public bool optionsMenuStatus;
-    public Animator optionsMenuAnimator;
+    public GameObject OptionsMenuObj;
+    public Animator OptionsMenuAnimator;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (optionsMenuObj != null)
-        {
-            optionsMenuAnimator.SetBool("Status", false);
-            optionsMenuObj.SetActive(false);
-        }
+    // rider says to do this for performance?
+    private static readonly int statusHash = Animator.StringToHash("Status");
+
+    private void Start() {
+        OptionsMenuAnimator.SetBool(statusHash, false);
+        OptionsMenuObj.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void ToggleOptionsMenu() {
+        OptionsMenuObj.SetActive(true);
+        OptionsMenuAnimator.SetBool(statusHash, !OptionsMenuAnimator.GetBool(statusHash));
     }
-
-    public void ToggleOptionsMenu()
-    {
-        optionsMenuObj.SetActive(true);
-        optionsMenuAnimator.SetBool("Status", !optionsMenuAnimator.GetBool("Status"));
-    }
-    
 }

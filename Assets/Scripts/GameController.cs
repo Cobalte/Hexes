@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour {
@@ -52,6 +51,7 @@ public class GameController : MonoBehaviour {
 
     private const float minSwipeDistScreenFration = 0.1f;
     private const string playerPrefHighScoreKey = "HighScore";
+    private const string playerPrefsGameCountKey = "GamesStarted";
     private const string saveFileName = "/savegame.save";
     
     //--------------------------------------------------------------------------------------------------------
@@ -81,6 +81,12 @@ public class GameController : MonoBehaviour {
         ScoreMultPanel.ResetLevel();
         UnlockProgressBar.currentUnlock = 0;
         UnlockProgressBar.levelLabel.text = "Level " + (UnlockProgressBar.currentUnlock + 1);
+        
+        // record number of games started on this device
+        int gamesStarted = PlayerPrefs.GetInt(playerPrefsGameCountKey) + 1;
+        PlayerPrefs.SetInt(playerPrefsGameCountKey, gamesStarted);
+        PlayerPrefs.Save();
+        Debug.Log("Starting game " + gamesStarted + " on this device.");
         
         // start the game
         CreateNewBlocks();
@@ -132,40 +138,24 @@ public class GameController : MonoBehaviour {
             List<Hex> column = HexesInDirection(captain, searchDir);
 
             for (int curHex = 0; curHex < column.Count; curHex++) {
-                if (column[curHex].CurrentLevel == 0 ||
-                    column[curHex].Occupant.Kind == BlockKind.Plant) {
-                    // this is an empty hex or a plant - do nothing
+                if (column[curHex].CurrentLevel == 0) {
+                    // this is an empty hex - do nothing
                     continue;
                 }
-                
-                if (column[curHex].Occupant.Kind == BlockKind.Anvil) {
-                    // this is an anvil - move and destroy everything in your path
-                    for (int n = 0; n < curHex; n++) {
-                        if (column[n].Occupant != null) {
-                            column[curHex].Occupant.BlocksToEat.Add(column[n].Occupant);
-                            column[n].Occupant = null;
-                        }
-                    }
-
-                    column[curHex].Occupant.SlideTo(GetAnvilDestination(column), swipeDir);
-                    column[curHex].Occupant.SuicideOnArrival = true;
-                    column[curHex].Occupant = null;
-                    somethingMoved = true;
-                    continue;
-                }
-                
+                                
                 int newHex = DeliciousEmptyHex(column, curHex);
 
-                if (newHex > 0 && column[newHex - 1].Occupant.Kind == BlockKind.Plant) {
-                    // this is a non-anvil block that's about to fall into a plant
-                    column[curHex].Occupant.SlideTo(column[newHex - 1].transform.position, swipeDir);
-                    column[newHex - 1].Occupant.BlocksToEat.Add(column[curHex].Occupant);
-                    column[newHex - 1].Occupant.SuicideAfterEating = true;
-                    column[curHex].Occupant = null;
-                    column[newHex - 1].Occupant = null;
-                    somethingMoved = true;
-                }
-                else if (newHex > 0
+//                if (newHex > 0 && column[newHex - 1].Occupant.Kind == BlockKind.Plant) {
+//                    // this is a non-anvil block that's about to fall into a plant
+//                    column[curHex].Occupant.SlideTo(column[newHex - 1].transform.position, swipeDir);
+//                    column[newHex - 1].Occupant.BlocksToEat.Add(column[curHex].Occupant);
+//                    column[newHex - 1].Occupant.SuicideAfterEating = true;
+//                    column[curHex].Occupant = null;
+//                    column[newHex - 1].Occupant = null;
+//                    somethingMoved = true;
+//                }
+                //else if (newHex > 0
+                if (newHex > 0
                     && column[curHex].CurrentLevel != ImageForBlockProgression.Count
                     && column[newHex - 1].CurrentLevel != ImageForBlockProgression.Count
                     && (column[curHex].CurrentLevel == column[newHex - 1].CurrentLevel
@@ -228,16 +218,7 @@ public class GameController : MonoBehaviour {
             openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();
             d100Roll = Random.Range(0f, 100f);
             BlockKind newBlockKind = d100Roll <= CurrentWildChance ? BlockKind.WildCard : BlockKind.Normal;
-
-            if (newBlockKind == BlockKind.Anvil || newBlockKind == BlockKind.Plant) {
-                List<Hex> interior = (from hex in openHexes where hex.Neighbors.Count == 6 select hex).ToList();
-                newDropHex = interior.Count > 0
-                    ? interior[Random.Range(0, interior.Count - 1)]
-                    : openHexes[Random.Range(0, openHexes.Count - 1)];
-            }
-            else {
-                newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
-            }
+            newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
         
             CreateBlock(newDropHex, newBlockKind, 1);
 
@@ -397,24 +378,22 @@ public class GameController : MonoBehaviour {
         
         // save the state to a file
         BinaryFormatter formatter = new BinaryFormatter();
-        FileStream file = System.IO.File.Create(Application.persistentDataPath + saveFileName);
+        FileStream file = File.Create(Application.persistentDataPath + saveFileName);
         formatter.Serialize(file, saveState);
         file.Close();
-        
-        // update high score
     }
     
     //--------------------------------------------------------------------------------------------------------
     private void LoadGameStateOrStartNewGame() {
         // if this device has no saved game, just start a new game
-        if (!System.IO.File.Exists(Application.persistentDataPath + saveFileName)) {
+        if (!File.Exists(Application.persistentDataPath + saveFileName)) {
             StartNewGame();
             return;
         }
         
         // fetch the save state from the save file
         BinaryFormatter formatter = new BinaryFormatter();
-        FileStream file = System.IO.File.Open(Application.persistentDataPath + saveFileName, FileMode.Open);
+        FileStream file = File.Open(Application.persistentDataPath + saveFileName, FileMode.Open);
         SaveState saveState = (SaveState)formatter.Deserialize(file);
         file.Close();
         
@@ -430,6 +409,6 @@ public class GameController : MonoBehaviour {
         allowInput = true;
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
 
-        Debug.Log("Game loaded.");
+        Debug.Log("Game loaded. High score: " + HighScore + ", Games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey));
     }
 }

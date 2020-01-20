@@ -124,57 +124,34 @@ public class Block : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void Eat(Block food) {
-        Debug.Log(name + " ate " + food.name);
         BlocksToEat.Remove(food);
         Destroy(food.gameObject);
 
         Celebration celebration = Instantiate(
-            original: (Kind == BlockKind.Anvil || Kind == BlockKind.Plant)
-                ? gameController.DestroyCelebrationPrefab
-                : gameController.CombineCelebrationPrefab ,
+            original: gameController.CombineCelebrationPrefab,
             parent: uiCanvas.transform,
             worldPositionStays: false).GetComponent<Celebration>();
         celebration.transform.position = (Vector3)swipeDestPos;
         celebration.SetSprite(gameController.ImageForBlockProgression[Level - 1]);
 
-        if (Kind == BlockKind.Anvil || Kind == BlockKind.Plant) {
-            gameController.ChangeScore(food.Level * -1);
-        }
-        else {
-            gameController.ChangeScore(Level * gameController.ScoreMultPanel.GetCurrentMultiplier());
-            gameController.ScoreMultPanel.TryToIncrementLevel();
-            gameController.SomethingJustPromoted = true;
-            RandomizeSpeed();
-            BlockAnimator.Play("Block_Birth");
-        }
-        
-        if (Kind == BlockKind.Plant) {
-            Destroy(gameObject);
-        }
+        gameController.ChangeScore(Level * gameController.ScoreMultPanel.GetCurrentMultiplier());
+        gameController.ScoreMultPanel.TryToIncrementLevel();
+        gameController.SomethingJustPromoted = true;
+        RandomizeSpeed();
+        BlockAnimator.Play("Block_Birth");
     }
     
     //--------------------------------------------------------------------------------------------------------
     private void UpdateDisplayImage() {
-        switch (Kind) {
-            case BlockKind.WildCard:
-                DisplayImage.sprite = gameController.ImageForWildCard;
-                break;
-            case BlockKind.Anvil:
-                DisplayImage.sprite = gameController.ImageForAnvil;
-                break;
-            case BlockKind.Plant:
-                DisplayImage.sprite = gameController.ImageForPlant;
-                break;
-            default:
-                DisplayImage.sprite = gameController.ImageForBlockProgression[Level - 1];
-                break;
-        }
+        DisplayImage.sprite = Kind == BlockKind.WildCard
+            ? gameController.ImageForWildCard
+            : gameController.ImageForBlockProgression[Level - 1];
     }
     
     //--------------------------------------------------------------------------------------------------------
-    private void RandomizeSpeed()
-    {
-        //Fun bit of code that sets a multiplier to be applied to the animator's playback speed. Adds some visual variety.
+    private void RandomizeSpeed() {
+        // Fun bit of code that sets a multiplier to be applied to the animator's playback speed.
+        // Adds some visual variety.
         float speed = UnityEngine.Random.Range(0.9f, 1.4f);
         BlockAnimator.SetFloat("speedMultiplier", speed);
     }
