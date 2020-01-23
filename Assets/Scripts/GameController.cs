@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -28,7 +29,9 @@ public class GameController : MonoBehaviour {
     public float CurrentDoubleChance;
     public float CurrentTripleChance;
     public int HighScore;
-    public GameObject HighScoreIndicator;
+    public GameObject NewHighScoreIndicator;
+    public GameObject CurrentHighScoreIndicator;
+    public TextMeshProUGUI CurrentHighScoreLabel;
     public PremiumController PremiumControllerObj;
     
     public int Score { get; private set; }
@@ -62,6 +65,12 @@ public class GameController : MonoBehaviour {
         blocks = new List<Block>();
         Canvas.ForceUpdateCanvases();
         LoadGameStateOrStartNewGame();
+        NewHighScoreIndicator.SetActive(false);
+        if (HighScore > 0)
+        {
+            CurrentHighScoreIndicator.SetActive(true);
+            CurrentHighScoreLabel.text = "High Score: " + HighScore;
+        }
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -78,6 +87,12 @@ public class GameController : MonoBehaviour {
         CurrentDoubleChance = 0f;
         CurrentTripleChance = 0f;
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
+        NewHighScoreIndicator.SetActive(false);
+        if (HighScore > 0)
+        {
+            CurrentHighScoreIndicator.SetActive(true);
+            CurrentHighScoreLabel.text = "High Score: " + HighScore;
+        }
         Score = 0;
         ScoreMultPanel.ResetLevel();
         UnlockProgressBar.currentUnlock = 0;
@@ -359,10 +374,17 @@ public class GameController : MonoBehaviour {
             PlayerPrefs.SetInt(playerPrefHighScoreKey, Score);
             PlayerPrefs.Save();
             
-            if (!HighScoreIndicator.activeSelf) {
-                HighScoreIndicator.SetActive(true);
+            if (!NewHighScoreIndicator.activeSelf) {
+                NewHighScoreIndicator.SetActive(true);
+                CurrentHighScoreIndicator.SetActive(false);
             }
         }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    public void ResetHighScore() {
+            PlayerPrefs.SetInt(playerPrefHighScoreKey, 0);
+            PlayerPrefs.Save();
     }
     
     //--------------------------------------------------------------------------------------------------------
