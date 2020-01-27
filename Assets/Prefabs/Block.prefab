@@ -175,6 +175,12 @@ MonoBehaviour:
   BlocksToEat: []
   DisplayImage: {fileID: 2706280104366367718}
   BlockAnimator: {fileID: 5978946419708288669}
+  CombineCelebrationPrefabs:
+  - {fileID: 5086884584025849981, guid: f758c78e1894ccf4a83d8c7a0d9da79f, type: 3}
+  - {fileID: 5086884584025849981, guid: e4b35e7174e6518438afded4a158ed23, type: 3}
+  - {fileID: 5086884584025849981, guid: 96f4b8d2e73d7b941a873b25c8263ddf, type: 3}
+  - {fileID: 5086884584025849981, guid: 9afe2c218722ece46ac575d911f2b8db, type: 3}
+  - {fileID: 5086884584025849981, guid: 2294db82512c5b54bbf73360e6fc8e22, type: 3}
 --- !u!223 &1572567518819242696
 Canvas:
   m_ObjectHideFlags: 0

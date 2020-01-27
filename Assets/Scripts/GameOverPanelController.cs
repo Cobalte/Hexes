@@ -78,8 +78,8 @@ public class GameOverPanelController : MonoBehaviour
         {
             highScoreIndicator.SetActive(false);
         }
-
-        scoreResultsLabel.text = scoreResult.ToString("D6");
+        scoreResultsLabel.text = "<mspace=100>" + ((int) scoreResult).ToString("D6") + "</mspace>";
+        
 
         oldSushiBoat = sushiBoat;
     }

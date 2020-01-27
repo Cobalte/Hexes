@@ -16,6 +16,7 @@ public class Block : MonoBehaviour {
     public List<Block> BlocksToEat;
     public Image DisplayImage;
     public Animator BlockAnimator;
+    public List<GameObject> CombineCelebrationPrefabs;
     
     public bool IsMoving => swipeDestPos != null;
 
@@ -127,12 +128,12 @@ public class Block : MonoBehaviour {
         BlocksToEat.Remove(food);
         Destroy(food.gameObject);
 
+        //Instantiate the correct combo pfx based on the current combo multiplier.
         Celebration celebration = Instantiate(
-            original: gameController.CombineCelebrationPrefab,
+            original: CombineCelebrationPrefabs[gameController.ScoreMultPanel.currentLevel],
             parent: uiCanvas.transform,
             worldPositionStays: false).GetComponent<Celebration>();
         celebration.transform.position = (Vector3)swipeDestPos;
-        celebration.SetSprite(gameController.ImageForBlockProgression[Level - 1]);
 
         gameController.ChangeScore(Level * gameController.ScoreMultPanel.GetCurrentMultiplier());
         gameController.ScoreMultPanel.TryToIncrementLevel();

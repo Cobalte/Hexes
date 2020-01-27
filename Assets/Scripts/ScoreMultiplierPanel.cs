@@ -11,7 +11,7 @@ public class ScoreMultiplierPanel : MonoBehaviour
     public List<GameObject> ComboPrefabs;
     public GameObject ActiveComboObj;
 
-    private int currentLevel;
+    public int currentLevel;
     private Image displayImage;
 
     //--------------------------------------------------------------------------------------------------------
