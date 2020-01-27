@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEngine;
@@ -10,16 +11,12 @@ using Random = UnityEngine.Random;
 public class GameController : MonoBehaviour {
 
     public GameObject BoardObj;
-    public GameObject UiCanvasObj;
     public GameObject SushiAnchor;
     public GameObject BlockPrefab;
     public List<Sprite> ImageForBlockProgression;
     public Sprite ImageForWildCard;
-    public Sprite ImageForAnvil;
-    public Sprite ImageForPlant;
     public GameObject CreateCelebrationPrefab;
     public GameObject CombineCelebrationPrefab;
-    public GameObject DestroyCelebrationPrefab;
     public ScoreDisplay ScoreDisplayObj;
     public ScoreMultiplierPanel ScoreMultPanel;
     public UnlockProgressBar UnlockProgressBar;
@@ -49,7 +46,6 @@ public class GameController : MonoBehaviour {
     private static Vector3 swipeEndPos;
     private float d100Roll;
 
-    private bool IsBoardFull => blocks.Count >= hexes.Count;
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
     private bool IsGameOver => GameOverPanel.activeSelf;
 
@@ -169,16 +165,6 @@ public class GameController : MonoBehaviour {
                                 
                 int newHex = DeliciousEmptyHex(column, curHex);
 
-//                if (newHex > 0 && column[newHex - 1].Occupant.Kind == BlockKind.Plant) {
-//                    // this is a non-anvil block that's about to fall into a plant
-//                    column[curHex].Occupant.SlideTo(column[newHex - 1].transform.position, swipeDir);
-//                    column[newHex - 1].Occupant.BlocksToEat.Add(column[curHex].Occupant);
-//                    column[newHex - 1].Occupant.SuicideAfterEating = true;
-//                    column[curHex].Occupant = null;
-//                    column[newHex - 1].Occupant = null;
-//                    somethingMoved = true;
-//                }
-                //else if (newHex > 0
                 if (newHex > 0
                     && column[curHex].CurrentLevel != ImageForBlockProgression.Count
                     && column[newHex - 1].CurrentLevel != ImageForBlockProgression.Count
@@ -234,11 +220,6 @@ public class GameController : MonoBehaviour {
 
         // create that many blocks
         for (int i = 0; i < newBlockCount; i++) {
-            if (IsBoardFull) {
-                EnterGameOverState();
-                return;
-            }
-
             openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();
             d100Roll = Random.Range(0f, 100f);
             BlockKind newBlockKind = d100Roll <= CurrentWildChance ? BlockKind.WildCard : BlockKind.Normal;
@@ -251,7 +232,20 @@ public class GameController : MonoBehaviour {
                 position: newBlock.transform.position,
                 rotation: Quaternion.identity,
                 parent: SushiAnchor.transform);
+            
+            if (blocks.Count == hexes.Count) {
+                EnterGameOverState();
+                return;
+            }
         }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private bool IsAnyMovementPossible() {
+        return (from hex in hexes
+            from neighbor in hex.Neighbors
+            where hex.Occupant.Level == neighbor.Occupant.Level
+            select hex).Any();
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -351,13 +345,6 @@ public class GameController : MonoBehaviour {
         }
 
         return result;
-    }
-    
-    //--------------------------------------------------------------------------------------------------------
-    private static Vector3 GetAnvilDestination(List<Hex> column) {
-        Vector3 pos0 = column[0].transform.position;
-        Vector3 pos1 = column[1].transform.position;
-        return pos0 + (pos0 - pos1);
     }
     
     //--------------------------------------------------------------------------------------------------------
