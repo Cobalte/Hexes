@@ -82,7 +82,6 @@ public class GameController : MonoBehaviour {
         // reset various things for a new game
         blocks = new List<Block>();
         swipeDir = BoardDirection.Null;
-        GameOverPanel.SetActive(false);
         CurrentWildChance = 0f;
         CurrentDoubleChance = 0f;
         CurrentTripleChance = 0f;
@@ -112,8 +111,17 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void EnterGameOverState() {
-        Debug.Log("Game is over.");
-        GameOverPanel.SetActive(true);
+        GameOverPanelController gameOverPanelController = GameOverPanel.GetComponent<GameOverPanelController>();
+        gameOverPanelController.ToggleResultsMenu();
+        gameOverPanelController.sushiBoatResults = SushiAnchor;
+        gameOverPanelController.scoreResult = Score;
+        gameOverPanelController.isHighScore = Score >= HighScore;
+        gameOverPanelController.GameIsOver();
+    }
+
+    public void CheatGameOver()
+    {
+        EnterGameOverState();
     }
     
     //--------------------------------------------------------------------------------------------------------
