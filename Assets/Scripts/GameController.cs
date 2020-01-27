@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEngine;
@@ -16,7 +15,6 @@ public class GameController : MonoBehaviour {
     public List<Sprite> ImageForBlockProgression;
     public Sprite ImageForWildCard;
     public GameObject CreateCelebrationPrefab;
-    public GameObject CombineCelebrationPrefab;
     public ScoreDisplay ScoreDisplayObj;
     public ScoreMultiplierPanel ScoreMultPanel;
     public UnlockProgressBar UnlockProgressBar;
@@ -61,12 +59,6 @@ public class GameController : MonoBehaviour {
         blocks = new List<Block>();
         Canvas.ForceUpdateCanvases();
         LoadGameStateOrStartNewGame();
-        NewHighScoreIndicator.SetActive(false);
-        if (HighScore > 0)
-        {
-            CurrentHighScoreIndicator.SetActive(true);
-            CurrentHighScoreLabel.text = "High Score: " + HighScore;
-        }
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -75,19 +67,22 @@ public class GameController : MonoBehaviour {
             Destroy(block.gameObject);
         }
         
-        // reset various things for a new game
-        blocks = new List<Block>();
+        // reset the sim
+        blocks.Clear();
         swipeDir = BoardDirection.Null;
         CurrentWildChance = 0f;
         CurrentDoubleChance = 0f;
         CurrentTripleChance = 0f;
+        
+        // reset high score
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
         NewHighScoreIndicator.SetActive(false);
-        if (HighScore > 0)
-        {
+        if (HighScore > 0) {
             CurrentHighScoreIndicator.SetActive(true);
             CurrentHighScoreLabel.text = "High Score: " + HighScore;
         }
+        
+        // reset other things
         Score = 0;
         ScoreMultPanel.ResetLevel();
         UnlockProgressBar.currentUnlock = 0;
@@ -109,9 +104,9 @@ public class GameController : MonoBehaviour {
     private void EnterGameOverState() {
         GameOverPanelController gameOverPanelController = GameOverPanel.GetComponent<GameOverPanelController>();
         gameOverPanelController.ToggleResultsMenu();
-        gameOverPanelController.sushiBoatResults = SushiAnchor;
-        gameOverPanelController.scoreResult = Score;
-        gameOverPanelController.isHighScore = Score >= HighScore;
+        gameOverPanelController.SushiBoatResults = SushiAnchor;
+        gameOverPanelController.ScoreResult = Score;
+        gameOverPanelController.IsHighScore = Score >= HighScore;
         gameOverPanelController.GameIsOver();
     }
 
@@ -218,9 +213,16 @@ public class GameController : MonoBehaviour {
             newBlockCount = 3;
         }
 
+        // if the board only has 2 or 3 hexes open, don't suddenly fill all of them and make the
+        // player lose - instead, make sure there's still 1 more empty hex after the drop
+        int openHexCount = (from hex in hexes where hex.Occupant == null select hex).Count();
+        if (openHexCount > 1 && newBlockCount >= openHexCount) {
+            newBlockCount = openHexCount - 1;
+        }
+        
         // create that many blocks
         for (int i = 0; i < newBlockCount; i++) {
-            openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();
+            openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();    
             d100Roll = Random.Range(0f, 100f);
             BlockKind newBlockKind = d100Roll <= CurrentWildChance ? BlockKind.WildCard : BlockKind.Normal;
             newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
