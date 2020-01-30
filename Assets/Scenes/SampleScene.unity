@@ -6101,6 +6101,7 @@ MonoBehaviour:
   CurrentHighScoreIndicator: {fileID: 495773897}
   CurrentHighScoreLabel: {fileID: 1268088125}
   PremiumControllerObj: {fileID: 608002476}
+  WaitForFingerUpToCommitSwipe: 0
 --- !u!4 &608002475
 Transform:
   m_ObjectHideFlags: 0

@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour {
     public GameObject CurrentHighScoreIndicator;
     public TextMeshProUGUI CurrentHighScoreLabel;
     public PremiumController PremiumControllerObj;
+    public bool WaitForFingerUpToCommitSwipe;
     
     public int Score { get; private set; }
     
@@ -40,8 +41,8 @@ public class GameController : MonoBehaviour {
     private bool allowInput;
     private static Touch currentTouch;
     private static float swipeMinDist;
-    private static Vector3 swipeStartPos;
-    private static Vector3 swipeEndPos;
+    private static Vector3? swipeStartPos;
+    private static Vector3? swipeEndPos;
     private float d100Roll;
     private bool isGameOver;
 
@@ -264,6 +265,8 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private BoardDirection GetSwipeDirection() {
+        BoardDirection result = BoardDirection.Null;
+        
         // get keyboard input from PC
         if (Input.GetKeyDown(KeyCode.Keypad7)) return BoardDirection.UpLeft;
         if (Input.GetKeyDown(KeyCode.Keypad8)) return BoardDirection.Up;
@@ -278,48 +281,49 @@ public class GameController : MonoBehaviour {
         }
         
         currentTouch = Input.GetTouch(0);
-        
-        switch (currentTouch.phase) {
-            case TouchPhase.Began:
-                // we just put our finer on the screen
 
-                if (isGameOver) {
-                    StartNewGame();
-                    return BoardDirection.Null;
-                }
+        if (currentTouch.phase == TouchPhase.Began) {
+            // we just put our finger on the screen
+            if (isGameOver) {
+                StartNewGame();
+                return BoardDirection.Null;
+            }
                 
-                swipeStartPos = currentTouch.position;
-                swipeEndPos = currentTouch.position;
-                break;
+            swipeStartPos = currentTouch.position;
+        }
+        else if (swipeStartPos != null &&
+                ((WaitForFingerUpToCommitSwipe && currentTouch.phase == TouchPhase.Ended) ||
+                 (!WaitForFingerUpToCommitSwipe && currentTouch.phase == TouchPhase.Moved))) {
             
-            case TouchPhase.Ended:
-                // we just pulled our finger off the screen
-                swipeEndPos = currentTouch.position;
-                float swipeDist = Math.Abs(Vector3.Distance(swipeStartPos, swipeEndPos));
-                
-                if (swipeDist < swipeMinDist) {
-                    break;
-                }
-
-                float swipeAngle = Vector3.Angle(Vector3.up, swipeEndPos - swipeStartPos);
-                bool swipingRightish = swipeEndPos.x > swipeStartPos.x;
-
-                if (swipeAngle < 30f) {
-                    return BoardDirection.Up;
-                }
-                else if (30f <= swipeAngle && swipeAngle <= 90f) {
-                    return swipingRightish ? BoardDirection.UpRight : BoardDirection.UpLeft;
-                }
-                else if (90f <= swipeAngle && swipeAngle <= 150f) {
-                    return swipingRightish ? BoardDirection.DownRight : BoardDirection.DownLeft;
-                }
-                else {
-                    return BoardDirection.Down;
-                }
+            // have we swiped far enough on the screen to actually execute a swipe? 
+            swipeEndPos = currentTouch.position;
+            float swipeDist = Math.Abs(Vector3.Distance((Vector3)swipeStartPos, (Vector3)swipeEndPos));
+            if (swipeDist >= swipeMinDist) {
+                result = GetBoardDirectionFromPoints((Vector3)swipeStartPos, (Vector3)swipeEndPos);
+                swipeStartPos = null;
+            }
         }
         
         // no input detected
-        return BoardDirection.Null;
+        return result;
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private static BoardDirection GetBoardDirectionFromPoints(Vector3 endPoint, Vector3 startPoint) {
+        float swipeAngle = Vector3.Angle(Vector3.up, startPoint - endPoint);
+        bool swipingRightish = startPoint.x > endPoint.x;
+
+        if (swipeAngle < 30f) {
+            return BoardDirection.Up;
+        }
+        if (30f <= swipeAngle && swipeAngle <= 90f) {
+            return swipingRightish ? BoardDirection.UpRight : BoardDirection.UpLeft;
+        }
+        if (90f <= swipeAngle && swipeAngle <= 150f) {
+            return swipingRightish ? BoardDirection.DownRight : BoardDirection.DownLeft;
+        }
+        
+        return BoardDirection.Down;
     }
     
     //--------------------------------------------------------------------------------------------------------
