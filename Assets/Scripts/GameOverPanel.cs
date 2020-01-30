@@ -5,7 +5,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameOverPanelController : MonoBehaviour
+public class GameOverPanel : MonoBehaviour
 {
     public int ScoreResult;
     public bool IsHighScore;
@@ -20,6 +20,7 @@ public class GameOverPanelController : MonoBehaviour
     
     // rider says to do this for performance?
     private static readonly int statusHash = Animator.StringToHash("Status");
+    private static readonly int speedMultiplier = Animator.StringToHash("speedMultiplier");
 
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
@@ -28,7 +29,7 @@ public class GameOverPanelController : MonoBehaviour
     }
 
     //--------------------------------------------------------------------------------------------------------
-    public void ToggleResultsMenu() {
+    public void ShowResultsMenu() {
         ResultMenuObj.SetActive(true);
         ResultsMenuAnimator.SetBool(statusHash, !ResultsMenuAnimator.GetBool(statusHash));
     }
@@ -51,7 +52,7 @@ public class GameOverPanelController : MonoBehaviour
             if (child.GetComponent<Animator>()) {
                 Animator animator = child.GetComponent<Animator>();
                 float speed = UnityEngine.Random.Range(0.9f, 1.4f);
-                animator.SetFloat("speedMultiplier", speed);
+                animator.SetFloat(speedMultiplier, speed);
             }
             
             //Need to turn of sorting override so the blocks appear in the pop up window sort.

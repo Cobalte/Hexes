@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour {
     public ScoreMultiplierPanel ScoreMultPanel;
     public UnlockProgressBar UnlockProgressBar;
     public bool SomethingJustPromoted;
-    public GameObject GameOverPanel;
+    public GameOverPanel GameOverPanelObj;
     public float CurrentWildChance;
     public float CurrentDoubleChance;
     public float CurrentTripleChance;
@@ -43,9 +43,9 @@ public class GameController : MonoBehaviour {
     private static Vector3 swipeStartPos;
     private static Vector3 swipeEndPos;
     private float d100Roll;
+    private bool isGameOver;
 
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
-    private bool IsGameOver => GameOverPanel.activeSelf;
 
     private const float minSwipeDistScreenFration = 0.1f;
     private const string playerPrefHighScoreKey = "HighScore";
@@ -73,6 +73,8 @@ public class GameController : MonoBehaviour {
         CurrentWildChance = 0f;
         CurrentDoubleChance = 0f;
         CurrentTripleChance = 0f;
+        Score = 0;
+        isGameOver = false;
         
         // reset high score
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
@@ -81,9 +83,11 @@ public class GameController : MonoBehaviour {
             CurrentHighScoreIndicator.SetActive(true);
             CurrentHighScoreLabel.text = "High Score: " + HighScore;
         }
+        else {
+            CurrentHighScoreIndicator.SetActive(false);
+        }
         
         // reset other things
-        Score = 0;
         ScoreMultPanel.ResetLevel();
         UnlockProgressBar.currentUnlock = 0;
         UnlockProgressBar.levelLabel.text = "Level " + (UnlockProgressBar.currentUnlock + 1);
@@ -102,21 +106,25 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void EnterGameOverState() {
-        GameOverPanelController gameOverPanelController = GameOverPanel.GetComponent<GameOverPanelController>();
-        gameOverPanelController.ToggleResultsMenu();
-        gameOverPanelController.SushiBoatResults = SushiAnchor;
-        gameOverPanelController.ScoreResult = Score;
-        gameOverPanelController.IsHighScore = Score >= HighScore;
-        gameOverPanelController.GameIsOver();
+        isGameOver = true;
+        GameOverPanelObj.ShowResultsMenu();
+        GameOverPanelObj.SushiBoatResults = SushiAnchor;
+        GameOverPanelObj.ScoreResult = Score;
+        GameOverPanelObj.IsHighScore = Score >= HighScore;
+        GameOverPanelObj.GameIsOver();
     }
 
-    public void CheatGameOver()
-    {
+    //--------------------------------------------------------------------------------------------------------
+    public void CheatGameOver() {
         EnterGameOverState();
     }
     
     //--------------------------------------------------------------------------------------------------------
     private void Update() {
+        if (isGameOver) {
+            return;
+        }
+        
         blocks.RemoveAll(b => b == null);
         
         if (!allowInput && !IsAnyBlockMoving) {
@@ -220,7 +228,7 @@ public class GameController : MonoBehaviour {
             newBlockCount = openHexCount - 1;
         }
         
-        // create that many blocks
+        // create as many blocks as we need
         for (int i = 0; i < newBlockCount; i++) {
             openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();    
             d100Roll = Random.Range(0f, 100f);
@@ -240,14 +248,6 @@ public class GameController : MonoBehaviour {
                 return;
             }
         }
-    }
-    
-    //--------------------------------------------------------------------------------------------------------
-    private bool IsAnyMovementPossible() {
-        return (from hex in hexes
-            from neighbor in hex.Neighbors
-            where hex.Occupant.Level == neighbor.Occupant.Level
-            select hex).Any();
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -283,7 +283,7 @@ public class GameController : MonoBehaviour {
             case TouchPhase.Began:
                 // we just put our finer on the screen
 
-                if (IsGameOver) {
+                if (isGameOver) {
                     StartNewGame();
                     return BoardDirection.Null;
                 }
@@ -367,10 +367,12 @@ public class GameController : MonoBehaviour {
         Score += change;
 
         if (HighScore < Score) {
+            // new high score! save it to device.
             HighScore = Score;
-            PlayerPrefs.SetInt(playerPrefHighScoreKey, Score);
+            PlayerPrefs.SetInt(playerPrefHighScoreKey, HighScore);
             PlayerPrefs.Save();
             
+            // swap out which indicators we're showing if we haven't already 
             if (!NewHighScoreIndicator.activeSelf) {
                 NewHighScoreIndicator.SetActive(true);
                 CurrentHighScoreIndicator.SetActive(false);
@@ -380,8 +382,8 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     public void ResetHighScore() {
-            PlayerPrefs.SetInt(playerPrefHighScoreKey, 0);
-            PlayerPrefs.Save();
+        PlayerPrefs.SetInt(playerPrefHighScoreKey, 0);
+        PlayerPrefs.Save();
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -430,7 +432,7 @@ public class GameController : MonoBehaviour {
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
 
         Debug.Log("Game loaded. High score: " + HighScore +
-                  ", Games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey) +
-                  ", Premium status: " + PremiumControllerObj.GameIsPremium);
+              ", Games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey) +
+              ", Premium status: " + PremiumControllerObj.GameIsPremium);
     }
 }

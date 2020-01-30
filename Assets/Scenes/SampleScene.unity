@@ -6092,7 +6092,7 @@ MonoBehaviour:
   ScoreMultPanel: {fileID: 2099982999}
   UnlockProgressBar: {fileID: 1029461410}
   SomethingJustPromoted: 0
-  GameOverPanel: {fileID: 1449525659}
+  GameOverPanelObj: {fileID: 1449525662}
   CurrentWildChance: 0
   CurrentDoubleChance: 0
   CurrentTripleChance: 0
@@ -12710,7 +12710,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1449525662}
-        m_MethodName: ToggleResultsMenu
+        m_MethodName: ShowResultsMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
