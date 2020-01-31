@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: TextLocAssets_id-ID
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: id-ID
+  m_SharedData: {fileID: 11400000, guid: afb3cfec4ee66bc42a0084fe376daf7e, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1
+    m_Localized: Kerja bagus!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8
+    m_Localized: Skor Tinggi Baru
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7
+    m_Localized: Skor tinggi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6
+    m_Localized: Ingin mendukung kami? Ingin menghapus iklan dari permainan?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3
+    m_Localized: Tingkat
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1

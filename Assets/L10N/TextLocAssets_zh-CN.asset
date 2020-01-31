@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: TextLocAssets_zh-CN
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: zh-CN
+  m_SharedData: {fileID: 11400000, guid: afb3cfec4ee66bc42a0084fe376daf7e, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1
+    m_Localized: "\u505A\u5F97\u597D\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9
+    m_Localized: "\u65B0\u6E38\u620F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3
+    m_Localized: "\u6C34\u5E73"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6
+    m_Localized: "\r\u60F3\u652F\u6301\u6211\u4EEC\u5417\uFF1F\u662F\u5426\u8981\u4ECE\u6E38\u620F\u4E2D\u5220\u9664\u5E7F\u544A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7
+    m_Localized: "\u9AD8\u5206"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8
+    m_Localized: "\u65B0\u9AD8\u5206"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1
