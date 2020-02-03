@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour {
     }
 
     //--------------------------------------------------------------------------------------------------------
-    public void StartNewGame() {
+    private void StartNewGame() {
         foreach (Block block in blocks) {
             Destroy(block.gameObject);
         }
