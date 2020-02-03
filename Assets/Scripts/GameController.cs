@@ -91,7 +91,7 @@ public class GameController : MonoBehaviour {
         // reset other things
         ScoreMultPanel.ResetLevel();
         UnlockProgressBar.currentUnlock = 0;
-        UnlockProgressBar.levelLabel.text = "Level " + (UnlockProgressBar.currentUnlock + 1);
+        UnlockProgressBar.levelLabel.text = (UnlockProgressBar.currentUnlock + 1).ToString();
         
         // record number of games started on this device
         int gamesStarted = PlayerPrefs.GetInt(playerPrefsGameCountKey) + 1;

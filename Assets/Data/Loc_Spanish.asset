@@ -18,3 +18,4 @@ MonoBehaviour:
   HighScoreString: Record
   PurchasePromptString: "\xBFTe gusta nuestro juego y quieres apoyarnos? \xBFQuieres
     eliminar todos los anuncios del juego?"
+  LevelString: Nivel

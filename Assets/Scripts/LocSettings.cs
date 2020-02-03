@@ -10,5 +10,6 @@ public class LocSettings : ScriptableObject {
     public string GoodJobString;
     public string HighScoreString;
     public string PurchasePromptString;
+    public string LevelString;
 
 }

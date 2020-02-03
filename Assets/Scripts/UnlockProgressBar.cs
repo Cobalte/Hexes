@@ -73,12 +73,12 @@ public class UnlockProgressBar : MonoBehaviour {
             currentUnlock++;
             scoreFloor = scoreCeiling;
             scoreCeiling = LevelRewards[currentUnlock].Experience;
-            levelLabel.text = "Level " + (currentUnlock + 1);
+            levelLabel.text = (currentUnlock + 1).ToString();
         }
         else {
             // we've unlocked everything!
             isProgressComplete = true;
-            levelLabel.text = "Level " + (currentUnlock + 1);
+            levelLabel.text = (currentUnlock + 1).ToString();
         }
     }
 }

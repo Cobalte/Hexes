@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef00c6415081364cbec270dc081dfa9, type: 3}
+  m_Name: Loc_Korean
+  m_EditorClassIdentifier: 
+  Locale: 23
+  NewGameString: " \uC0C8\uB85C\uC6B4 \uAC8C\uC784"
+  GoodJobString: " \uC798 \uD588\uC5B4!"
+  HighScoreString: "\uCD5C\uACE0 \uC810\uC218"
+  PurchasePromptString: "\uC6B0\uB9AC \uAC8C\uC784\uCC98\uB7FC \uC6B0\uB9AC\uB97C
+    \uC9C0\uC6D0\uD558\uACE0 \uC2F6\uC2B5\uB2C8\uAE4C? \uAC8C\uC784\uC5D0\uC11C \uBAA8\uB4E0
+    \uAD11\uACE0\uB97C \uC0AD\uC81C \uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
+  LevelString: "\uC218\uD3C9"
