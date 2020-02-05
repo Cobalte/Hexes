@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Loc_Korean
   m_EditorClassIdentifier: 
   Locale: 23
+  FourCC: koKR
   NewGameString: " \uC0C8\uB85C\uC6B4 \uAC8C\uC784"
   GoodJobString: " \uC798 \uD588\uC5B4!"
   HighScoreString: "\uCD5C\uACE0 \uC810\uC218"
@@ -20,3 +21,4 @@ MonoBehaviour:
     \uC9C0\uC6D0\uD558\uACE0 \uC2F6\uC2B5\uB2C8\uAE4C? \uAC8C\uC784\uC5D0\uC11C \uBAA8\uB4E0
     \uAD11\uACE0\uB97C \uC0AD\uC81C \uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
   LevelString: "\uC218\uD3C9"
+  UseAlternateFont: 1

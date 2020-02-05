@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Loc_Spanish
   m_EditorClassIdentifier: 
   Locale: 34
+  FourCC: esES
   NewGameString: Nuevo juego
   GoodJobString: "\xA1Buen trabajo!"
   HighScoreString: Record
   PurchasePromptString: "\xBFTe gusta nuestro juego y quieres apoyarnos? \xBFQuieres
     eliminar todos los anuncios del juego?"
   LevelString: Nivel
+  UseAlternateFont: 0

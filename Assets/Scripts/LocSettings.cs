@@ -6,10 +6,12 @@ using UnityEngine;
 public class LocSettings : ScriptableObject {
 
     public SystemLanguage Locale;
+    public string FourCC;
     public string NewGameString;
     public string GoodJobString;
     public string HighScoreString;
     public string PurchasePromptString;
     public string LevelString;
+    public bool UseAlternateFont;
 
 }

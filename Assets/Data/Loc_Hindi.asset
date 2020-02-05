@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef00c6415081364cbec270dc081dfa9, type: 3}
+  m_Name: Loc_Hindi
+  m_EditorClassIdentifier: 
+  Locale: 0
+  FourCC: hiIN
+  NewGameString: "\u0928\u092F\u093E \u0916\u0947\u0932"
+  GoodJobString: "\u092C\u0939\u0941\u0924 \u092C\u0922\u093C\u093F\u092F\u093E!"
+  HighScoreString: "\u0909\u091A\u094D\u091A \u0938\u094D\u0915\u094B\u0930"
+  PurchasePromptString: " \u0939\u092E\u093E\u0930\u0947 \u0916\u0947\u0932 \u0915\u0940
+    \u0924\u0930\u0939 \u0914\u0930 \u0939\u092E\u0947\u0902 \u0938\u092E\u0930\u094D\u0925\u0928
+    \u0915\u0930\u0928\u093E \u091A\u093E\u0939\u0924\u0947 \u0939\u0948\u0902? \u0916\u0947\u0932
+    \u0938\u0947 \u0938\u092D\u0940 \u0935\u093F\u091C\u094D\u091E\u093E\u092A\u0928
+    \u0928\u093F\u0915\u093E\u0932\u0928\u093E \u091A\u093E\u0939\u0924\u0947 \u0939\u0948\u0902?"
+  LevelString: "\u0938\u094D\u0924\u0930"
+  UseAlternateFont: 1

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ef00c6415081364cbec270dc081dfa9, type: 3}
-  m_Name: Loc_English
+  m_Name: Loc_Indonesian
   m_EditorClassIdentifier: 
-  Locale: 10
-  FourCC: enGB
-  NewGameString: New Game
-  GoodJobString: Good Run!
-  HighScoreString: High Score
-  PurchasePromptString: Like our game and want to support us? Want to remove all
-    the ads from the game?
-  LevelString: Level
+  Locale: 20
+  FourCC: idID
+  NewGameString: Permainan Baru
+  GoodJobString: Kerja bagus!
+  HighScoreString: Skor Tinggi Baru
+  PurchasePromptString: Suka game kami dan ingin mendukung kami? Ingin menghapus
+    semua iklan dari game?
+  LevelString: Tingkat
   UseAlternateFont: 0
