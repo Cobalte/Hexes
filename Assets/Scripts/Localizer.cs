@@ -76,6 +76,13 @@ public class Localizer : MonoBehaviour {
                     GoodJobText.font = goodJobTextFont;
                     PurchasePromptText.font = purchasePromptTextFont;
                     LevelText.font = levelTextFont;
+
+                    NewGameText1.fontMaterial = newGameText1Material;
+                    NewGameText2.fontMaterial = newGameText2Material;
+                    HighScoreText.fontMaterial = highScoreTextMaterial;
+                    GoodJobText.fontMaterial = goodJobTextMaterial;
+                    PurchasePromptText.fontMaterial = purchasePromptTextMaterial;
+                    LevelText.fontMaterial = levelTextMaterial;
                 }
                 
                 return;
