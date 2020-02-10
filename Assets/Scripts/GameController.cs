@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour {
     public TextMeshProUGUI CurrentHighScoreLabel;
     public PremiumController PremiumControllerObj;
     public bool WaitForFingerUpToCommitSwipe;
+    public GameObject SwipeTutorialObj;
     
     public int Score { get; private set; }
     
@@ -100,7 +101,14 @@ public class GameController : MonoBehaviour {
         Debug.Log("Starting game " + gamesStarted + " on this device.");
         
         // start the game
-        CreateNewBlocks();
+        //if (gamesStarted == 1) {
+        if (true) {
+            CreateFirstBlockInFirstGame();
+        }
+        else {
+            CreateNewBlocks();            
+        }
+        
         SaveGameState();
         allowInput = true;
     }
@@ -149,6 +157,7 @@ public class GameController : MonoBehaviour {
 
         if (somethingMoved) {
             allowInput = false;
+            SwipeTutorialObj.SetActive(false);
         }
     }
     
@@ -438,5 +447,23 @@ public class GameController : MonoBehaviour {
         Debug.Log("Game loaded. High score: " + HighScore +
               ", Games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey) +
               ", Premium status: " + PremiumControllerObj.GameIsPremium);
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private void CreateFirstBlockInFirstGame() {
+        Debug.Log("Dropping the first block ever.");
+        openHexes = (from hex in hexes where hex.Neighbors.Count == 6 select hex).ToList();    
+        newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
+        
+        CreateBlock(newDropHex, BlockKind.Normal, 1);
+
+        Instantiate(
+            original: CreateCelebrationPrefab,
+            position: newBlock.transform.position,
+            rotation: Quaternion.identity,
+            parent: SushiAnchor.transform);
+
+        SwipeTutorialObj.SetActive(true);
+        SwipeTutorialObj.transform.position = newDropHex.transform.position;
     }
 }
