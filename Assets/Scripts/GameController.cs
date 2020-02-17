@@ -30,6 +30,7 @@ public class GameController : MonoBehaviour {
     public PremiumController PremiumControllerObj;
     public bool WaitForFingerUpToCommitSwipe;
     public GameObject SwipeTutorialObj;
+    public bool IsFreshGame;
     
     public int Score { get; private set; }
     
@@ -77,6 +78,7 @@ public class GameController : MonoBehaviour {
         CurrentTripleChance = 0f;
         Score = 0;
         isGameOver = false;
+        IsFreshGame = true;
         
         // reset high score
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
@@ -101,14 +103,7 @@ public class GameController : MonoBehaviour {
         Debug.Log("Starting game " + gamesStarted + " on this device.");
         
         // start the game
-        //if (gamesStarted == 1) {
-        if (true) {
-            CreateFirstBlockInFirstGame();
-        }
-        else {
-            CreateNewBlocks();            
-        }
-        
+        CreateFirstBlock();
         SaveGameState();
         allowInput = true;
     }
@@ -245,13 +240,7 @@ public class GameController : MonoBehaviour {
             BlockKind newBlockKind = d100Roll <= CurrentWildChance ? BlockKind.WildCard : BlockKind.Normal;
             newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
         
-            CreateBlock(newDropHex, newBlockKind, 1);
-
-            Instantiate(
-                original: CreateCelebrationPrefab,
-                position: newBlock.transform.position,
-                rotation: Quaternion.identity,
-                parent: SushiAnchor.transform);
+            CreateBlock(newDropHex, newBlockKind, 1, true);
             
             if (blocks.Count == hexes.Count) {
                 EnterGameOverState();
@@ -261,15 +250,24 @@ public class GameController : MonoBehaviour {
     }
     
     //--------------------------------------------------------------------------------------------------------
-    private void CreateBlock(Hex location, BlockKind kind, int level) {
+    private void CreateBlock(Hex location, BlockKind kind, int level, bool celebrate) {
         newBlock = Instantiate(
             original: BlockPrefab,
             position: location.transform.position,
             rotation: Quaternion.identity,
             parent: SushiAnchor.transform).GetComponent<Block>();
+        
         newBlock.Initialize(location, level, kind);
         location.Occupant = newBlock;
         blocks.Add(newBlock);
+
+        if (celebrate) {
+            Instantiate(
+                original: CreateCelebrationPrefab,
+                position: newBlock.transform.position,
+                rotation: Quaternion.identity,
+                parent: SushiAnchor.transform);
+        }
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -435,7 +433,11 @@ public class GameController : MonoBehaviour {
         // populate the board according to the saved state
         Score = saveState.Score;
         for (int i = 0; i < saveState.BlockLocations.Count; i++) {
-            CreateBlock(hexes[saveState.BlockLocations[i]], saveState.BlockKinds[i], saveState.BlockLevels[i]);
+            CreateBlock(
+                location: hexes[saveState.BlockLocations[i]],
+                kind: saveState.BlockKinds[i],
+                level: saveState.BlockLevels[i],
+                celebrate: false);
         }
         
         // misc initialization tasks
@@ -443,6 +445,7 @@ public class GameController : MonoBehaviour {
         swipeDir = BoardDirection.Null;
         allowInput = true;
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
+        IsFreshGame = Score == 0; // score will be > 0 if any blocks have combined
 
         Debug.Log("Game loaded. High score: " + HighScore +
               ", Games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey) +
@@ -450,18 +453,12 @@ public class GameController : MonoBehaviour {
     }
     
     //--------------------------------------------------------------------------------------------------------
-    private void CreateFirstBlockInFirstGame() {
+    private void CreateFirstBlock() {
         Debug.Log("Dropping the first block ever.");
         openHexes = (from hex in hexes where hex.Neighbors.Count == 6 select hex).ToList();    
         newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
         
-        CreateBlock(newDropHex, BlockKind.Normal, 1);
-
-        Instantiate(
-            original: CreateCelebrationPrefab,
-            position: newBlock.transform.position,
-            rotation: Quaternion.identity,
-            parent: SushiAnchor.transform);
+        CreateBlock(newDropHex, BlockKind.Normal, 1, true);
 
         SwipeTutorialObj.SetActive(true);
         SwipeTutorialObj.transform.position = newDropHex.transform.position;

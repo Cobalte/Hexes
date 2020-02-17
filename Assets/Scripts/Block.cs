@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Block : MonoBehaviour {
 
     private const float slideSpeed = 3f;
+    private const float tutorialSlideSpeed = 2f;
     private const float arrivalDist = 0.1f;
 
     public int Level;
@@ -62,7 +63,7 @@ public class Block : MonoBehaviour {
             }
             else {
                 // we are sliding
-                float speed = slideSpeed * Time.deltaTime;
+                float speed = (gameController.IsFreshGame ? tutorialSlideSpeed : slideSpeed) * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, (Vector3)swipeDestPos, speed);
             }
         }
@@ -140,6 +141,8 @@ public class Block : MonoBehaviour {
         gameController.SomethingJustPromoted = true;
         RandomizeSpeed();
         BlockAnimator.Play("Block_Birth");
+
+        gameController.IsFreshGame = false;
     }
     
     //--------------------------------------------------------------------------------------------------------
