@@ -143,9 +143,6 @@ public class Block : MonoBehaviour {
         BlockAnimator.Play("Block_Birth");
 
         gameController.IsFreshGame = false;
-        if (gameController.CombineTutorial.IsActive) {
-            gameController.CombineTutorial.gameObject.SetActive(false);
-        }
     }
     
     //--------------------------------------------------------------------------------------------------------

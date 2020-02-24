@@ -12,7 +12,6 @@ public class GameController : MonoBehaviour {
     public GameObject BoardObj;
     public GameObject SushiAnchor;
     public GameObject BlockPrefab;
-    public CombineTutorialGuide CombineTutorial;
     public List<Sprite> ImageForBlockProgression;
     public Sprite ImageForWildCard;
     public GameObject CreateCelebrationPrefab;
@@ -94,7 +93,6 @@ public class GameController : MonoBehaviour {
         
         // reset other things
         ScoreMultPanel.ResetLevel();
-        CombineTutorial.ResetAndHide();
         UnlockProgressBar.currentUnlock = 0;
         UnlockProgressBar.levelLabel.text = (UnlockProgressBar.currentUnlock + 1).ToString();
         
@@ -133,7 +131,7 @@ public class GameController : MonoBehaviour {
         
         blocks.RemoveAll(b => b == null);
         
-        if (!allowInput && !IsAnyBlockMoving && !CombineTutorial.gameObject.activeSelf) {
+        if (!allowInput && !IsAnyBlockMoving) {
             if (!SomethingJustPromoted) {
                 ScoreMultPanel.ResetLevel();
             }
@@ -248,11 +246,6 @@ public class GameController : MonoBehaviour {
                 EnterGameOverState();
                 return;
             }
-        }
-        
-        // if the combine tutorial is partially set up, finish setting it up
-        if (CombineTutorial.IsWaiting) {
-            CombineTutorial.TrackObject2(newBlock.gameObject);
         }
     }
     
@@ -461,12 +454,12 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void CreateFirstBlock() {
+        Debug.Log("Dropping the first block ever.");
         openHexes = (from hex in hexes where hex.Neighbors.Count == 6 select hex).ToList();    
         newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
         
         CreateBlock(newDropHex, BlockKind.Normal, 1, true);
 
-        CombineTutorial.TrackObject1(newBlock.gameObject);
         SwipeTutorialObj.SetActive(true);
         SwipeTutorialObj.transform.position = newDropHex.transform.position;
     }
