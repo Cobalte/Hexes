@@ -8,7 +8,7 @@ public class LoadingScreen : MonoBehaviour {
     public float HideAnimDuration;
     private Animator anim;
     
-    private void Start() {
+    /*private void Start() {
         anim = GetComponent<Animator>();
         StartCoroutine(WaitForDelay());
     }
@@ -22,5 +22,5 @@ public class LoadingScreen : MonoBehaviour {
     private IEnumerator WaitForAnim() {
         yield return new WaitForSeconds(HideAnimDuration);
         gameObject.SetActive(false);
-    }
+    }*/
 }
