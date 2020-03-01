@@ -30,6 +30,7 @@ public class GameController : MonoBehaviour {
     public PremiumController PremiumControllerObj;
     public bool WaitForFingerUpToCommitSwipe;
     public GameObject SwipeTutorialObj;
+    public Hex CenterHex;
     public bool IsFreshGame;
     
     public int Score { get; private set; }
@@ -47,6 +48,7 @@ public class GameController : MonoBehaviour {
     private static Vector3? swipeEndPos;
     private float d100Roll;
     private bool isGameOver;
+    private GameObject SwipeTutorialInstance;
 
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
 
@@ -152,7 +154,9 @@ public class GameController : MonoBehaviour {
 
         if (somethingMoved) {
             allowInput = false;
-            SwipeTutorialObj.SetActive(false);
+            if (SwipeTutorialInstance) {
+                SwipeTutorialInstance.SetActive(false);
+            }
         }
     }
     
@@ -455,12 +459,22 @@ public class GameController : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     private void CreateFirstBlock() {
         Debug.Log("Dropping the first block ever.");
-        openHexes = (from hex in hexes where hex.Neighbors.Count == 6 select hex).ToList();    
-        newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
+        /*openHexes = (from hex in hexes where hex.Neighbors.Count == 6 select hex).ToList();
+        //newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
+        newDropHex = openHexes[3];*/
         
-        CreateBlock(newDropHex, BlockKind.Normal, 1, true);
+        CreateBlock(CenterHex, BlockKind.Normal, 1, true);
 
-        SwipeTutorialObj.SetActive(true);
-        SwipeTutorialObj.transform.position = newDropHex.transform.position;
+        if (SwipeTutorialInstance == null) {
+            SwipeTutorialInstance = Instantiate(
+                original: SwipeTutorialObj,
+                position: CenterHex.transform.position,
+                rotation: Quaternion.identity,
+                parent: SushiAnchor.transform);
+        }
+        else {
+            SwipeTutorialInstance.SetActive(true);
+            SwipeTutorialInstance.transform.position = CenterHex.transform.position;
+        }
     }
 }
