@@ -9,5 +9,6 @@ public class SaveState {
     public List<BlockKind> BlockKinds = new List<BlockKind>();
     public List<int> BlockLevels = new List<int>();
     public int Score;
-    
+    public int Multiplier;
+
 }

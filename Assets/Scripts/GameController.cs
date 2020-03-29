@@ -417,7 +417,11 @@ public class GameController : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     private void SaveGameState() {
         // put all of the blocks on the board (and the current score) into a serializable state
-        SaveState saveState = new SaveState {Score = this.Score};
+        SaveState saveState = new SaveState {
+            Score = this.Score,
+            Multiplier = ScoreMultPanel.CurrentLevel
+        };
+        
         for (int i = 0; i < hexes.Count; i++) {
             if (hexes[i].Occupant != null) {
                 saveState.BlockLocations.Add(i);
@@ -448,7 +452,6 @@ public class GameController : MonoBehaviour {
         file.Close();
         
         // populate the board according to the saved state
-        Score = saveState.Score;
         for (int i = 0; i < saveState.BlockLocations.Count; i++) {
             CreateBlock(
                 location: hexes[saveState.BlockLocations[i]],
@@ -456,6 +459,9 @@ public class GameController : MonoBehaviour {
                 level: saveState.BlockLevels[i],
                 celebrate: false);
         }
+        Score = saveState.Score;
+        ScoreMultPanel.CurrentLevel = saveState.Multiplier;
+        ScoreMultPanel.CreateComboPrefab();
         
         // misc initialization tasks
         ScoreDisplayObj.Snap();

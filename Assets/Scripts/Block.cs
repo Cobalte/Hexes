@@ -123,7 +123,7 @@ public class Block : MonoBehaviour {
 
         //Instantiate the correct combo pfx based on the current combo multiplier.
         Celebration celebration = Instantiate(
-            original: CombineCelebrationPrefabs[gameController.ScoreMultPanel.currentLevel],
+            original: CombineCelebrationPrefabs[gameController.ScoreMultPanel.CurrentLevel],
             parent: uiCanvas.transform,
             worldPositionStays: false).GetComponent<Celebration>();
         celebration.transform.position = (Vector3)swipeDestPos;

@@ -10,36 +10,28 @@ public class ScoreMultiplierPanel : MonoBehaviour
 {
     public List<GameObject> ComboPrefabs;
     public GameObject ActiveComboObj;
-
-    public int currentLevel;
+    public int CurrentLevel;
+    
     private Image displayImage;
 
     //--------------------------------------------------------------------------------------------------------
-    private void Start() {
-        currentLevel = 0;
-        ActiveComboObj = null;
-        CreateComboPrefab();
-    }
-
-    //--------------------------------------------------------------------------------------------------------
     public void TryToIncrementLevel() {
-        if (currentLevel < ComboPrefabs.Count - 1)
+        if (CurrentLevel < ComboPrefabs.Count - 1)
         {
-            currentLevel++;
+            CurrentLevel++;
             CreateComboPrefab();
         }
     }
 
     //--------------------------------------------------------------------------------------------------------
-    private void CreateComboPrefab() {
-        if (ActiveComboObj)
-        {
+    public void CreateComboPrefab() {
+        if (ActiveComboObj) {
             Destroy(ActiveComboObj);
         }
 
         ActiveComboObj = null;
         ActiveComboObj = Instantiate(
-            original: ComboPrefabs[currentLevel],
+            original: ComboPrefabs[CurrentLevel],
             parent: transform,
             worldPositionStays: true);
         ActiveComboObj.transform.localPosition = Vector3.zero;
@@ -47,18 +39,17 @@ public class ScoreMultiplierPanel : MonoBehaviour
         RectTransform rect = ActiveComboObj.GetComponent<RectTransform>();
         rect.offsetMax = Vector2.zero;
         rect.offsetMin = Vector2.zero;
-        
     }
-
+    
     //--------------------------------------------------------------------------------------------------------
     public void ResetLevel() {
-        currentLevel = 0;
+        CurrentLevel = 0;
         CreateComboPrefab();
     }
 
     //--------------------------------------------------------------------------------------------------------
     public int GetCurrentMultiplier() {
         // returns 2, 4, 8, etc until all sprite are used
-        return (int) Math.Pow(2, currentLevel);
+        return (int) Math.Pow(2, CurrentLevel);
     }
 }
