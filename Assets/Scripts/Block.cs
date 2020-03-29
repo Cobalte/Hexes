@@ -54,7 +54,6 @@ public class Block : MonoBehaviour {
 
         if (food != null) {
             Eat(food);
-            return;
         }
         
         if (swipeDestPos != null) {
@@ -76,13 +75,6 @@ public class Block : MonoBehaviour {
         swipeDirection = direction;
     }
     
-    //--------------------------------------------------------------------------------------------------------
-    public void SlideTo(Vector3 destUiPos, BoardDirection direction) {
-        swipeDestHex = null;
-        swipeDestPos = destUiPos;
-        swipeDirection = direction;
-    }
-   
     //--------------------------------------------------------------------------------------------------------
     private void Arrive() {
         if (swipeDestHex != null) {
@@ -126,8 +118,8 @@ public class Block : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void Eat(Block food) {
-        BlocksToEat.Remove(food);
         Destroy(food.gameObject);
+        //DestroyImmediate(food.gameObject);
 
         //Instantiate the correct combo pfx based on the current combo multiplier.
         Celebration celebration = Instantiate(
@@ -143,6 +135,8 @@ public class Block : MonoBehaviour {
         BlockAnimator.Play("Block_Birth");
 
         gameController.IsFreshGame = false;
+        BlocksToEat.Remove(food);
+        gameController.GlobalFood.Remove(food);
     }
     
     //--------------------------------------------------------------------------------------------------------

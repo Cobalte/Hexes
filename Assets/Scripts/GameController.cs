@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,6 +33,8 @@ public class GameController : MonoBehaviour {
     public GameObject SwipeTutorialObj;
     public Hex CenterHex;
     public bool IsFreshGame;
+    // this var sucks and it's here to fix a weird problem I don't know how to fix otherwise
+    public List<Block> GlobalFood;
     
     public int Score { get; private set; }
     
@@ -48,7 +51,7 @@ public class GameController : MonoBehaviour {
     private static Vector3? swipeEndPos;
     private float d100Roll;
     private bool isGameOver;
-    private GameObject SwipeTutorialInstance;
+    private GameObject swipeTutorialInstance;
 
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
 
@@ -81,6 +84,7 @@ public class GameController : MonoBehaviour {
         Score = 0;
         isGameOver = false;
         IsFreshGame = true;
+        GlobalFood = new List<Block>(); 
         
         // reset high score
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
@@ -134,9 +138,16 @@ public class GameController : MonoBehaviour {
         blocks.RemoveAll(b => b == null);
         
         if (!allowInput && !IsAnyBlockMoving) {
+            // blocks just finished moving to their destinations
             if (!SomethingJustPromoted) {
                 ScoreMultPanel.ResetLevel();
             }
+
+            // this part sucks - somehow there's food left over from last frame?
+            foreach (Block food in GlobalFood) {
+                Destroy(food.gameObject);
+            }
+            GlobalFood.Clear();
 
             CreateNewBlocks();
             SaveGameState();
@@ -154,8 +165,8 @@ public class GameController : MonoBehaviour {
 
         if (somethingMoved) {
             allowInput = false;
-            if (SwipeTutorialInstance) {
-                SwipeTutorialInstance.SetActive(false);
+            if (swipeTutorialInstance) {
+                swipeTutorialInstance.SetActive(false);
             }
         }
     }
@@ -185,6 +196,7 @@ public class GameController : MonoBehaviour {
                         || column[newHex - 1].Occupant.Kind == BlockKind.WildCard)
                     && (column[curHex].Occupant.Kind == BlockKind.Normal
                         || column[newHex - 1].Occupant.Kind == BlockKind.Normal)) {
+                    
                     // this is a block that's about to combine with another block - either both blocks are
                     // the same level or one of them is a wild card (bot not both)
                     newHex -= 1;
@@ -194,6 +206,7 @@ public class GameController : MonoBehaviour {
                     
                     column[curHex].Occupant.SlideTo(column[newHex], swipeDir);
                     column[curHex].Occupant.BlocksToEat.Add(column[newHex].Occupant);
+                    GlobalFood.Add(column[newHex].Occupant);
                     column[curHex].Occupant.Level  = newLevel;
                     column[curHex].Occupant.Kind = BlockKind.Normal;
                     column[newHex].Occupant = column[curHex].Occupant;
@@ -465,16 +478,16 @@ public class GameController : MonoBehaviour {
         
         CreateBlock(CenterHex, BlockKind.Normal, 1, true);
 
-        if (SwipeTutorialInstance == null) {
-            SwipeTutorialInstance = Instantiate(
+        if (swipeTutorialInstance == null) {
+            swipeTutorialInstance = Instantiate(
                 original: SwipeTutorialObj,
                 position: CenterHex.transform.position,
                 rotation: Quaternion.identity,
                 parent: SushiAnchor.transform);
         }
         else {
-            SwipeTutorialInstance.SetActive(true);
-            SwipeTutorialInstance.transform.position = CenterHex.transform.position;
+            swipeTutorialInstance.SetActive(true);
+            swipeTutorialInstance.transform.position = CenterHex.transform.position;
         }
     }
 }
