@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605224277920bf24f9fd9bb94c72f5e0, type: 3}
   m_Name: RewardLevel03
   m_EditorClassIdentifier: 
-  Experience: 3000
+  Experience: 2300
   Type: 1
-  Chance: 40
+  Value: 5
   Icon: {fileID: 21300000, guid: 2be2df3ae99a2c342ae7b8ff1b6ff63e, type: 3}

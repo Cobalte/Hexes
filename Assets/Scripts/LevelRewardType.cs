@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum LevelRewardType {
+    Nothing,
     WildDropChance,
     DoubleDropChance,
-    TripleDropChance
+    TripleDropChance,
+    HungryNekoInterval
 }

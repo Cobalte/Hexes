@@ -23,6 +23,7 @@ public class Block : MonoBehaviour {
 
     private Vector3? swipeDestPos;
     private Hex swipeDestHex;
+    private HungryNeko swipeDestNeko;
     private bool isInitialized;
     private GameController gameController;
     private GameObject uiCanvas;
@@ -33,6 +34,7 @@ public class Block : MonoBehaviour {
         Level = startLevel;
         swipeDestHex = null;
         swipeDestPos = null;
+        swipeDestNeko = null;
         Kind = blockKind;
         BlocksToEat = new List<Block>();
         gameController = GameObject.Find("Game Controller").GetComponent<GameController>();
@@ -71,7 +73,16 @@ public class Block : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     public void SlideTo(Hex destHex, BoardDirection direction) {
         swipeDestHex = destHex;
+        swipeDestNeko = null;
         swipeDestPos = destHex.transform.position;
+        swipeDirection = direction;
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    public void SlideTo(HungryNeko neko, BoardDirection direction) {
+        swipeDestHex = null;
+        swipeDestNeko = neko;
+        swipeDestPos = neko.transform.position;
         swipeDirection = direction;
     }
     
@@ -80,6 +91,11 @@ public class Block : MonoBehaviour {
         if (swipeDestHex != null) {
             name = "Block on " + swipeDestHex.name + ", Level " + Level + " (" + Kind + ")";
             swipeDestHex = null;    
+        }
+        
+        if (swipeDestNeko != null) {
+            swipeDestNeko.Feed(this);
+            return;
         }
         
         transform.position = (Vector3)swipeDestPos;

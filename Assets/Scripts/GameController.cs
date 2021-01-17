@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour {
@@ -14,6 +15,7 @@ public class GameController : MonoBehaviour {
     public GameObject SushiAnchor;
     public GameObject BlockPrefab;
     public List<Sprite> ImageForBlockProgression;
+    public List<HungryNeko> HungryNekoSpawners;
     public Sprite ImageForWildCard;
     public GameObject CreateCelebrationPrefab;
     public ScoreDisplay ScoreDisplayObj;
@@ -24,6 +26,7 @@ public class GameController : MonoBehaviour {
     public float CurrentWildChance;
     public float CurrentDoubleChance;
     public float CurrentTripleChance;
+    public int CurrentHungryNekoInterval;
     public int HighScore;
     public GameObject NewHighScoreIndicator;
     public GameObject CurrentHighScoreIndicator;
@@ -52,6 +55,7 @@ public class GameController : MonoBehaviour {
     private float d100Roll;
     private bool isGameOver;
     private GameObject swipeTutorialInstance;
+    private int movesSinceLastHungryNeko;
 
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
 
@@ -163,38 +167,56 @@ public class GameController : MonoBehaviour {
 
         ExecuteSwipe(out bool somethingMoved);
 
-        if (somethingMoved) {
-            allowInput = false;
-            if (swipeTutorialInstance) {
-                swipeTutorialInstance.SetActive(false);
-            }
+        if (!somethingMoved) {
+            return;
+        }
+        
+        allowInput = false;
+
+        if (swipeTutorialInstance) {
+            swipeTutorialInstance.SetActive(false);
         }
     }
     
     //--------------------------------------------------------------------------------------------------------
     private void ExecuteSwipe(out bool somethingMoved) {
+        // 'captains' are the five hexes at the edge of the board in the swiped direction. this whole
+        // function generally works by starting with those captain hexes then looking backwards to see
+        // which blocks need to be 'sucked' in that direction.
         IEnumerable<Hex> captains = from h in hexes where !h.NeighborDirections.Contains(swipeDir) select h;
         BoardDirection searchDir = Opposite(swipeDir);
         somethingMoved = false;
 
         foreach (Hex captain in captains) {
             List<Hex> column = HexesInDirection(captain, searchDir);
-
+            HungryNeko activeNeko = AdjacentHungryNeko(captain, searchDir);
+            
             for (int curHex = 0; curHex < column.Count; curHex++) {
                 if (column[curHex].CurrentLevel == 0) {
                     // this is an empty hex - do nothing
                     continue;
                 }
-                                
+                
                 int newHex = DeliciousEmptyHex(column, curHex);
-
-                if (newHex > 0
-                    && column[curHex].CurrentLevel != ImageForBlockProgression.Count
-                    && column[newHex - 1].CurrentLevel != ImageForBlockProgression.Count
-                    && (column[curHex].CurrentLevel == column[newHex - 1].CurrentLevel
+                
+                if (newHex == 0
+                    && activeNeko != null
+                    && activeNeko.IsHungry
+                    && activeNeko.BlockLevel == column[curHex].CurrentLevel) {
+                    
+                    // this is a block that's about to be fed to the neko
+                    activeNeko.BlocksIncoming++;
+                    column[curHex].Occupant.SlideTo(activeNeko, swipeDir);
+                    column[curHex].Occupant = null;
+                    somethingMoved = true;
+                }
+                else if (newHex > 0
+                    && column[curHex].CurrentLevel != ImageForBlockProgression.Count // we not max level
+                    && column[newHex - 1].CurrentLevel != ImageForBlockProgression.Count // they not max level
+                    && (column[curHex].CurrentLevel == column[newHex - 1].CurrentLevel // equal lvl or wild
                         || column[curHex].Occupant.Kind == BlockKind.WildCard
                         || column[newHex - 1].Occupant.Kind == BlockKind.WildCard)
-                    && (column[curHex].Occupant.Kind == BlockKind.Normal
+                    && (column[curHex].Occupant.Kind == BlockKind.Normal // both not wild
                         || column[newHex - 1].Occupant.Kind == BlockKind.Normal)) {
                     
                     // this is a block that's about to combine with another block - either both blocks are
@@ -229,7 +251,7 @@ public class GameController : MonoBehaviour {
 
         swipeDir = BoardDirection.Null;
     }
-    
+
     //--------------------------------------------------------------------------------------------------------
     private void CreateNewBlocks() {
         // how many blocks are we supposed to create?
@@ -495,5 +517,20 @@ public class GameController : MonoBehaviour {
             swipeTutorialInstance.SetActive(true);
             swipeTutorialInstance.transform.position = CenterHex.transform.position;
         }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private HungryNeko AdjacentHungryNeko(Hex hex, BoardDirection dir) {
+        foreach (HungryNeko neko in HungryNekoSpawners) {
+            if (neko.IsHungry) {
+                for (int i = 0; i < neko.FeedingHexes.Count; i++) {
+                    if (neko.FeedingHexes[i] == hex && neko.FeedingDirections[i] == dir) {
+                        return neko;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 }

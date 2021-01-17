@@ -58,13 +58,16 @@ public class UnlockProgressBar : MonoBehaviour {
             if (currentUnlock >= 0) {
                 switch (LevelRewards[currentUnlock].Type) {
                     case LevelRewardType.WildDropChance:
-                        GameControllerObj.CurrentWildChance = LevelRewards[currentUnlock].Chance;
+                        GameControllerObj.CurrentWildChance = LevelRewards[currentUnlock].Value;
                         break;
                     case LevelRewardType.DoubleDropChance:
-                        GameControllerObj.CurrentDoubleChance = LevelRewards[currentUnlock].Chance;
+                        GameControllerObj.CurrentDoubleChance = LevelRewards[currentUnlock].Value;
                         break;
                     case LevelRewardType.TripleDropChance:
-                        GameControllerObj.CurrentTripleChance = LevelRewards[currentUnlock].Chance;
+                        GameControllerObj.CurrentTripleChance = LevelRewards[currentUnlock].Value;
+                        break;
+                    case LevelRewardType.HungryNekoInterval:
+                        GameControllerObj.CurrentHungryNekoInterval = (int)LevelRewards[currentUnlock].Value;
                         break;
                 }
             }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 605224277920bf24f9fd9bb94c72f5e0, type: 3}
-  m_Name: RewardLevel07
+  m_Name: RewardLevel09
   m_EditorClassIdentifier: 
-  Experience: 11300
-  Type: 0
-  Value: 0
+  Experience: 18800
+  Type: 2
+  Value: 25
   Icon: {fileID: 21300000, guid: 7baf4c24488b5fa42879624effcd3557, type: 3}
