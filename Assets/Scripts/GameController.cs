@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour {
     public GameObject SushiAnchor;
     public GameObject BlockPrefab;
     public List<Sprite> ImageForBlockProgression;
-    public List<HungryNeko> HungryNekoSpawners;
+    public List<HungryNeko> HungryNekos;
     public Sprite ImageForWildCard;
     public GameObject CreateCelebrationPrefab;
     public ScoreDisplay ScoreDisplayObj;
@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour {
     public float CurrentDoubleChance;
     public float CurrentTripleChance;
     public int CurrentHungryNekoInterval;
+    public int MovesSinceLastHungryNeko;
+    public int Score;
     public int HighScore;
     public GameObject NewHighScoreIndicator;
     public GameObject CurrentHighScoreIndicator;
@@ -38,8 +40,6 @@ public class GameController : MonoBehaviour {
     public bool IsFreshGame;
     // this var sucks and it's here to fix a weird problem I don't know how to fix otherwise
     public List<Block> GlobalFood;
-    
-    public int Score { get; private set; }
     
     private List<Hex> hexes;
     private List<Hex> openHexes;
@@ -55,7 +55,6 @@ public class GameController : MonoBehaviour {
     private float d100Roll;
     private bool isGameOver;
     private GameObject swipeTutorialInstance;
-    private int movesSinceLastHungryNeko;
 
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
 
@@ -85,6 +84,8 @@ public class GameController : MonoBehaviour {
         CurrentWildChance = 0f;
         CurrentDoubleChance = 0f;
         CurrentTripleChance = 0f;
+        CurrentHungryNekoInterval = -1;
+        MovesSinceLastHungryNeko = 0;
         Score = 0;
         isGameOver = false;
         IsFreshGame = true;
@@ -172,10 +173,7 @@ public class GameController : MonoBehaviour {
         }
         
         allowInput = false;
-
-        if (swipeTutorialInstance) {
-            swipeTutorialInstance.SetActive(false);
-        }
+        swipeTutorialInstance.SetActive(false);
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -249,6 +247,15 @@ public class GameController : MonoBehaviour {
             }
         }
 
+        // if we have a hungry neko interval and no currently hungry nekos, increment our counter
+        if (CurrentHungryNekoInterval != -1 && !IsAnyNekoHungry()) {
+            MovesSinceLastHungryNeko++;
+            
+            if (MovesSinceLastHungryNeko > CurrentHungryNekoInterval) { // ignore this bs off-by-one err
+                MakeNekoHungry();
+            }
+        }
+        
         swipeDir = BoardDirection.Null;
     }
 
@@ -521,7 +528,7 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private HungryNeko AdjacentHungryNeko(Hex hex, BoardDirection dir) {
-        foreach (HungryNeko neko in HungryNekoSpawners) {
+        foreach (HungryNeko neko in HungryNekos) {
             if (neko.IsHungry) {
                 for (int i = 0; i < neko.FeedingHexes.Count; i++) {
                     if (neko.FeedingHexes[i] == hex && neko.FeedingDirections[i] == dir) {
@@ -532,5 +539,19 @@ public class GameController : MonoBehaviour {
         }
 
         return null;
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private void MakeNekoHungry() {
+        int randNeko = Random.Range(0, HungryNekos.Count);
+        int randLevel = Random.Range(1, 3);
+        int randCount = Random.Range(3, 5);
+        HungryNekos[randNeko].GetHungry(randLevel, randCount);
+        MovesSinceLastHungryNeko = 0;
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private bool IsAnyNekoHungry() {
+        return HungryNekos.Any(neko => neko.IsHungry);
     }
 }

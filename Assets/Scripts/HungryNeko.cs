@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 public class HungryNeko : MonoBehaviour {
 
+    public GameController GameController;
     public Image NekoImage;
+    public List<Image> BlockCounters;
     public int BlockLevel;
     public int BlocksLeft;
     public int BlocksIncoming;
@@ -26,9 +28,27 @@ public class HungryNeko : MonoBehaviour {
         Destroy(sushiBlock.gameObject);
         BlocksLeft--;
         BlocksIncoming--;
+        BlockCounters[BlocksLeft].gameObject.SetActive(false);
+        
+        if (!IsHungry) {
+            GetFull();
+        }
     }
     
     //--------------------------------------------------------------------------------------------------------
+    public void GetHungry(int level, int count) {
+        NekoImage.gameObject.SetActive(true);
+        BlockLevel = level;
+        BlocksLeft = count;
+
+        for (int i = 0; i < BlockCounters.Count; i++) {
+            BlockCounters[i].sprite = GameController.ImageForBlockProgression[level - 1];
+            BlockCounters[i].gameObject.SetActive(i < count);
+        }
+    }
     
     //--------------------------------------------------------------------------------------------------------
+    public void GetFull() {
+        NekoImage.gameObject.SetActive(false);
+    }
 }
