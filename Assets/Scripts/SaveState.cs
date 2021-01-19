@@ -10,5 +10,8 @@ public class SaveState {
     public List<int> BlockLevels = new List<int>();
     public int Score;
     public int Multiplier;
+    public int HungryNekoLocation;
+    public int HungryNekoLevel;
+    public int HungryNekoCount;
 
 }

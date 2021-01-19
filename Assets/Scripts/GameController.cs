@@ -89,7 +89,10 @@ public class GameController : MonoBehaviour {
         Score = 0;
         isGameOver = false;
         IsFreshGame = true;
-        GlobalFood = new List<Block>(); 
+        GlobalFood = new List<Block>();
+        foreach (HungryNeko neko in HungryNekos) {
+            neko.Reset();
+        }
         
         // reset high score
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
@@ -173,7 +176,10 @@ public class GameController : MonoBehaviour {
         }
         
         allowInput = false;
-        swipeTutorialInstance.SetActive(false);
+
+        if (swipeTutorialInstance != null) {
+            swipeTutorialInstance.SetActive(false);    
+        }
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -248,7 +254,7 @@ public class GameController : MonoBehaviour {
         }
 
         // if we have a hungry neko interval and no currently hungry nekos, increment our counter
-        if (CurrentHungryNekoInterval != -1 && !IsAnyNekoHungry()) {
+        if (somethingMoved && CurrentHungryNekoInterval != -1 && !IsAnyNekoHungry()) {
             MovesSinceLastHungryNeko++;
             
             if (MovesSinceLastHungryNeko > CurrentHungryNekoInterval) { // ignore this bs off-by-one err
@@ -458,6 +464,15 @@ public class GameController : MonoBehaviour {
                 saveState.BlockLevels.Add(hexes[i].Occupant.Level);    
             }
         }
+
+        for (int i = 0; i < HungryNekos.Count; i++) {
+            if (HungryNekos[i].IsHungry) {
+                saveState.HungryNekoLocation = i;
+                saveState.HungryNekoLevel = HungryNekos[i].BlockLevel;
+                saveState.HungryNekoCount = HungryNekos[i].BlocksLeft;
+                break;
+            }
+        }
         
         // save the state to a file
         BinaryFormatter formatter = new BinaryFormatter();
@@ -491,6 +506,13 @@ public class GameController : MonoBehaviour {
         Score = saveState.Score;
         ScoreMultPanel.CurrentLevel = saveState.Multiplier;
         ScoreMultPanel.CreateComboPrefab();
+        
+        // initialize the current hungry neko, if we have one
+        if (saveState.HungryNekoCount > 0) {
+            HungryNekos[saveState.HungryNekoLocation].GetHungry(
+                level: saveState.HungryNekoLevel,
+                count: saveState.HungryNekoCount);
+        }
         
         // misc initialization tasks
         ScoreDisplayObj.Snap();

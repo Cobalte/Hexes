@@ -18,6 +18,8 @@ public class HungryNeko : MonoBehaviour {
 
     public bool IsHungry => BlocksLeft - BlocksIncoming > 0;
 
+    private static int pointsForFeeding = 1000;
+
     //--------------------------------------------------------------------------------------------------------
     private void Awake() {
         
@@ -50,5 +52,18 @@ public class HungryNeko : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     public void GetFull() {
         NekoImage.gameObject.SetActive(false);
+        GameController.ChangeScore(pointsForFeeding);
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    public void Reset() {
+        NekoImage.gameObject.SetActive(false);
+        BlockLevel = 0;
+        BlocksLeft = 0;
+        BlocksIncoming = 0;
+        
+        foreach (Image counterImage in BlockCounters) {
+            counterImage.gameObject.SetActive(false);
+        }
     }
 }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: RewardLevel08
   m_EditorClassIdentifier: 
   Experience: 14800
-  Type: 0
-  Chance: 0
+  Type: 1
+  Value: 10
   Icon: {fileID: 21300000, guid: 7baf4c24488b5fa42879624effcd3557, type: 3}
