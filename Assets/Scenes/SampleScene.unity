@@ -2592,7 +2592,7 @@ PrefabInstance:
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 4.43995
       objectReference: {fileID: 0}
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
@@ -2632,7 +2632,7 @@ PrefabInstance:
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -2.2200317
       objectReference: {fileID: 0}
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
@@ -7153,6 +7153,8 @@ MonoBehaviour:
   PremiumControllerObj: {fileID: 608002476}
   WaitForFingerUpToCommitSwipe: 0
   SwipeTutorialPrefab: {fileID: 6410933099117074753, guid: 78115fe476af1ee4fb9c79067a17efa9,
+    type: 3}
+  CombineTutorialPrefab: {fileID: 6410933099117074753, guid: c44af6cde8215bb4fa1c0da95fecd5a6,
     type: 3}
   CenterHex: {fileID: 647430624}
   IsFreshGame: 0

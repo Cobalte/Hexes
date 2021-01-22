@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour {
     public PremiumController PremiumControllerObj;
     public bool WaitForFingerUpToCommitSwipe;
     public GameObject SwipeTutorialPrefab;
+    public GameObject CombineTutorialPrefab;
     public Hex CenterHex;
     public bool IsFreshGame;
     public List<Hex> OrderedCornerHexes;
@@ -54,7 +55,8 @@ public class GameController : MonoBehaviour {
     private static Vector3? swipeStartPos;
     private static Vector3? swipeEndPos;
     private bool isGameOver;
-    private GameObject swipeTutorialInstance;
+    private GameObject swipeTutorial;
+    private GameObject combineTutorial;
     private int turnCounter;
 
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
@@ -108,6 +110,7 @@ public class GameController : MonoBehaviour {
         }
         
         // reset other things
+        ClearTutorials();
         ScoreMultPanel.ResetLevel();
         UnlockProgressBar.currentUnlock = 0;
         UnlockProgressBar.levelLabel.text = (UnlockProgressBar.currentUnlock + 1).ToString();
@@ -179,10 +182,7 @@ public class GameController : MonoBehaviour {
 
         turnCounter++;
         allowInput = false;
-
-        if (swipeTutorialInstance != null) {
-            swipeTutorialInstance.SetActive(false);    
-        }
+        ClearTutorials();
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -542,29 +542,63 @@ public class GameController : MonoBehaviour {
     private void CreateFirstBlock() {
         // create the first block in the middle of the board
         CreateBlock(CenterHex, BlockKind.Normal, 1, true);
-
+        
         // show the swipe tutorial
-        if (swipeTutorialInstance == null) {
-            swipeTutorialInstance = Instantiate(
-                original: SwipeTutorialPrefab,
-                position: CenterHex.transform.position,
-                rotation: Quaternion.identity,
-                parent: SushiAnchor.transform);
-        }
-        else {
-            swipeTutorialInstance.SetActive(true);
-            swipeTutorialInstance.transform.position = CenterHex.transform.position;
-        }
+        swipeTutorial = Instantiate(
+            original: SwipeTutorialPrefab,
+            position: CenterHex.transform.position,
+            rotation: Quaternion.identity,
+            parent: SushiAnchor.transform);
+        swipeTutorial.transform.position = CenterHex.transform.position;
     }
     
     //--------------------------------------------------------------------------------------------------------
     private void CreateSecondBlock() {
         // we assume the block is at one of the six corners - create a block exactly 2 corners away
         // in a random direction so the player has to make two swipes to combine them
-        int block1Pos = OrderedCornerHexes.IndexOf(GetBlockHex(blocks[0]));
+        int corner1 = OrderedCornerHexes.IndexOf(GetBlockHex(blocks[0]));
         int offset = Random.Range(0, 2) == 0 ? 2 : -2;
-        int block2Pos = (block1Pos + offset + OrderedCornerHexes.Count) % OrderedCornerHexes.Count;
-        CreateBlock(OrderedCornerHexes[block2Pos], BlockKind.Normal, 1, true);
+        int corner2 = (corner1 + offset + OrderedCornerHexes.Count) % OrderedCornerHexes.Count;
+        CreateBlock(OrderedCornerHexes[corner2], BlockKind.Normal, 1, true);
+        
+        // show the combine tutorial
+        combineTutorial = Instantiate(
+            original: CombineTutorialPrefab,
+            position: CenterHex.transform.position,
+            rotation: Quaternion.identity,
+            parent: SushiAnchor.transform);
+        combineTutorial.transform.position = CenterHex.transform.position;
+        
+        // move and rotate the combine tutorial's arrows depending on block positions
+        int middleCorner = (corner1 + (offset / 2) + OrderedCornerHexes.Count) % OrderedCornerHexes.Count;
+        Vector3 arrowSegment1 = OrderedCornerHexes[corner1].transform.position;
+        Vector3 arrowSegment2 = OrderedCornerHexes[middleCorner].transform.position;
+        Vector3 arrowSegment3 = OrderedCornerHexes[corner2].transform.position;
+        
+        CombineTutorial tutorial = combineTutorial.GetComponent<CombineTutorial>();
+        tutorial.Arrow1.transform.position = arrowSegment1;
+        tutorial.Arrow2.transform.position = arrowSegment2;
+        
+        // I don't want to talk about this
+        float angle = 0;
+        switch (corner1) {
+            case 0: angle = offset > 0 ?  30 : 270; break;
+            case 1: angle = offset > 0 ? 330 : 210; break;
+            case 2: angle = offset > 0 ? 270 : 150; break;
+            case 3: angle = offset > 0 ? 210 :  90; break;
+            case 4: angle = offset > 0 ? 150 :  30; break;
+            case 5: angle = offset > 0 ?  90 : 330; break;
+        }
+        tutorial.Arrow1.transform.Rotate(new Vector3(0, 0, angle));
+        switch (middleCorner) {
+            case 0: angle = offset > 0 ?  30 : 270; break;
+            case 1: angle = offset > 0 ? 330 : 210; break;
+            case 2: angle = offset > 0 ? 270 : 150; break;
+            case 3: angle = offset > 0 ? 210 :  90; break;
+            case 4: angle = offset > 0 ? 150 :  30; break;
+            case 5: angle = offset > 0 ?  90 : 330; break;
+        }
+        tutorial.Arrow2.transform.Rotate(new Vector3(0, 0, angle));
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -599,5 +633,18 @@ public class GameController : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     private Hex GetBlockHex(Block block) {
         return hexes.FirstOrDefault(hex => hex.Occupant == block);
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private void ClearTutorials() {
+        if (swipeTutorial != null) {
+            Destroy(swipeTutorial);
+            swipeTutorial = null;
+        }
+
+        if (combineTutorial != null) {
+            Destroy(combineTutorial);
+            combineTutorial = null;
+        }
     }
 }
