@@ -35,9 +35,10 @@ public class GameController : MonoBehaviour {
     public TextMeshProUGUI CurrentHighScoreLabel;
     public PremiumController PremiumControllerObj;
     public bool WaitForFingerUpToCommitSwipe;
-    public GameObject SwipeTutorialObj;
+    public GameObject SwipeTutorialPrefab;
     public Hex CenterHex;
     public bool IsFreshGame;
+    public List<Hex> OrderedCornerHexes;
     // this var sucks and it's here to fix a weird problem I don't know how to fix otherwise
     public List<Block> GlobalFood;
     
@@ -52,9 +53,9 @@ public class GameController : MonoBehaviour {
     private static float swipeMinDist;
     private static Vector3? swipeStartPos;
     private static Vector3? swipeEndPos;
-    private float d100Roll;
     private bool isGameOver;
     private GameObject swipeTutorialInstance;
+    private int turnCounter;
 
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
 
@@ -86,6 +87,7 @@ public class GameController : MonoBehaviour {
         CurrentTripleChance = 0f;
         CurrentHungryNekoInterval = -1;
         MovesSinceLastHungryNeko = 0;
+        turnCounter = 1;
         Score = 0;
         isGameOver = false;
         IsFreshGame = true;
@@ -117,7 +119,7 @@ public class GameController : MonoBehaviour {
         Debug.Log("Starting game " + gamesStarted + " on this device.");
         
         // start the game
-        CreateFirstBlock();
+        CreateBlocks();
         SaveGameState();
         allowInput = true;
     }
@@ -157,7 +159,7 @@ public class GameController : MonoBehaviour {
             }
             GlobalFood.Clear();
 
-            CreateNewBlocks();
+            CreateBlocks();
             SaveGameState();
             allowInput = true;
             SomethingJustPromoted = false;
@@ -174,7 +176,8 @@ public class GameController : MonoBehaviour {
         if (!somethingMoved) {
             return;
         }
-        
+
+        turnCounter++;
         allowInput = false;
 
         if (swipeTutorialInstance != null) {
@@ -258,7 +261,7 @@ public class GameController : MonoBehaviour {
             MovesSinceLastHungryNeko++;
             
             if (MovesSinceLastHungryNeko > CurrentHungryNekoInterval) { // ignore this bs off-by-one err
-                MakeNekoHungry();
+                MakeRandomNekoHungry();
             }
         }
         
@@ -266,11 +269,20 @@ public class GameController : MonoBehaviour {
     }
 
     //--------------------------------------------------------------------------------------------------------
-    private void CreateNewBlocks() {
+    private void CreateBlocks() {
+        // handle the early game using special block-creating logic
+        switch (turnCounter) {
+            case 1:
+                CreateFirstBlock();
+                return;
+            case 2:
+                CreateSecondBlock();
+                return;
+        }
+
         // how many blocks are we supposed to create?
         int newBlockCount = 1;
-        d100Roll = Random.Range(0f, 100f);
-        
+        float d100Roll = Random.Range(0f, 100f);
         if (d100Roll <= CurrentDoubleChance) {
             newBlockCount = 2;
         }
@@ -528,16 +540,13 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void CreateFirstBlock() {
-        Debug.Log("Dropping the first block ever.");
-        /*openHexes = (from hex in hexes where hex.Neighbors.Count == 6 select hex).ToList();
-        //newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
-        newDropHex = openHexes[3];*/
-        
+        // create the first block in the middle of the board
         CreateBlock(CenterHex, BlockKind.Normal, 1, true);
 
+        // show the swipe tutorial
         if (swipeTutorialInstance == null) {
             swipeTutorialInstance = Instantiate(
-                original: SwipeTutorialObj,
+                original: SwipeTutorialPrefab,
                 position: CenterHex.transform.position,
                 rotation: Quaternion.identity,
                 parent: SushiAnchor.transform);
@@ -546,6 +555,16 @@ public class GameController : MonoBehaviour {
             swipeTutorialInstance.SetActive(true);
             swipeTutorialInstance.transform.position = CenterHex.transform.position;
         }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private void CreateSecondBlock() {
+        // we assume the block is at one of the six corners - create a block exactly 2 corners away
+        // in a random direction so the player has to make two swipes to combine them
+        int block1Pos = OrderedCornerHexes.IndexOf(GetBlockHex(blocks[0]));
+        int offset = Random.Range(0, 2) == 0 ? 2 : -2;
+        int block2Pos = (block1Pos + offset + OrderedCornerHexes.Count) % OrderedCornerHexes.Count;
+        CreateBlock(OrderedCornerHexes[block2Pos], BlockKind.Normal, 1, true);
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -564,7 +583,7 @@ public class GameController : MonoBehaviour {
     }
     
     //--------------------------------------------------------------------------------------------------------
-    private void MakeNekoHungry() {
+    private void MakeRandomNekoHungry() {
         int randNeko = Random.Range(0, HungryNekos.Count);
         int randLevel = Random.Range(1, 3);
         int randCount = Random.Range(3, 5);
@@ -575,5 +594,10 @@ public class GameController : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     private bool IsAnyNekoHungry() {
         return HungryNekos.Any(neko => neko.IsHungry);
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private Hex GetBlockHex(Block block) {
+        return hexes.FirstOrDefault(hex => hex.Occupant == block);
     }
 }

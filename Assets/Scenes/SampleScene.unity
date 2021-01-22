@@ -7144,16 +7144,25 @@ MonoBehaviour:
   CurrentDoubleChance: 0
   CurrentTripleChance: 0
   CurrentHungryNekoInterval: 0
+  MovesSinceLastHungryNeko: 0
+  Score: 0
   HighScore: 0
   NewHighScoreIndicator: {fileID: 728306577}
   CurrentHighScoreIndicator: {fileID: 495773897}
   CurrentHighScoreLabel: {fileID: 1268088125}
   PremiumControllerObj: {fileID: 608002476}
   WaitForFingerUpToCommitSwipe: 0
-  SwipeTutorialObj: {fileID: 6410933099117074753, guid: 78115fe476af1ee4fb9c79067a17efa9,
+  SwipeTutorialPrefab: {fileID: 6410933099117074753, guid: 78115fe476af1ee4fb9c79067a17efa9,
     type: 3}
   CenterHex: {fileID: 647430624}
   IsFreshGame: 0
+  OrderedCornerHexes:
+  - {fileID: 1726248935}
+  - {fileID: 460359169}
+  - {fileID: 562722426}
+  - {fileID: 146271066}
+  - {fileID: 814480098}
+  - {fileID: 667552322}
   GlobalFood: []
 --- !u!4 &608002475
 Transform:
