@@ -10,7 +10,6 @@ public class UnlockProgressBar : MonoBehaviour {
     //public Image IconImage;
     public GameController GameControllerObj;
     public Slider ProgressSlider;
-    public Slider ReflectionSlider;
     public List<LevelReward> LevelRewards;
     public TextMeshProUGUI levelLabel;
     public int currentUnlock;
@@ -44,7 +43,6 @@ public class UnlockProgressBar : MonoBehaviour {
             float scoreDifference = progress - ProgressSlider.value;
             float progressIncrementAmt = scoreDifference / sliderGrowSpeed;
             ProgressSlider.value += progressIncrementAmt * 2;
-            ReflectionSlider.value = ProgressSlider.value;
         }
         else {
             IncrementUnlock();

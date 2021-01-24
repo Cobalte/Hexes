@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class HungryNeko : MonoBehaviour {
 
     public GameController GameController;
-    public Image NekoImage;
+    public Animator NekoAnimator;
     public List<Image> BlockCounters;
     public int BlockLevel;
     public int BlocksLeft;
@@ -39,7 +39,7 @@ public class HungryNeko : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     public void GetHungry(int level, int count) {
-        NekoImage.gameObject.SetActive(true);
+        NekoAnimator.Play("NekoHungry");
         BlockLevel = level;
         BlocksLeft = count;
 
@@ -51,13 +51,13 @@ public class HungryNeko : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     public void GetFull() {
-        NekoImage.gameObject.SetActive(false);
+        NekoAnimator.Play("NekoFull");
         GameController.ChangeScore(pointsForFeeding);
     }
     
     //--------------------------------------------------------------------------------------------------------
     public void Reset() {
-        NekoImage.gameObject.SetActive(false);
+        NekoAnimator.Play("NekoNotHungry");
         BlockLevel = 0;
         BlocksLeft = 0;
         BlocksIncoming = 0;
