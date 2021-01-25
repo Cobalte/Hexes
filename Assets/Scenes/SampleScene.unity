@@ -1522,6 +1522,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0.14509805, g: 0.23529412, b: 0.3254902, a: 1}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
+--- !u!114 &67759292 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5011701502445165477, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1580596676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &104199813
 GameObject:
   m_ObjectHideFlags: 0
@@ -6735,6 +6747,8 @@ MonoBehaviour:
     type: 3}
   CombineTutorialPrefab: {fileID: 6410933099117074753, guid: c44af6cde8215bb4fa1c0da95fecd5a6,
     type: 3}
+  WildcardTutorialPrefab: {fileID: 6410933099117074753, guid: b585a0380fd9e8741b30ddd6242edc01,
+    type: 3}
   CenterHex: {fileID: 647430624}
   IsFreshGame: 0
   OrderedCornerHexes:
@@ -6744,6 +6758,7 @@ MonoBehaviour:
   - {fileID: 146271066}
   - {fileID: 814480098}
   - {fileID: 667552322}
+  NextTurnShouldBeWild: 0
   GlobalFood: []
 --- !u!4 &608002475
 Transform:
@@ -9727,6 +9742,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890515750}
   m_CullTransparentMesh: 0
+--- !u!114 &894354210 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5011701502903589064, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1580596676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &906236723
 GameObject:
   m_ObjectHideFlags: 0
@@ -11265,8 +11292,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c26b0c140281dad46b7fd1e3d9157d68, type: 2}
   - {fileID: 11400000, guid: 8551077faa0c62f49aec154904936409, type: 2}
   - {fileID: 11400000, guid: b67000d9e30169d428170f6947747018, type: 2}
-  levelLabel: {fileID: 1249321154}
-  currentUnlock: 0
+  - {fileID: 11400000, guid: 4071b9ebd112ded43a24a2918500a0b3, type: 2}
+  - {fileID: 11400000, guid: 5f2caa73fd95eac46b4ab322fd4716fa, type: 2}
+  - {fileID: 11400000, guid: ba476501bd2aa364096df8eb8a52910d, type: 2}
+  - {fileID: 11400000, guid: f04ab80f79670984188c5e7c99291757, type: 2}
+  - {fileID: 11400000, guid: 406fb49cff2dfe9418ffea7aa31c7336, type: 2}
+  - {fileID: 11400000, guid: dc3f9cf6a3af46346a09c991c0404fc0, type: 2}
+  - {fileID: 11400000, guid: a7071e2311925e7469e11e2a49d393fa, type: 2}
+  - {fileID: 11400000, guid: 8d0f3482e99015a44a23b8b633637261, type: 2}
+  - {fileID: 11400000, guid: 1508a7af10e9cd749977eabeb2036e48, type: 2}
+  - {fileID: 11400000, guid: 40c2e2c4ed6dd2f4aaac340d84f51357, type: 2}
+  - {fileID: 11400000, guid: 1d67bed9de125da489973c387a4107fd, type: 2}
+  - {fileID: 11400000, guid: a1b6afeceb976694f8bca1b08b755428, type: 2}
+  - {fileID: 11400000, guid: efe8201340d332f489aee787e8d8a7fb, type: 2}
+  LevelLabel: {fileID: 1249321154}
+  CurrentUnlock: 0
 --- !u!222 &1029461411
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14982,6 +15022,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1427978234 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5011701502967902611, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1580596676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1435624150
 GameObject:
   m_ObjectHideFlags: 0
@@ -15616,13 +15668,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameController: {fileID: 608002474}
-  NekoAnimator: {fileID: 1325622480}
+  NekoAnimator: {fileID: 1941570419}
   BlockCounters:
-  - {fileID: 1325622479}
-  - {fileID: 1325622476}
-  - {fileID: 1325622478}
-  - {fileID: 1325622475}
-  - {fileID: 1325622477}
+  - {fileID: 1812282469}
+  - {fileID: 1427978234}
+  - {fileID: 894354210}
+  - {fileID: 2007769713}
+  - {fileID: 67759292}
   BlockLevel: 1
   BlocksLeft: 0
   BlocksIncoming: 0
@@ -17658,6 +17710,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1780710105}
   m_CullTransparentMesh: 0
+--- !u!114 &1812282469 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5011701502460953382, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1580596676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1854128181
 GameObject:
   m_ObjectHideFlags: 0
@@ -18449,6 +18513,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 3
   m_AspectRatio: 2.7080061
+--- !u!95 &1941570419 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5011701502468090383, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1580596676}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1952022298
 GameObject:
   m_ObjectHideFlags: 0
@@ -18805,6 +18875,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973675017}
   m_CullTransparentMesh: 0
+--- !u!114 &2007769713 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5011701502342105144, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1580596676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2031492141
 GameObject:
   m_ObjectHideFlags: 0

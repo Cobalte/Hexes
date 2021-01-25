@@ -37,9 +37,11 @@ public class GameController : MonoBehaviour {
     public bool WaitForFingerUpToCommitSwipe;
     public GameObject SwipeTutorialPrefab;
     public GameObject CombineTutorialPrefab;
+    public GameObject WildcardTutorialPrefab;
     public Hex CenterHex;
     public bool IsFreshGame;
     public List<Hex> OrderedCornerHexes;
+    public bool ForceWildCardNextTurn;
     // this var sucks and it's here to fix a weird problem I don't know how to fix otherwise
     public List<Block> GlobalFood;
     
@@ -57,7 +59,8 @@ public class GameController : MonoBehaviour {
     private bool isGameOver;
     private GameObject swipeTutorial;
     private GameObject combineTutorial;
-    private int turnCounter;
+    private GameObject wildcardTutorial;
+    private int turnCount;
 
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
 
@@ -89,9 +92,10 @@ public class GameController : MonoBehaviour {
         CurrentTripleChance = 0f;
         CurrentHungryNekoInterval = -1;
         MovesSinceLastHungryNeko = 0;
-        turnCounter = 1;
+        turnCount = 1;
         Score = 0;
         isGameOver = false;
+        ForceWildCardNextTurn = false;
         IsFreshGame = true;
         GlobalFood = new List<Block>();
         foreach (HungryNeko neko in HungryNekos) {
@@ -111,9 +115,9 @@ public class GameController : MonoBehaviour {
         
         // reset other things
         ClearTutorials();
+        UnlockProgressBar.Reset();
         ScoreMultPanel.ResetLevel();
-        UnlockProgressBar.currentUnlock = 0;
-        UnlockProgressBar.levelLabel.text = (UnlockProgressBar.currentUnlock + 1).ToString();
+        UnlockProgressBar.LevelLabel.text = (UnlockProgressBar.CurrentUnlock + 1).ToString();
         
         // record number of games started on this device
         int gamesStarted = PlayerPrefs.GetInt(playerPrefsGameCountKey) + 1;
@@ -180,7 +184,7 @@ public class GameController : MonoBehaviour {
             return;
         }
 
-        turnCounter++;
+        turnCount++;
         allowInput = false;
         ClearTutorials();
     }
@@ -271,7 +275,7 @@ public class GameController : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     private void CreateBlocks() {
         // handle the early game using special block-creating logic
-        switch (turnCounter) {
+        switch (turnCount) {
             case 1:
                 CreateFirstBlock();
                 return;
@@ -279,7 +283,7 @@ public class GameController : MonoBehaviour {
                 CreateSecondBlock();
                 return;
         }
-
+        
         // how many blocks are we supposed to create?
         int newBlockCount = 1;
         float d100Roll = Random.Range(0f, 100f);
@@ -315,6 +319,12 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void CreateBlock(Hex location, BlockKind kind, int level, bool celebrate) {
+        if (ForceWildCardNextTurn) {
+            kind = BlockKind.WildCard;
+            ShowWildcardTutorial(location);
+            ForceWildCardNextTurn = false;
+        }
+        
         newBlock = Instantiate(
             original: BlockPrefab,
             position: location.transform.position,
@@ -466,6 +476,12 @@ public class GameController : MonoBehaviour {
         // put all of the blocks on the board (and the current score) into a serializable state
         SaveState saveState = new SaveState {
             Score = this.Score,
+            TurnCount = turnCount,
+            CurrentWildChance = this.CurrentWildChance,
+            CurrentDoubleChance = this.CurrentDoubleChance,
+            CurrentTripleChance = this.CurrentTripleChance,
+            CurrentHungryNekoInterval = this.CurrentHungryNekoInterval,
+            MovesSinceLastHungryNeko = this.MovesSinceLastHungryNeko,
             Multiplier = ScoreMultPanel.CurrentLevel
         };
         
@@ -518,6 +534,16 @@ public class GameController : MonoBehaviour {
         Score = saveState.Score;
         ScoreMultPanel.CurrentLevel = saveState.Multiplier;
         ScoreMultPanel.CreateComboPrefab();
+        turnCount = saveState.TurnCount;
+        
+        // update the level rewards bar
+        CurrentWildChance = saveState.CurrentWildChance;
+        CurrentDoubleChance = saveState.CurrentDoubleChance;
+        CurrentTripleChance = saveState.CurrentTripleChance;
+        CurrentHungryNekoInterval = saveState.CurrentHungryNekoInterval;
+        MovesSinceLastHungryNeko = saveState.MovesSinceLastHungryNeko;
+        ForceWildCardNextTurn = false;
+        UnlockProgressBar.SnapToCurrentScoreWithoutRewards();
         
         // initialize the current hungry neko, if we have one
         if (saveState.HungryNekoCount > 0) {
@@ -533,9 +559,9 @@ public class GameController : MonoBehaviour {
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
         IsFreshGame = Score == 0; // score will be > 0 if any blocks have combined
 
-        Debug.Log("Game loaded. High score: " + HighScore +
-              ", Games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey) +
-              ", Premium status: " + PremiumControllerObj.GameIsPremium);
+        Debug.Log("Game loaded. " +
+            "Total games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey) + ", " +
+            "Premium status: " + PremiumControllerObj.GameIsPremium);
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -646,5 +672,22 @@ public class GameController : MonoBehaviour {
             Destroy(combineTutorial);
             combineTutorial = null;
         }
+        
+        if (wildcardTutorial != null) {
+            Destroy(wildcardTutorial);
+            wildcardTutorial = null;
+        }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private void ShowWildcardTutorial(Hex wildcardHex) {
+        wildcardTutorial = Instantiate(
+            original: WildcardTutorialPrefab,
+            position: CenterHex.transform.position,
+            rotation: Quaternion.identity,
+            parent: SushiAnchor.transform);
+        wildcardTutorial.transform.position = CenterHex.transform.position;
+        WildcardTutorial theActualTutorial = wildcardTutorial.GetComponent<WildcardTutorial>();
+        theActualTutorial.Circle.transform.position = wildcardHex.transform.position;
     }
 }

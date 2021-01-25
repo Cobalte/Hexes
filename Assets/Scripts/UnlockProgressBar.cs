@@ -1,39 +1,44 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class UnlockProgressBar : MonoBehaviour {
     
-    //public Image IconImage;
     public GameController GameControllerObj;
     public Slider ProgressSlider;
     public List<LevelReward> LevelRewards;
-    public TextMeshProUGUI levelLabel;
-    public int currentUnlock;
+    public TextMeshProUGUI LevelLabel;
+    public int CurrentUnlock;
 
-    private const float sliderGrowSpeed = 30f;
+    private const float sliderMoveSpeed = 30f;
     
-    private RectTransform fillerRect;
-    private float fillerMaxSize;
     private float scoreFloor;
     private float scoreCeiling;
     private float progress;
-    private bool isProgressComplete;
+    private bool finalLevelReached;
 
     //--------------------------------------------------------------------------------------------------------
     private void Awake() {
-        ProgressSlider.value = 0;
-        currentUnlock = -1;
-        IncrementUnlock();
-        
+        Reset();
     }
 
     //--------------------------------------------------------------------------------------------------------
+    public void Reset() {
+        ProgressSlider.value = 0;
+        finalLevelReached = false;
+        CurrentUnlock = 0;
+        scoreFloor = 0;
+        scoreCeiling = LevelRewards[0].Experience;
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
     private void Update() {
-        if (isProgressComplete) {
+        if (finalLevelReached) {
             return;
         }
 
@@ -41,7 +46,7 @@ public class UnlockProgressBar : MonoBehaviour {
 
         if (progress < 1f) {
             float scoreDifference = progress - ProgressSlider.value;
-            float progressIncrementAmt = scoreDifference / sliderGrowSpeed;
+            float progressIncrementAmt = scoreDifference / sliderMoveSpeed;
             ProgressSlider.value += progressIncrementAmt * 2;
         }
         else {
@@ -50,36 +55,56 @@ public class UnlockProgressBar : MonoBehaviour {
     }
 
     //--------------------------------------------------------------------------------------------------------
-    private void IncrementUnlock()
-    {
-        if (currentUnlock < LevelRewards.Count - 1) {
-            if (currentUnlock >= 0) {
-                switch (LevelRewards[currentUnlock].Type) {
+    private void IncrementUnlock() {
+        if (CurrentUnlock < LevelRewards.Count - 1) {
+            CurrentUnlock++;
+            scoreFloor = scoreCeiling;
+            scoreCeiling = LevelRewards[CurrentUnlock].Experience;
+            LevelLabel.text = (CurrentUnlock + 1).ToString();
+
+            // if this level actually unlocked something, tell that to the game controller 
+            switch (LevelRewards[CurrentUnlock].Type) {
+                case LevelRewardType.WildDropChance:
+                    GameControllerObj.CurrentWildChance = LevelRewards[CurrentUnlock].Value;
+                    break;
+                case LevelRewardType.DoubleDropChance:
+                    GameControllerObj.CurrentDoubleChance = LevelRewards[CurrentUnlock].Value;
+                    break;
+                case LevelRewardType.TripleDropChance:
+                    GameControllerObj.CurrentTripleChance = LevelRewards[CurrentUnlock].Value;
+                    break;
+                case LevelRewardType.HungryNekoInterval:
+                    GameControllerObj.CurrentHungryNekoInterval = (int)LevelRewards[CurrentUnlock].Value;
+                    break;
+            }
+            
+            // if this is the first time a new mechanic is introduced, show its tutorial
+            LevelRewardType unlockedType = LevelRewards[CurrentUnlock].Type;
+            if (CurrentUnlock == LevelRewards.FindIndex(reward => reward.Type == unlockedType)) {
+                switch (unlockedType) {
                     case LevelRewardType.WildDropChance:
-                        GameControllerObj.CurrentWildChance = LevelRewards[currentUnlock].Value;
+                        GameControllerObj.ForceWildCardNextTurn = true;
                         break;
                     case LevelRewardType.DoubleDropChance:
-                        GameControllerObj.CurrentDoubleChance = LevelRewards[currentUnlock].Value;
                         break;
                     case LevelRewardType.TripleDropChance:
-                        GameControllerObj.CurrentTripleChance = LevelRewards[currentUnlock].Value;
                         break;
                     case LevelRewardType.HungryNekoInterval:
-                        GameControllerObj.CurrentHungryNekoInterval = (int)LevelRewards[currentUnlock].Value;
                         break;
                 }
             }
-            
-            // onto the next unlock!
-            currentUnlock++;
-            scoreFloor = scoreCeiling;
-            scoreCeiling = LevelRewards[currentUnlock].Experience;
-            levelLabel.text = (currentUnlock + 1).ToString();
         }
         else {
             // we've unlocked everything!
-            isProgressComplete = true;
-            levelLabel.text = (currentUnlock + 1).ToString();
+            finalLevelReached = true;
+            LevelLabel.text = (CurrentUnlock + 1).ToString();
         }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    public void SnapToCurrentScoreWithoutRewards() {
+        CurrentUnlock = LevelRewards.FindIndex(lvl => GameControllerObj.Score < lvl.Experience);
+        scoreFloor = CurrentUnlock > 0 ? LevelRewards[CurrentUnlock - 1].Experience : 0;  
+        scoreCeiling = LevelRewards[CurrentUnlock].Experience;
     }
 }

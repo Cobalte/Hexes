@@ -21,11 +21,6 @@ public class HungryNeko : MonoBehaviour {
     private static int pointsForFeeding = 1000;
 
     //--------------------------------------------------------------------------------------------------------
-    private void Awake() {
-        
-    }
-    
-    //--------------------------------------------------------------------------------------------------------
     public void Feed(Block sushiBlock) {
         Destroy(sushiBlock.gameObject);
         BlocksLeft--;

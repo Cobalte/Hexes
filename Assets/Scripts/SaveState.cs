@@ -13,5 +13,11 @@ public class SaveState {
     public int HungryNekoLocation;
     public int HungryNekoLevel;
     public int HungryNekoCount;
+    public int TurnCount;
+    public float CurrentWildChance;
+    public float CurrentDoubleChance;
+    public float CurrentTripleChance;
+    public int CurrentHungryNekoInterval;
+    public int MovesSinceLastHungryNeko;
 
 }

@@ -6,18 +6,22 @@ public class PremiumController : MonoBehaviour {
 
     public bool GameIsPremium { get; private set; }
     
+    //--------------------------------------------------------------------------------------------------------
     private void Start() {
         GameIsPremium = false;
-        UpdatePremiumStatus();
+        VerifyPremiumStatus();
     }
 
-    private void UpdatePremiumStatus() {
-        Debug.Log("TODO: Execute premium status query.");
+    //--------------------------------------------------------------------------------------------------------
+    private void VerifyPremiumStatus() {
+        Debug.Log("Game is in premium mode: " + GameIsPremium);
     }
     
+    //--------------------------------------------------------------------------------------------------------
     public void GoPremium() {
         Debug.Log("TODO: Execute premium purchase.");
+        
         GameIsPremium = true;
-        UpdatePremiumStatus();
+        VerifyPremiumStatus();
     }
 }
