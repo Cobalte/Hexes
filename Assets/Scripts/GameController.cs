@@ -39,7 +39,6 @@ public class GameController : MonoBehaviour {
     public GameObject CombineTutorialPrefab;
     public GameObject WildcardTutorialPrefab;
     public Hex CenterHex;
-    public bool IsFreshGame;
     public List<Hex> OrderedCornerHexes;
     public bool ForceWildCardNextTurn;
     // this var sucks and it's here to fix a weird problem I don't know how to fix otherwise
@@ -63,6 +62,7 @@ public class GameController : MonoBehaviour {
     private int turnCount;
 
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
+    public bool IsFreshGame => turnCount <= 5;
 
     private const float minSwipeDistScreenFration = 0.1f;
     private const string playerPrefHighScoreKey = "HighScore";
@@ -96,7 +96,6 @@ public class GameController : MonoBehaviour {
         Score = 0;
         isGameOver = false;
         ForceWildCardNextTurn = false;
-        IsFreshGame = true;
         GlobalFood = new List<Block>();
         foreach (HungryNeko neko in HungryNekos) {
             neko.Reset();
@@ -557,7 +556,6 @@ public class GameController : MonoBehaviour {
         swipeDir = BoardDirection.Null;
         allowInput = true;
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
-        IsFreshGame = Score == 0; // score will be > 0 if any blocks have combined
 
         Debug.Log("Game loaded. " +
             "Total games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey) + ", " +

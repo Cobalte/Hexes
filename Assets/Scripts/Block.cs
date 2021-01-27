@@ -150,7 +150,6 @@ public class Block : MonoBehaviour {
         RandomizeSpeed();
         BlockAnimator.Play("Block_Birth");
 
-        gameController.IsFreshGame = false;
         BlocksToEat.Remove(food);
         gameController.GlobalFood.Remove(food);
     }
