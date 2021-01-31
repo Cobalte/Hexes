@@ -6750,7 +6750,6 @@ MonoBehaviour:
   WildcardTutorialPrefab: {fileID: 6410933099117074753, guid: b585a0380fd9e8741b30ddd6242edc01,
     type: 3}
   CenterHex: {fileID: 647430624}
-  IsFreshGame: 0
   OrderedCornerHexes:
   - {fileID: 1726248935}
   - {fileID: 460359169}
@@ -6758,7 +6757,7 @@ MonoBehaviour:
   - {fileID: 146271066}
   - {fileID: 814480098}
   - {fileID: 667552322}
-  NextTurnShouldBeWild: 0
+  ForceWildCardNextTurn: 0
   GlobalFood: []
 --- !u!4 &608002475
 Transform:
@@ -12866,7 +12865,7 @@ PrefabInstance:
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 28.99997
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 7316692578941375728, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
@@ -13207,10 +13206,10 @@ RectTransform:
   m_Father: {fileID: 850104838}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 125}
+  m_SizeDelta: {x: 680, y: 682.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1293491860
 PrefabInstance:
@@ -18026,7 +18025,7 @@ PrefabInstance:
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 28.99997
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 7316692578941375728, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
