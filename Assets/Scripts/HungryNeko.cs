@@ -15,6 +15,7 @@ public class HungryNeko : MonoBehaviour {
     public int BlocksIncoming;
     public List<Hex> FeedingHexes;
     public List<BoardDirection> FeedingDirections;
+    public List<GameObject> HelperArrows;
 
     public bool IsHungry => BlocksLeft - BlocksIncoming > 0;
 
@@ -42,12 +43,20 @@ public class HungryNeko : MonoBehaviour {
             BlockCounters[i].sprite = GameController.ImageForBlockProgression[level - 1];
             BlockCounters[i].gameObject.SetActive(i < count);
         }
+
+        foreach (GameObject helperArrow in HelperArrows) {
+            helperArrow.SetActive(true);
+        }
     }
     
     //--------------------------------------------------------------------------------------------------------
     public void GetFull() {
         NekoAnimator.Play("NekoFull");
         GameController.ChangeScore(pointsForFeeding);
+        
+        foreach (GameObject helperArrow in HelperArrows) {
+            helperArrow.SetActive(false);
+        }
     }
     
     //--------------------------------------------------------------------------------------------------------
