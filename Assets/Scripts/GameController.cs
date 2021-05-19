@@ -138,6 +138,7 @@ public class GameController : MonoBehaviour {
         GameOverPanelObj.ScoreResult = Score;
         GameOverPanelObj.IsHighScore = Score >= HighScore;
         GameOverPanelObj.GameIsOver();
+        SaveGameState();
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -481,7 +482,8 @@ public class GameController : MonoBehaviour {
             CurrentTripleChance = this.CurrentTripleChance,
             CurrentHungryNekoInterval = this.CurrentHungryNekoInterval,
             MovesSinceLastHungryNeko = this.MovesSinceLastHungryNeko,
-            Multiplier = ScoreMultPanel.CurrentLevel
+            Multiplier = ScoreMultPanel.CurrentLevel,
+            IsGameOver = isGameOver
         };
         
         for (int i = 0; i < hexes.Count; i++) {
@@ -521,6 +523,12 @@ public class GameController : MonoBehaviour {
         FileStream file = File.Open(Application.persistentDataPath + saveFileName, FileMode.Open);
         SaveState saveState = (SaveState)formatter.Deserialize(file);
         file.Close();
+        
+        // if the loaded game is actually over, start a new one instead
+        if (saveState.IsGameOver) {
+            StartNewGame();
+            return;
+        }
         
         // populate the board according to the saved state
         for (int i = 0; i < saveState.BlockLocations.Count; i++) {

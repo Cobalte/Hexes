@@ -8,6 +8,7 @@ public class SaveState {
     public List<int> BlockLocations = new List<int>();
     public List<BlockKind> BlockKinds = new List<BlockKind>();
     public List<int> BlockLevels = new List<int>();
+    public bool IsGameOver;
     public int Score;
     public int Multiplier;
     public int HungryNekoLocation;
