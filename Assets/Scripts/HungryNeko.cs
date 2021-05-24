@@ -69,5 +69,9 @@ public class HungryNeko : MonoBehaviour {
         foreach (Image counterImage in BlockCounters) {
             counterImage.gameObject.SetActive(false);
         }
+        
+        foreach (GameObject helperArrow in HelperArrows) {
+            helperArrow.SetActive(false);
+        }
     }
 }
