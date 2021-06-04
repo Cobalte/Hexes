@@ -52,7 +52,6 @@ public class GameController : MonoBehaviour {
     private Block newBlock;
     private bool allowInput;
     private static Touch currentTouch;
-    private static float swipeMinDist;
     private static Vector3? swipeStartPos;
     private static Vector3? swipeEndPos;
     private bool isGameOver;
@@ -64,14 +63,13 @@ public class GameController : MonoBehaviour {
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
     public bool IsFreshGame => turnCount <= 5;
 
-    private const float minSwipeDistScreenFration = 0.1f;
+    private const float swipeMinDist = 50f; // feels good?
     private const string playerPrefHighScoreKey = "HighScore";
     private const string playerPrefsGameCountKey = "GamesStarted";
     private const string saveFileName = "/savegame.save";
     
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
-        swipeMinDist = Screen.height * minSwipeDistScreenFration;
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
         blocks = new List<Block>();
         Canvas.ForceUpdateCanvases();
