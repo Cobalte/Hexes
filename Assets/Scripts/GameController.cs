@@ -67,6 +67,8 @@ public class GameController : MonoBehaviour {
     private const string playerPrefHighScoreKey = "HighScore";
     private const string playerPrefsGameCountKey = "GamesStarted";
     private const string saveFileName = "/savegame.save";
+    private readonly List<BoardDirection> fullBoardCheckDirections = new List<BoardDirection>
+        { BoardDirection.Down, BoardDirection.DownLeft, BoardDirection.DownRight };
     
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
@@ -294,25 +296,66 @@ public class GameController : MonoBehaviour {
 
         // if the board only has 2 or 3 hexes open, don't suddenly fill all of them and make the
         // player lose - instead, make sure there's still 1 more empty hex after the drop
-        int openHexCount = (from hex in hexes where hex.Occupant == null select hex).Count();
-        if (openHexCount > 1 && newBlockCount >= openHexCount) {
-            newBlockCount = openHexCount - 1;
+        openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();
+        if (openHexes.Count > 1 && newBlockCount >= openHexes.Count) {
+            newBlockCount = openHexes.Count - 1;
         }
         
         // create as many blocks as we need
         for (int i = 0; i < newBlockCount; i++) {
-            openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();    
             d100Roll = Random.Range(0f, 100f);
             BlockKind newBlockKind = d100Roll <= CurrentWildChance ? BlockKind.WildCard : BlockKind.Normal;
             newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
         
             CreateBlock(newDropHex, newBlockKind, 1, true);
             
-            if (blocks.Count == hexes.Count) {
+            // if the board is full and there are no moves available, end the game
+            if (IsBoardFullAndImmobile()) {
                 EnterGameOverState();
                 return;
             }
         }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    private bool IsBoardFullAndImmobile() {
+        // if the board is not full then the game isn't over yet
+        if (blocks.Count < hexes.Count) {
+            return false;
+        }
+
+        // if any sushi on the board can combine with any of its neighbors then the game isn't over yet
+        foreach (Hex hex in hexes) {
+            // max level sushi never combines with anything
+            if (hex.Occupant.Level == ImageForBlockProgression.Count) {
+                continue;
+            }
+            
+            // when we find a wasabi, we need to make sure it's not completely surrounded by max level blocks
+            // or other wasabi (because that's comically unlikely but still technically possible)
+            if (hex.Occupant.Kind == BlockKind.WildCard) {
+                if (hex.Neighbors.Any(neighbor =>
+                    neighbor.Occupant.Kind == BlockKind.Normal &&
+                    neighbor.Occupant.Level < ImageForBlockProgression.Count)) {
+                    
+                    return false;
+                }
+            }
+
+            // this works by checking the down, down-left, and down-right neighboring positions. if
+            // there's an identical sushi in any of those positions then we know a combination is possible
+            for (int d = 0; d < hex.NeighborDirections.Count; d++) {
+                if (!fullBoardCheckDirections.Contains(hex.NeighborDirections[d])) {
+                    continue;
+                }
+
+                if (hex.Occupant.Level == hex.Neighbors[d].Occupant.Level) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
     
     //--------------------------------------------------------------------------------------------------------
