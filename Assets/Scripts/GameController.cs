@@ -100,6 +100,9 @@ public class GameController : MonoBehaviour {
         foreach (HungryNeko neko in HungryNekos) {
             neko.Reset();
         }
+        foreach (Hex hex in hexes) {
+            hex.Occupant = null;
+        }
         
         // reset high score
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
@@ -284,6 +287,12 @@ public class GameController : MonoBehaviour {
                 return;
         }
         
+        int openHexCount = (from hex in hexes where hex.Occupant == null select hex).Count();
+        if (openHexCount == 0) {
+            // how did we get here?
+            return;
+        }
+        
         // how many blocks are we supposed to create?
         int newBlockCount = 1;
         float d100Roll = Random.Range(0f, 100f);
@@ -296,15 +305,15 @@ public class GameController : MonoBehaviour {
 
         // if the board only has 2 or 3 hexes open, don't suddenly fill all of them and make the
         // player lose - instead, make sure there's still 1 more empty hex after the drop
-        openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();
-        if (openHexes.Count > 1 && newBlockCount >= openHexes.Count) {
-            newBlockCount = openHexes.Count - 1;
+        if (openHexCount > 1 && newBlockCount >= openHexCount) {
+            newBlockCount = openHexCount - 1;
         }
         
         // create as many blocks as we need
         for (int i = 0; i < newBlockCount; i++) {
             d100Roll = Random.Range(0f, 100f);
             BlockKind newBlockKind = d100Roll <= CurrentWildChance ? BlockKind.WildCard : BlockKind.Normal;
+            openHexes = (from hex in hexes where hex.Occupant == null select hex).ToList();
             newDropHex = openHexes[Random.Range(0, openHexes.Count - 1)];
         
             CreateBlock(newDropHex, newBlockKind, 1, true);
@@ -515,6 +524,7 @@ public class GameController : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     private void SaveGameState() {
         // put all of the blocks on the board (and the current score) into a serializable state
+        
         SaveState saveState = new SaveState {
             Score = this.Score,
             TurnCount = turnCount,
@@ -595,9 +605,7 @@ public class GameController : MonoBehaviour {
         
         // initialize the current hungry neko, if we have one
         if (saveState.HungryNekoCount > 0) {
-            HungryNekos[saveState.HungryNekoLocation].GetHungry(
-                level: saveState.HungryNekoLevel,
-                count: saveState.HungryNekoCount);
+            HungryNekos[saveState.HungryNekoLocation].GetHungry(saveState.HungryNekoLevel);
         }
         
         // misc initialization tasks
@@ -691,10 +699,17 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void MakeRandomNekoHungry() {
+        // what is the highest (non-maxed) level sushi on the board?
+        int highestLevel = 0;
+        foreach (Block sushi in blocks) {
+            if (sushi.Level < ImageForBlockProgression.Count && sushi.Level > highestLevel) {
+                highestLevel = sushi.Level;
+            }
+        }
+
         int randNeko = Random.Range(0, HungryNekos.Count);
-        int randLevel = Random.Range(1, 3);
-        int randCount = Random.Range(3, 5);
-        HungryNekos[randNeko].GetHungry(randLevel, randCount);
+        int nekoLevel = Random.Range(highestLevel / 2, highestLevel + 1);
+        HungryNekos[randNeko].GetHungry(nekoLevel);
         MovesSinceLastHungryNeko = 0;
     }
     

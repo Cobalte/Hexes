@@ -34,15 +34,13 @@ public class HungryNeko : MonoBehaviour {
     }
     
     //--------------------------------------------------------------------------------------------------------
-    public void GetHungry(int level, int count) {
+    public void GetHungry(int level) {
         NekoAnimator.Play("NekoHungry");
         BlockLevel = level;
-        BlocksLeft = count;
+        BlocksLeft = 1;
 
-        for (int i = 0; i < BlockCounters.Count; i++) {
-            BlockCounters[i].sprite = GameController.ImageForBlockProgression[level - 1];
-            BlockCounters[i].gameObject.SetActive(i < count);
-        }
+        BlockCounters[0].sprite = GameController.ImageForBlockProgression[level - 1];
+        BlockCounters[0].gameObject.SetActive(true);
 
         foreach (GameObject helperArrow in HelperArrows) {
             helperArrow.SetActive(true);
