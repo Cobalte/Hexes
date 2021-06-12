@@ -1045,10 +1045,6 @@ MonoBehaviour:
   NekoAnimator: {fileID: 123869699}
   BlockCounters:
   - {fileID: 123869698}
-  - {fileID: 123869695}
-  - {fileID: 123869697}
-  - {fileID: 123869694}
-  - {fileID: 123869696}
   BlockLevel: 1
   BlocksLeft: 0
   BlocksIncoming: 0
@@ -1527,18 +1523,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0.14509805, g: 0.23529412, b: 0.3254902, a: 1}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
---- !u!114 &67759292 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5011701502445165477, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1580596676}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &104199813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1790,54 +1774,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 123869692}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &123869694 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3940409263174985130, guid: d1ea5b445b1331f4f8231b3add7390e6,
-    type: 3}
-  m_PrefabInstance: {fileID: 123869692}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &123869695 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3940409263874235393, guid: d1ea5b445b1331f4f8231b3add7390e6,
-    type: 3}
-  m_PrefabInstance: {fileID: 123869692}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &123869696 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3940409263353607735, guid: d1ea5b445b1331f4f8231b3add7390e6,
-    type: 3}
-  m_PrefabInstance: {fileID: 123869692}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &123869697 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3940409263935763802, guid: d1ea5b445b1331f4f8231b3add7390e6,
-    type: 3}
-  m_PrefabInstance: {fileID: 123869692}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &123869698 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3940409263291805364, guid: d1ea5b445b1331f4f8231b3add7390e6,
@@ -3648,10 +3584,6 @@ MonoBehaviour:
   NekoAnimator: {fileID: 1576629557}
   BlockCounters:
   - {fileID: 1576629556}
-  - {fileID: 1576629553}
-  - {fileID: 1576629555}
-  - {fileID: 1576629552}
-  - {fileID: 1576629554}
   BlockLevel: 1
   BlocksLeft: 0
   BlocksIncoming: 0
@@ -9901,18 +9833,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890515750}
   m_CullTransparentMesh: 0
---- !u!114 &894354210 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5011701502903589064, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1580596676}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &906236723
 GameObject:
   m_ObjectHideFlags: 0
@@ -10767,10 +10687,6 @@ MonoBehaviour:
   NekoAnimator: {fileID: 1325622480}
   BlockCounters:
   - {fileID: 1325622479}
-  - {fileID: 1325622476}
-  - {fileID: 1325622478}
-  - {fileID: 1325622475}
-  - {fileID: 1325622477}
   BlockLevel: 1
   BlocksLeft: 0
   BlocksIncoming: 0
@@ -11364,7 +11280,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: -62.9}
+  m_AnchoredPosition: {x: 0, y: -62.9}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &992239141
@@ -13981,54 +13897,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1325622473}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1325622475 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 709525289053841932, guid: 94735da6397f0554a9812eee22a2bbcc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1325622473}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1325622476 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 709525288410682279, guid: 94735da6397f0554a9812eee22a2bbcc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1325622473}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1325622477 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 709525288963832209, guid: 94735da6397f0554a9812eee22a2bbcc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1325622473}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1325622478 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 709525288338160380, guid: 94735da6397f0554a9812eee22a2bbcc,
-    type: 3}
-  m_PrefabInstance: {fileID: 1325622473}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1325622479 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 709525288902156562, guid: 94735da6397f0554a9812eee22a2bbcc,
@@ -15384,18 +15252,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1427978234 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5011701502967902611, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1580596676}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1435624150
 GameObject:
   m_ObjectHideFlags: 0
@@ -16035,10 +15891,6 @@ MonoBehaviour:
   NekoAnimator: {fileID: 1941570419}
   BlockCounters:
   - {fileID: 1812282469}
-  - {fileID: 1427978234}
-  - {fileID: 894354210}
-  - {fileID: 2007769713}
-  - {fileID: 67759292}
   BlockLevel: 1
   BlocksLeft: 0
   BlocksIncoming: 0
@@ -16156,6 +16008,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 227575473}
     m_Modifications:
+    - target: {fileID: 4223464193232752502, guid: 78702836d5991e844a72a98f68fce74d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223464193257807261, guid: 78702836d5991e844a72a98f68fce74d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223464193519959977, guid: 78702836d5991e844a72a98f68fce74d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4223464193867295776, guid: 78702836d5991e844a72a98f68fce74d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4223464194328512064, guid: 78702836d5991e844a72a98f68fce74d,
         type: 3}
       propertyPath: m_Pivot.x
@@ -16266,6 +16138,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HungryNeko  Variant FarLeft
       objectReference: {fileID: 0}
+    - target: {fileID: 4223464194328512065, guid: 78702836d5991e844a72a98f68fce74d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78702836d5991e844a72a98f68fce74d, type: 3}
 --- !u!224 &1576629551 stripped
@@ -16274,54 +16151,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1576629550}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1576629552 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4223464194471240816, guid: 78702836d5991e844a72a98f68fce74d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1576629550}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1576629553 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4223464194904677851, guid: 78702836d5991e844a72a98f68fce74d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1576629550}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1576629554 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4223464194385098733, guid: 78702836d5991e844a72a98f68fce74d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1576629550}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1576629555 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4223464194968827008, guid: 78702836d5991e844a72a98f68fce74d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1576629550}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1576629556 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4223464194320936814, guid: 78702836d5991e844a72a98f68fce74d,
@@ -16456,6 +16285,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HungryNeko Variant MidLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011701502468090377, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9, type: 3}
@@ -19452,18 +19286,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973675017}
   m_CullTransparentMesh: 0
---- !u!114 &2007769713 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5011701502342105144, guid: 9ea93a8b78f3fd0458ae607e35bd2fc9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1580596676}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2031492141
 GameObject:
   m_ObjectHideFlags: 0
