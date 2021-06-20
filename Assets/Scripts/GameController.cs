@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using GoogleMobileAds.Api;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -59,7 +60,6 @@ public class GameController : MonoBehaviour {
     private GameObject combineTutorial;
     private GameObject wildcardTutorial;
     private int turnCount;
-
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
     public bool IsFreshGame => turnCount <= 5;
 
@@ -70,6 +70,10 @@ public class GameController : MonoBehaviour {
     private readonly List<BoardDirection> fullBoardCheckDirections = new List<BoardDirection>
         { BoardDirection.Down, BoardDirection.DownLeft, BoardDirection.DownRight };
     
+    //--------------------------------------------------------------------------------------------------------
+    private void Awake() {
+    }
+
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
@@ -616,7 +620,7 @@ public class GameController : MonoBehaviour {
 
         Debug.Log("Game loaded. " +
             "Total games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey) + ", " +
-            "Premium status: " + PremiumControllerObj.GameIsPremium);
+            "Premium status: " + PremiumControllerObj.IsGamePremium);
     }
     
     //--------------------------------------------------------------------------------------------------------
