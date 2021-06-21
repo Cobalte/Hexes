@@ -24,7 +24,7 @@ public class PremiumController : MonoBehaviour {
     #endif
     
     //--------------------------------------------------------------------------------------------------------
-    private void Start() {
+    private void Awake() {
         IsGamePremium = false; // testing purposes only!
         VerifyPremiumStatus();
 
