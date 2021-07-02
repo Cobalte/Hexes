@@ -455,9 +455,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 608002477}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadLocale
-        m_Mode: 5
+        m_TargetAssemblyTypeName: Localizer, Assembly-CSharp
+        m_MethodName: SetLanguageHindi
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1444,9 +1444,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 608002477}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadLocale
-        m_Mode: 5
+        m_TargetAssemblyTypeName: Localizer, Assembly-CSharp
+        m_MethodName: SetLanguageIndonesian
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3314,9 +3314,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 608002477}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadLocale
-        m_Mode: 5
+        m_TargetAssemblyTypeName: Localizer, Assembly-CSharp
+        m_MethodName: SetLanguageKorean
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4665,6 +4665,7 @@ GameObject:
   m_Component:
   - component: {fileID: 386572293}
   - component: {fileID: 386572295}
+  - component: {fileID: 386572296}
   - component: {fileID: 386572294}
   m_Layer: 5
   m_Name: PurchasePromptNewGameLabel
@@ -4789,6 +4790,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386572292}
   m_CullTransparentMesh: 0
+--- !u!114 &386572296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386572292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f546f851b5877d41b54e591f2171b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lines:
+  - Language: 0
+    Text: New Game
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 13097d6972a030a42a7b7684d15216a9, type: 2}
+  - Language: 6
+    Text: "\u65B0\u6E38\u620F"
+    FontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
+    FontMaterial: {fileID: -925802235091648071, guid: a1c07502d14b660449ed2ef33a6ce395,
+      type: 2}
+  - Language: 1
+    Text: Nuevo Juego
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 13097d6972a030a42a7b7684d15216a9, type: 2}
+  - Language: 2
+    Text: Neues Spiel
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 13097d6972a030a42a7b7684d15216a9, type: 2}
+  - Language: 3
+    Text: "\u041D\u043E\u0432\u0430\u044F \u0438\u0433\u0440\u0430"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: -1056503659491160984, guid: 2408ce60cf0b6ce4ea5e7d8065106412,
+      type: 2}
+  - Language: 4
+    Text: "\u0928\u092F\u093E \u0916\u0947\u0932"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: -1056503659491160984, guid: 2408ce60cf0b6ce4ea5e7d8065106412,
+      type: 2}
+  - Language: 5
+    Text: Permainan Baru
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 13097d6972a030a42a7b7684d15216a9, type: 2}
+  - Language: 7
+    Text: "\uC0C8\uB85C\uC6B4 \uAC8C\uC784"
+    FontAsset: {fileID: 11400000, guid: 9ce5bfcb6d51f1a4aa3d31236ff2438b, type: 2}
+    FontMaterial: {fileID: -6686471165842534768, guid: 9ce5bfcb6d51f1a4aa3d31236ff2438b,
+      type: 2}
 --- !u!1 &392205413
 GameObject:
   m_ObjectHideFlags: 0
@@ -6889,22 +6939,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc4b48a39b7281b4a847f4a70c56c7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LocaleSettings:
-  - {fileID: 11400000, guid: 5c49421fb9fab5343a667fdafeb6acf8, type: 2}
-  - {fileID: 11400000, guid: 879ae7b9eea3c284bbcdee430e7a81c4, type: 2}
-  - {fileID: 11400000, guid: 2f508a4472d2cf54f8fafee50fe8531b, type: 2}
-  - {fileID: 11400000, guid: e02dc3681898ffa468e468c668b77c27, type: 2}
-  - {fileID: 11400000, guid: a829342d60465ea46ae20536f49fb3b2, type: 2}
-  - {fileID: 11400000, guid: 0c86819f1d942e348acb73af88d869b9, type: 2}
-  - {fileID: 11400000, guid: 02c22feabafe8564088a1351f8f038f4, type: 2}
-  - {fileID: 11400000, guid: 77861ddd77b83e14eae6671d365905db, type: 2}
-  AlternateFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  NewGameText1: {fileID: 24670314}
-  NewGameText2: {fileID: 386572294}
-  HighScoreText: {fileID: 169608538}
-  GoodJobText: {fileID: 1085822651}
-  PurchasePromptText: {fileID: 1219605967}
-  LevelText: {fileID: 1153214766}
 --- !u!1 &637376047
 GameObject:
   m_ObjectHideFlags: 0
@@ -7612,9 +7646,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 608002477}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadLocale
-        m_Mode: 5
+        m_TargetAssemblyTypeName: Localizer, Assembly-CSharp
+        m_MethodName: SetLanguageRussian
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8405,7 +8439,7 @@ PrefabInstance:
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 19.49997
+      value: 19.5
       objectReference: {fileID: 0}
     - target: {fileID: 7316692578941375728, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
@@ -11019,9 +11053,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 608002477}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadLocale
-        m_Mode: 5
+        m_TargetAssemblyTypeName: Localizer, Assembly-CSharp
+        m_MethodName: SetLanguageSpanish
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -12730,6 +12764,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1219605966}
   - component: {fileID: 1219605968}
+  - component: {fileID: 1219605969}
   - component: {fileID: 1219605967}
   m_Layer: 5
   m_Name: PurchasePromptTextLabel
@@ -12737,7 +12772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1219605966
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12777,14 +12812,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Like our game and want to support us?
-
-
-    Want to remove all the ads
-    from the game?'
+  m_text: "\u559C\u6B22\u6211\u4EEC\u7684\u6E38\u620F\u5E76\u60F3\u8981\u652F\u6301\u6211\u4EEC\u5417\uFF1F<br><br>\u662F\u5426\u8981\u4ECE\u6E38\u620F\u4E2D\u5220\u9664\u6240\u6709\u5E7F\u544A\uFF1F"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f3ed296a6af06624c8fe31a1eb420996, type: 2}
-  m_sharedMaterial: {fileID: 8722553192024656558, guid: f3ed296a6af06624c8fe31a1eb420996,
+  m_fontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
+  m_sharedMaterial: {fileID: -925802235091648071, guid: a1c07502d14b660449ed2ef33a6ce395,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -12809,10 +12840,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
+  m_fontSize: 42.95
   m_fontSizeBase: 45
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 10
   m_fontSizeMax: 46
   m_fontStyle: 1
@@ -12859,6 +12890,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1219605965}
   m_CullTransparentMesh: 0
+--- !u!114 &1219605969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219605965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f546f851b5877d41b54e591f2171b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lines:
+  - Language: 0
+    Text: Like our game and want to support us?<br><br>Want to remove all the ads
+      from the game?
+    FontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  - Language: 1
+    Text: "\xBFTe gusta nuestro juego y quieres apoyarnos?<br><br>\xBFQuieres eliminar
+      todos los anuncios<br>del juego?"
+    FontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  - Language: 2
+    Text: "Gef\xE4llt dir unser Spiel und du m\xF6chtest uns unterst\xFCtzen?<br><br>M\xF6chten
+      Sie alle Anzeigen aus dem Spiel entfernen?"
+    FontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  - Language: 3
+    Text: "\u041D\u0440\u0430\u0432\u0438\u0442\u0441\u044F \u043D\u0430\u0448\u0430
+      \u0438\u0433\u0440\u0430 \u0438 \u0432\u044B \u0445\u043E\u0442\u0438\u0442\u0435
+      \u043D\u0430\u0441 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0430\u0442\u044C?<br><br>\u0425\u043E\u0442\u0438\u0442\u0435
+      \u0443\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u044E \u0440\u0435\u043A\u043B\u0430\u043C\u0443
+      \u0438\u0437 \u0438\u0433\u0440\u044B?"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: -1056503659491160984, guid: 2408ce60cf0b6ce4ea5e7d8065106412,
+      type: 2}
+  - Language: 4
+    Text: "\u0939\u092E\u093E\u0930\u0947 \u0916\u0947\u0932 \u0915\u0940 \u0924\u0930\u0939
+      \u0914\u0930 \u0939\u092E\u093E\u0930\u093E \u0938\u092E\u0930\u094D\u0925\u0928
+      \u0915\u0930\u0928\u093E \u091A\u093E\u0939\u0924\u0947 \u0939\u0948\u0902?<br><br>\u0916\u0947\u0932
+      \u0938\u0947 \u0938\u092D\u0940 \u0935\u093F\u091C\u094D\u091E\u093E\u092A\u0928
+      \u0939\u091F\u093E\u0928\u093E \u091A\u093E\u0939\u0924\u0947 \u0939\u0948\u0902?"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: -1056503659491160984, guid: 2408ce60cf0b6ce4ea5e7d8065106412,
+      type: 2}
+  - Language: 5
+    Text: Suka permainan kami dan ingin mendukung kami?<br><br>Ingin menghapus semua
+      iklan dari game?
+    FontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  - Language: 6
+    Text: "\u559C\u6B22\u6211\u4EEC\u7684\u6E38\u620F\u5E76\u60F3\u8981\u652F\u6301\u6211\u4EEC\u5417\uFF1F<br><br>\u662F\u5426\u8981\u4ECE\u6E38\u620F\u4E2D\u5220\u9664\u6240\u6709\u5E7F\u544A\uFF1F"
+    FontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
+    FontMaterial: {fileID: -925802235091648071, guid: a1c07502d14b660449ed2ef33a6ce395,
+      type: 2}
+  - Language: 7
+    Text: "\uC6B0\uB9AC \uAC8C\uC784\uC744 \uC88B\uC544\uD558\uACE0 \uC6B0\uB9AC\uB97C
+      \uC9C0\uC6D0\uD558\uACE0 \uC2F6\uC2B5\uB2C8\uAE4C?<br><br>\uAC8C\uC784\uC5D0\uC11C
+      \uBAA8\uB4E0 \uAD11\uACE0\uB97C \uC81C\uAC70\uD558\uACE0 \uC2F6\uC2B5\uB2C8\uAE4C?"
+    FontAsset: {fileID: 11400000, guid: 9ce5bfcb6d51f1a4aa3d31236ff2438b, type: 2}
+    FontMaterial: {fileID: -6686471165842534768, guid: 9ce5bfcb6d51f1a4aa3d31236ff2438b,
+      type: 2}
 --- !u!1 &1249321153
 GameObject:
   m_ObjectHideFlags: 0
@@ -14355,9 +14449,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 608002477}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadLocale
-        m_Mode: 5
+        m_TargetAssemblyTypeName: Localizer, Assembly-CSharp
+        m_MethodName: SetLanguageEnglish
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14449,7 +14543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1345497793
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15118,7 +15212,7 @@ PrefabInstance:
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 19.500092
+      value: 19.5
       objectReference: {fileID: 0}
     - target: {fileID: 7316692578941375728, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
@@ -15522,9 +15616,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 608002477}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadLocale
-        m_Mode: 5
+        m_TargetAssemblyTypeName: Localizer, Assembly-CSharp
+        m_MethodName: SetLanguageChinese
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -15761,9 +15855,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 608002477}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadLocale
-        m_Mode: 5
+        m_TargetAssemblyTypeName: Localizer, Assembly-CSharp
+        m_MethodName: SetLanguageGerman
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -15979,6 +16073,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1549807147}
   - component: {fileID: 1549807149}
+  - component: {fileID: 1549807150}
   - component: {fileID: 1549807148}
   m_Layer: 5
   m_Name: PurchaseConfirmTextLabel
@@ -15986,7 +16081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1549807147
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16026,17 +16121,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Thank you for your support! In-game ads have been removed forever!
-
-
-    If
-    you want to help us even more, tell your friends about
-
-    Sushi Neko Swipe!'
+  m_text: Thank you for your support! In-game ads have been removed forever!  If
+    you want to help us even more, tell your friends about Sushi Neko Swipe!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f3ed296a6af06624c8fe31a1eb420996, type: 2}
-  m_sharedMaterial: {fileID: 8722553192024656558, guid: f3ed296a6af06624c8fe31a1eb420996,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -16110,6 +16199,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1549807146}
   m_CullTransparentMesh: 0
+--- !u!114 &1549807150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549807146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f546f851b5877d41b54e591f2171b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lines:
+  - Language: 0
+    Text: New String
+    FontAsset: {fileID: 0}
+    FontMaterial: {fileID: 0}
 --- !u!1 &1557114452
 GameObject:
   m_ObjectHideFlags: 0
