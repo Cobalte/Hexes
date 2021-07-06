@@ -12,7 +12,7 @@ public class LocalizedText : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     public void Awake() {
-        LocalizedTextController.RegisterText(this);
+        //LocalizedTextController.RegisterText(this);
         textMesh = GetComponent<TextMeshProUGUI>();
     }
 
@@ -22,11 +22,17 @@ public class LocalizedText : MonoBehaviour {
         
         foreach (LocalizedTextLine line in Lines) {
             if (line.Language == language) {
-                textMesh.gameObject.SetActive(false);
+                bool isActive = gameObject.activeSelf;
+
+                if (isActive) {
+                    textMesh.gameObject.SetActive(false);
+                }
                 textMesh.text = line.Text;
                 textMesh.font = line.FontAsset;
-                //textMesh.fontMaterial = line.FontMaterial;
-                textMesh.gameObject.SetActive(true);
+                textMesh.fontMaterial = line.FontMaterial;
+                if (isActive) {
+                    textMesh.gameObject.SetActive(true);
+                }
                 return;
             }
         }

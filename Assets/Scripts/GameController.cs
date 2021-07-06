@@ -60,6 +60,7 @@ public class GameController : MonoBehaviour {
     private GameObject combineTutorial;
     private GameObject wildcardTutorial;
     private int turnCount;
+    private Localizer localizer;
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
     public bool IsFreshGame => turnCount <= 5;
 
@@ -78,6 +79,7 @@ public class GameController : MonoBehaviour {
     private void Start() {
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
         blocks = new List<Block>();
+        localizer = GetComponent<Localizer>();
         Canvas.ForceUpdateCanvases();
         LoadGameStateOrStartNewGame();
     }
@@ -526,7 +528,7 @@ public class GameController : MonoBehaviour {
     }
     
     //--------------------------------------------------------------------------------------------------------
-    private void SaveGameState() {
+    public void SaveGameState() {
         // put all of the blocks on the board (and the current score) into a serializable state
         
         SaveState saveState = new SaveState {
@@ -538,7 +540,8 @@ public class GameController : MonoBehaviour {
             CurrentHungryNekoInterval = this.CurrentHungryNekoInterval,
             MovesSinceLastHungryNeko = this.MovesSinceLastHungryNeko,
             Multiplier = ScoreMultPanel.CurrentLevel,
-            IsGameOver = isGameOver
+            IsGameOver = isGameOver,
+            Language = localizer.CurrentLanguage
         };
         
         for (int i = 0; i < hexes.Count; i++) {
@@ -569,6 +572,7 @@ public class GameController : MonoBehaviour {
     private void LoadGameStateOrStartNewGame() {
         // if this device has no saved game, just start a new game
         if (!File.Exists(Application.persistentDataPath + saveFileName)) {
+            localizer.ResetLanguageToDeviceLanguage();
             StartNewGame();
             return;
         }
@@ -612,15 +616,20 @@ public class GameController : MonoBehaviour {
             HungryNekos[saveState.HungryNekoLocation].GetHungry(saveState.HungryNekoLevel);
         }
         
+        // set text language
+        localizer.SetLanguage(saveState.Language);
+        
         // misc initialization tasks
         ScoreDisplayObj.Snap();
         swipeDir = BoardDirection.Null;
         allowInput = true;
         HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
 
-        Debug.Log("Game loaded. " +
-            "Total games started: " + PlayerPrefs.GetInt(playerPrefsGameCountKey) + ", " +
-            "Premium status: " + PremiumControllerObj.IsGamePremium);
+        Debug.Log(
+            $"Game loaded. Total games started: {PlayerPrefs.GetInt(playerPrefsGameCountKey)}, " +
+            $"Premium status: {PremiumControllerObj.IsGamePremium}, " +
+            $"Language: {localizer.CurrentLanguage}"
+        );
     }
     
     //--------------------------------------------------------------------------------------------------------

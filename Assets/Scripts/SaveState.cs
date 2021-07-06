@@ -20,5 +20,6 @@ public class SaveState {
     public float CurrentTripleChance;
     public int CurrentHungryNekoInterval;
     public int MovesSinceLastHungryNeko;
+    public LocalizedLanguage Language;
 
 }

@@ -50,9 +50,7 @@ public class LocalizedTextInspector : Editor {
             
             // row 2: display string (in target language)
             EditorGUI.indentLevel = 1;
-            GUILayout.BeginHorizontal();
             text.stringValue = EditorGUILayout.TextField(text.stringValue);
-            GUILayout.EndHorizontal();
         }
         
         // "Add" button

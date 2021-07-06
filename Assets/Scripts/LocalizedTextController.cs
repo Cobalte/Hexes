@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class LocalizedTextController {
@@ -14,7 +15,8 @@ public static class LocalizedTextController {
     
     //--------------------------------------------------------------------------------------------------------
     public static void SetGlobalLanguage(LocalizedLanguage language) {
-        texts ??= new List<LocalizedText>();
+        texts ??= Resources.FindObjectsOfTypeAll<LocalizedText>().ToList();
+        
         foreach (LocalizedText text in texts) {
             text.SetLanguage(language);
         }

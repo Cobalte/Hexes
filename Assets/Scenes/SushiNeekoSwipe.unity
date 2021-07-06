@@ -619,6 +619,7 @@ GameObject:
   m_Component:
   - component: {fileID: 24670313}
   - component: {fileID: 24670315}
+  - component: {fileID: 24670316}
   - component: {fileID: 24670314}
   m_Layer: 5
   m_Name: NewGameButtonLabel
@@ -644,8 +645,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 8.625}
-  m_SizeDelta: {x: 43.1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 4.59375}
+  m_SizeDelta: {x: 43.1, y: -29.19001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &24670314
 MonoBehaviour:
@@ -667,10 +668,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Game
+  m_text: "\u65B0\u6E38\u620F"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 13097d6972a030a42a7b7684d15216a9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: cb02612f551cedb4da110d2810d7c03d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -744,6 +745,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 24670312}
   m_CullTransparentMesh: 0
+--- !u!114 &24670316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24670312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f546f851b5877d41b54e591f2171b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lines:
+  - Language: 0
+    Text: New Game
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 13097d6972a030a42a7b7684d15216a9, type: 2}
+  - Language: 6
+    Text: "\u65B0\u6E38\u620F"
+    FontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
+    FontMaterial: {fileID: 2100000, guid: cb02612f551cedb4da110d2810d7c03d, type: 2}
+  - Language: 1
+    Text: Nuevo Juego
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 13097d6972a030a42a7b7684d15216a9, type: 2}
+  - Language: 2
+    Text: Neues Spiel
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 13097d6972a030a42a7b7684d15216a9, type: 2}
+  - Language: 3
+    Text: "\u041D\u043E\u0432\u0430\u044F \u0438\u0433\u0440\u0430"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: 2100000, guid: eedc1a52ad7511149a900351801462b3, type: 2}
+  - Language: 4
+    Text: "\u0928\u092F\u093E \u0916\u0947\u0932"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: 2100000, guid: eedc1a52ad7511149a900351801462b3, type: 2}
+  - Language: 5
+    Text: Permainan Baru
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 13097d6972a030a42a7b7684d15216a9, type: 2}
+  - Language: 7
+    Text: "\uC0C8\uB85C\uC6B4 \uAC8C\uC784"
+    FontAsset: {fileID: 11400000, guid: 9ce5bfcb6d51f1a4aa3d31236ff2438b, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 34965a8100dd4ab468e428898a53b092, type: 2}
 --- !u!1001 &34200415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3403,6 +3449,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224093972}
   - component: {fileID: 224093974}
+  - component: {fileID: 224093975}
   - component: {fileID: 224093973}
   m_Layer: 5
   m_Name: Label
@@ -3450,9 +3497,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'High
-
-    Score!'
+  m_text: High<br>Score!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 38401ffc25a31214687f615a7dbbcf20, type: 2}
@@ -3529,6 +3574,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224093971}
   m_CullTransparentMesh: 0
+--- !u!114 &224093975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224093971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f546f851b5877d41b54e591f2171b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lines:
+  - Language: 0
+    Text: High<br>Score!
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 38401ffc25a31214687f615a7dbbcf20, type: 2}
+  - Language: 1
+    Text: "Nuevo R\xE9cord"
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 38401ffc25a31214687f615a7dbbcf20, type: 2}
+  - Language: 2
+    Text: Neuer Rekord
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 38401ffc25a31214687f615a7dbbcf20, type: 2}
+  - Language: 3
+    Text: "\u0420\u0435\u043A\u043E\u0440\u0434"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: 2100000, guid: e02a39948d13af64cb51be862da77ac1, type: 2}
+  - Language: 4
+    Text: "\u0909\u091A\u094D\u091A<br>\u0938\u094D\u0915\u094B\u0930"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: 2100000, guid: e02a39948d13af64cb51be862da77ac1, type: 2}
+  - Language: 5
+    Text: Skor Tinggi
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 38401ffc25a31214687f615a7dbbcf20, type: 2}
+  - Language: 6
+    Text: "\u9AD8\u5206"
+    FontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
+    FontMaterial: {fileID: -925802235091648071, guid: a1c07502d14b660449ed2ef33a6ce395,
+      type: 2}
+  - Language: 7
+    Text: "\uB192\uC740 \uC810\uC218"
+    FontAsset: {fileID: 11400000, guid: 9ce5bfcb6d51f1a4aa3d31236ff2438b, type: 2}
+    FontMaterial: {fileID: -6686471165842534768, guid: 9ce5bfcb6d51f1a4aa3d31236ff2438b,
+      type: 2}
 --- !u!1 &227575472
 GameObject:
   m_ObjectHideFlags: 0
@@ -4690,8 +4782,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 8.599976}
-  m_SizeDelta: {x: 43.1, y: 0}
+  m_AnchoredPosition: {x: 0.8399811, y: 2.8650055}
+  m_SizeDelta: {x: 22.12003, y: -38.38999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &386572294
 MonoBehaviour:
@@ -4713,10 +4805,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Game
+  m_text: "\u65B0\u6E38\u620F"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 13097d6972a030a42a7b7684d15216a9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: cb02612f551cedb4da110d2810d7c03d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4740,15 +4832,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55
+  m_fontSize: 80
   m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
-  m_fontSizeMax: 55
+  m_fontSizeMax: 80
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -4810,8 +4902,7 @@ MonoBehaviour:
   - Language: 6
     Text: "\u65B0\u6E38\u620F"
     FontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
-    FontMaterial: {fileID: -925802235091648071, guid: a1c07502d14b660449ed2ef33a6ce395,
-      type: 2}
+    FontMaterial: {fileID: 2100000, guid: cb02612f551cedb4da110d2810d7c03d, type: 2}
   - Language: 1
     Text: Nuevo Juego
     FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
@@ -4823,13 +4914,11 @@ MonoBehaviour:
   - Language: 3
     Text: "\u041D\u043E\u0432\u0430\u044F \u0438\u0433\u0440\u0430"
     FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
-    FontMaterial: {fileID: -1056503659491160984, guid: 2408ce60cf0b6ce4ea5e7d8065106412,
-      type: 2}
+    FontMaterial: {fileID: 2100000, guid: eedc1a52ad7511149a900351801462b3, type: 2}
   - Language: 4
     Text: "\u0928\u092F\u093E \u0916\u0947\u0932"
     FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
-    FontMaterial: {fileID: -1056503659491160984, guid: 2408ce60cf0b6ce4ea5e7d8065106412,
-      type: 2}
+    FontMaterial: {fileID: 2100000, guid: eedc1a52ad7511149a900351801462b3, type: 2}
   - Language: 5
     Text: Permainan Baru
     FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
@@ -4837,8 +4926,7 @@ MonoBehaviour:
   - Language: 7
     Text: "\uC0C8\uB85C\uC6B4 \uAC8C\uC784"
     FontAsset: {fileID: 11400000, guid: 9ce5bfcb6d51f1a4aa3d31236ff2438b, type: 2}
-    FontMaterial: {fileID: -6686471165842534768, guid: 9ce5bfcb6d51f1a4aa3d31236ff2438b,
-      type: 2}
+    FontMaterial: {fileID: 2100000, guid: 34965a8100dd4ab468e428898a53b092, type: 2}
 --- !u!1 &392205413
 GameObject:
   m_ObjectHideFlags: 0
@@ -5632,8 +5720,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.80543625, y: 0.8670448}
   m_AnchorMax: {x: 0.9567469, y: 0.9410854}
-  m_AnchoredPosition: {x: -2, y: 15.5}
-  m_SizeDelta: {x: 0, y: 0.000030517578}
+  m_AnchoredPosition: {x: -2, y: -11.5}
+  m_SizeDelta: {x: 0, y: 6.5001583}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &460359168
 PrefabInstance:
@@ -8439,7 +8527,7 @@ PrefabInstance:
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 19.5
+      value: 19.49997
       objectReference: {fileID: 0}
     - target: {fileID: 7316692578941375728, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
@@ -9172,7 +9260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &855951258
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11999,6 +12087,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1085822650}
   - component: {fileID: 1085822652}
+  - component: {fileID: 1085822653}
   - component: {fileID: 1085822651}
   m_Layer: 5
   m_Name: ResultLabel
@@ -12046,10 +12135,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YUMMY!
+  m_text: "\u53EF\u53E3\u7684\uFF01"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 6e41c33efa73bc047b7ba9afd277f804, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: b2fad4d4f16933045b29d3f2780e8255, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12123,6 +12212,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085822649}
   m_CullTransparentMesh: 0
+--- !u!114 &1085822653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085822649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f546f851b5877d41b54e591f2171b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Lines:
+  - Language: 0
+    Text: YUMMY!
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 6e41c33efa73bc047b7ba9afd277f804, type: 2}
+  - Language: 1
+    Text: "\xA1Delicioso!"
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 6e41c33efa73bc047b7ba9afd277f804, type: 2}
+  - Language: 2
+    Text: "K\xF6stlich!"
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 6e41c33efa73bc047b7ba9afd277f804, type: 2}
+  - Language: 7
+    Text: "\uB9DB\uC788\uB294!"
+    FontAsset: {fileID: 11400000, guid: 9ce5bfcb6d51f1a4aa3d31236ff2438b, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 0b132b4808fcb9a469ac4fb61c6cdd32, type: 2}
+  - Language: 3
+    Text: "\u041E\u0447\u0435\u043D\u044C \u0432\u043A\u0443\u0441\u043D\u043E!"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 4fc2716b03abb954a8b2c575ab1e759c, type: 2}
+  - Language: 4
+    Text: "\u0938\u094D\u0935\u093E\u0926\u093F\u0937\u094D\u091F!"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 4fc2716b03abb954a8b2c575ab1e759c, type: 2}
+  - Language: 5
+    Text: Lezat!
+    FontAsset: {fileID: 11400000, guid: a9a76df210d2f57478b55405ed2af651, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 6e41c33efa73bc047b7ba9afd277f804, type: 2}
+  - Language: 6
+    Text: "\u53EF\u53E3\u7684\uFF01"
+    FontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
+    FontMaterial: {fileID: 2100000, guid: b2fad4d4f16933045b29d3f2780e8255, type: 2}
 --- !u!1 &1113994617
 GameObject:
   m_ObjectHideFlags: 0
@@ -12772,7 +12906,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1219605966
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12812,11 +12946,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u559C\u6B22\u6211\u4EEC\u7684\u6E38\u620F\u5E76\u60F3\u8981\u652F\u6301\u6211\u4EEC\u5417\uFF1F<br><br>\u662F\u5426\u8981\u4ECE\u6E38\u620F\u4E2D\u5220\u9664\u6240\u6709\u5E7F\u544A\uFF1F"
+  m_text: "\xBFTe gusta nuestro juego y quieres apoyarnos?<br><br>\xBFQuieres eliminar
+    todos los anuncios<br>del juego?"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
-  m_sharedMaterial: {fileID: -925802235091648071, guid: a1c07502d14b660449ed2ef33a6ce395,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12840,7 +12974,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42.95
+  m_fontSize: 38.9
   m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -12925,8 +13059,7 @@ MonoBehaviour:
       \u0443\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u044E \u0440\u0435\u043A\u043B\u0430\u043C\u0443
       \u0438\u0437 \u0438\u0433\u0440\u044B?"
     FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
-    FontMaterial: {fileID: -1056503659491160984, guid: 2408ce60cf0b6ce4ea5e7d8065106412,
-      type: 2}
+    FontMaterial: {fileID: 2100000, guid: e7a4ea222a9d9d44d862b971a3295ce0, type: 2}
   - Language: 4
     Text: "\u0939\u092E\u093E\u0930\u0947 \u0916\u0947\u0932 \u0915\u0940 \u0924\u0930\u0939
       \u0914\u0930 \u0939\u092E\u093E\u0930\u093E \u0938\u092E\u0930\u094D\u0925\u0928
@@ -12934,8 +13067,7 @@ MonoBehaviour:
       \u0938\u0947 \u0938\u092D\u0940 \u0935\u093F\u091C\u094D\u091E\u093E\u092A\u0928
       \u0939\u091F\u093E\u0928\u093E \u091A\u093E\u0939\u0924\u0947 \u0939\u0948\u0902?"
     FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
-    FontMaterial: {fileID: -1056503659491160984, guid: 2408ce60cf0b6ce4ea5e7d8065106412,
-      type: 2}
+    FontMaterial: {fileID: 2100000, guid: e7a4ea222a9d9d44d862b971a3295ce0, type: 2}
   - Language: 5
     Text: Suka permainan kami dan ingin mendukung kami?<br><br>Ingin menghapus semua
       iklan dari game?
@@ -15212,7 +15344,7 @@ PrefabInstance:
     - target: {fileID: 2968262141564076046, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 19.5
+      value: 19.500092
       objectReference: {fileID: 0}
     - target: {fileID: 7316692578941375728, guid: aecb2043bdb79204481a6db2b17542d5,
         type: 3}
@@ -16081,7 +16213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1549807147
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16121,11 +16253,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Thank you for your support! In-game ads have been removed forever!  If
-    you want to help us even more, tell your friends about Sushi Neko Swipe!
+  m_text: Terima kasih atas dukungan Anda! Iklan dalam game telah dihapus selamanya!
+    Jika Anda ingin membantu kami lebih banyak lagi, beri tahu teman Anda tentang
+    permainan kami!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -16149,10 +16282,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
+  m_fontSize: 33.95
   m_fontSizeBase: 45
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 10
   m_fontSizeMax: 46
   m_fontStyle: 1
@@ -16213,9 +16346,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Lines:
   - Language: 0
-    Text: New String
-    FontAsset: {fileID: 0}
-    FontMaterial: {fileID: 0}
+    Text: Thank you for your support! In-game ads have been removed forever!<br><br>If
+      you want to help us even more, tell your friends about Sushi Neko Swipe!
+    FontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  - Language: 1
+    Text: "\xA1Gracias por tu apoyo! \xA1Los anuncios en el juego se han eliminado
+      para siempre! Si quieres ayudarnos a\xFAn m\xE1s, \xA1cu\xE9ntale a tus amigos
+      sobre Sushi Neko Swipe!"
+    FontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  - Language: 2
+    Text: "Danke f\xFCr Ihre Unterst\xFCtzung! Werbung im Spiel wurde f\xFCr immer
+      entfernt! Wenn Sie uns noch mehr helfen m\xF6chten, erz\xE4hlen Sie Ihren Freunden
+      von<br>Sushi Neko Swipe!"
+    FontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  - Language: 3
+    Text: "\u0421\u043F\u0430\u0441\u0438\u0431\u043E \u0437\u0430 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0443!
+      \u0412\u043D\u0443\u0442\u0440\u0438\u0438\u0433\u0440\u043E\u0432\u0430\u044F
+      \u0440\u0435\u043A\u043B\u0430\u043C\u0430 \u0431\u044B\u043B\u0430 \u0443\u0434\u0430\u043B\u0435\u043D\u0430
+      \u043D\u0430\u0432\u0441\u0435\u0433\u0434\u0430!<br><br>\u0415\u0441\u043B\u0438
+      \u0432\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u043F\u043E\u043C\u043E\u0447\u044C
+      \u043D\u0430\u043C \u0435\u0449\u0435 \u0431\u043E\u043B\u044C\u0448\u0435,
+      \u0440\u0430\u0441\u0441\u043A\u0430\u0436\u0438\u0442\u0435 \u043E \u043D\u0430\u0448\u0435\u0439
+      \u0438\u0433\u0440\u0435 \u0434\u0440\u0443\u0437\u044C\u044F\u043C!"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: 2100000, guid: e7a4ea222a9d9d44d862b971a3295ce0, type: 2}
+  - Language: 4
+    Text: "\u0906\u092A\u0915\u0947 \u0938\u0939\u092F\u094B\u0917 \u0915\u0947 \u0932\u093F\u090F
+      \u0927\u0928\u094D\u092F\u0935\u093E\u0926! \u0907\u0928-\u0917\u0947\u092E
+      \u0935\u093F\u091C\u094D\u091E\u093E\u092A\u0928 \u0939\u092E\u0947\u0936\u093E
+      \u0915\u0947 \u0932\u093F\u090F \u0939\u091F\u093E \u0926\u093F\u090F \u0917\u090F
+      \u0939\u0948\u0902! \u0905\u0917\u0930 \u0906\u092A \u0939\u092E\u093E\u0930\u0940
+      \u0914\u0930 \u092D\u0940 \u092E\u0926\u0926 \u0915\u0930\u0928\u093E \u091A\u093E\u0939\u0924\u0947
+      \u0939\u0948\u0902, \u0924\u094B \u0905\u092A\u0928\u0947 \u0926\u094B\u0938\u094D\u0924\u094B\u0902
+      \u0915\u094B \u0939\u092E\u093E\u0930\u0947 \u0916\u0947\u0932 \u0915\u0947
+      \u092C\u093E\u0930\u0947 \u092E\u0947\u0902 \u092C\u0924\u093E\u090F\u0902!"
+    FontAsset: {fileID: 11400000, guid: 2408ce60cf0b6ce4ea5e7d8065106412, type: 2}
+    FontMaterial: {fileID: 2100000, guid: e7a4ea222a9d9d44d862b971a3295ce0, type: 2}
+  - Language: 5
+    Text: Terima kasih atas dukungan Anda! Iklan dalam game telah dihapus selamanya!
+      Jika Anda ingin membantu kami lebih banyak lagi, beri tahu teman Anda tentang
+      permainan kami!
+    FontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    FontMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  - Language: 6
+    Text: "\u8C22\u8C22\u60A8\u7684\u652F\u6301\uFF01\u6E38\u620F\u5185\u5E7F\u544A\u5DF2\u88AB\u6C38\u4E45\u5220\u9664\uFF01<br><br>\u5982\u679C\u60A8\u60F3\u5E2E\u52A9\u6211\u4EEC\u66F4\u591A\uFF0C\u8BF7\u544A\u8BC9\u60A8\u7684\u670B\u53CB\u6211\u4EEC\u7684\u6E38\u620F\uFF01"
+    FontAsset: {fileID: 11400000, guid: a1c07502d14b660449ed2ef33a6ce395, type: 2}
+    FontMaterial: {fileID: 2100000, guid: b9b74ccc02ab84a48b6dc1a487833a18, type: 2}
+  - Language: 7
+    Text: "\uC9C0\uC6D0\uD574 \uC8FC\uC154\uC11C \uAC10\uC0AC\uD569\uB2C8\uB2E4!
+      \uAC8C\uC784 \uB0B4 \uAD11\uACE0\uAC00 \uC601\uC6D0\uD788 \uC81C\uAC70\uB418\uC5C8\uC2B5\uB2C8\uB2E4!
+      \uC6B0\uB9AC\uB97C \uB354 \uB3D5\uACE0 \uC2F6\uB2E4\uBA74 \uC6B0\uB9AC \uAC8C\uC784\uC5D0
+      \uB300\uD574 \uCE5C\uAD6C\uB4E4\uC5D0\uAC8C \uC54C\uB824\uC8FC\uC138\uC694!"
+    FontAsset: {fileID: 11400000, guid: 9ce5bfcb6d51f1a4aa3d31236ff2438b, type: 2}
+    FontMaterial: {fileID: 2100000, guid: b0373f53f6187df448556e409baeb623, type: 2}
 --- !u!1 &1557114452
 GameObject:
   m_ObjectHideFlags: 0
