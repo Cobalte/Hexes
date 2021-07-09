@@ -14,6 +14,9 @@ public class GameController : MonoBehaviour {
 
     public GameObject BoardObj;
     public GameObject SushiAnchor;
+    public GameObject SwipeTutorial;
+    public GameObject CombineTutorial;
+    public GameObject WildCardTutorial;
     public GameObject BlockPrefab;
     public List<Sprite> ImageForBlockProgression;
     public List<HungryNeko> HungryNekos;
@@ -36,9 +39,6 @@ public class GameController : MonoBehaviour {
     public TextMeshProUGUI CurrentHighScoreLabel;
     public PremiumController PremiumControllerObj;
     public bool WaitForFingerUpToCommitSwipe;
-    public GameObject SwipeTutorialPrefab;
-    public GameObject CombineTutorialPrefab;
-    public GameObject WildcardTutorialPrefab;
     public Hex CenterHex;
     public List<Hex> OrderedCornerHexes;
     public bool ForceWildCardNextTurn;
@@ -56,9 +56,7 @@ public class GameController : MonoBehaviour {
     private static Vector3? swipeStartPos;
     private static Vector3? swipeEndPos;
     private bool isGameOver;
-    private GameObject swipeTutorial;
-    private GameObject combineTutorial;
-    private GameObject wildcardTutorial;
+    
     private int turnCount;
     private Localizer localizer;
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
@@ -638,12 +636,8 @@ public class GameController : MonoBehaviour {
         CreateBlock(CenterHex, BlockKind.Normal, 1, true);
         
         // show the swipe tutorial
-        swipeTutorial = Instantiate(
-            original: SwipeTutorialPrefab,
-            position: CenterHex.transform.position,
-            rotation: Quaternion.identity,
-            parent: SushiAnchor.transform);
-        swipeTutorial.transform.position = CenterHex.transform.position;
+        SwipeTutorial.gameObject.SetActive(true);
+        SwipeTutorial.transform.position = CenterHex.transform.position;
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -656,12 +650,8 @@ public class GameController : MonoBehaviour {
         CreateBlock(OrderedCornerHexes[corner2], BlockKind.Normal, 1, true);
         
         // show the combine tutorial
-        combineTutorial = Instantiate(
-            original: CombineTutorialPrefab,
-            position: CenterHex.transform.position,
-            rotation: Quaternion.identity,
-            parent: SushiAnchor.transform);
-        combineTutorial.transform.position = CenterHex.transform.position;
+        CombineTutorial.gameObject.SetActive(true);
+        CombineTutorial.transform.position = CenterHex.transform.position;
         
         // move and rotate the combine tutorial's arrows depending on block positions
         int middleCorner = (corner1 + (offset / 2) + OrderedCornerHexes.Count) % OrderedCornerHexes.Count;
@@ -669,7 +659,7 @@ public class GameController : MonoBehaviour {
         Vector3 arrowSegment2 = OrderedCornerHexes[middleCorner].transform.position;
         Vector3 arrowSegment3 = OrderedCornerHexes[corner2].transform.position;
         
-        CombineTutorial tutorial = combineTutorial.GetComponent<CombineTutorial>();
+        CombineTutorial tutorial = CombineTutorial.GetComponent<CombineTutorial>();
         tutorial.Arrow1.transform.position = arrowSegment1;
         tutorial.Arrow2.transform.position = arrowSegment2;
         
@@ -738,31 +728,16 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void ClearTutorials() {
-        if (swipeTutorial != null) {
-            Destroy(swipeTutorial);
-            swipeTutorial = null;
-        }
-
-        if (combineTutorial != null) {
-            Destroy(combineTutorial);
-            combineTutorial = null;
-        }
-        
-        if (wildcardTutorial != null) {
-            Destroy(wildcardTutorial);
-            wildcardTutorial = null;
-        }
+        SwipeTutorial.gameObject.SetActive(false);
+        CombineTutorial.gameObject.SetActive(false);
+        WildCardTutorial.gameObject.SetActive(false);
     }
     
     //--------------------------------------------------------------------------------------------------------
     private void ShowWildcardTutorial(Hex wildcardHex) {
-        wildcardTutorial = Instantiate(
-            original: WildcardTutorialPrefab,
-            position: CenterHex.transform.position,
-            rotation: Quaternion.identity,
-            parent: SushiAnchor.transform);
-        wildcardTutorial.transform.position = CenterHex.transform.position;
-        WildcardTutorial theActualTutorial = wildcardTutorial.GetComponent<WildcardTutorial>();
+        WildCardTutorial.gameObject.SetActive(true);
+        WildCardTutorial.transform.position = CenterHex.transform.position;
+        WildcardTutorial theActualTutorial = WildCardTutorial.GetComponent<WildcardTutorial>();
         theActualTutorial.Circle.transform.position = wildcardHex.transform.position;
     }
 }
