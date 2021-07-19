@@ -113,7 +113,7 @@ public class GameController : MonoBehaviour {
         NewHighScoreIndicator.SetActive(false);
         if (HighScore > 0) {
             CurrentHighScoreIndicator.SetActive(true);
-            CurrentHighScoreLabel.text = "High Score: " + HighScore;
+            CurrentHighScoreLabel.text = HighScore.ToString();
         }
         else {
             CurrentHighScoreIndicator.SetActive(false);

@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class LocalizedText : MonoBehaviour {
-
-    public List<LocalizedTextLine> Lines;
+public class LocalizedFont : MonoBehaviour {
+    
+    public List<LocalizedFontLine> Lines;
 
     private TextMeshProUGUI textMesh;
     
     //--------------------------------------------------------------------------------------------------------
     public void Awake() {
+        //LocalizedTextController.RegisterText(this);
         textMesh = GetComponent<TextMeshProUGUI>();
     }
 
@@ -19,14 +20,13 @@ public class LocalizedText : MonoBehaviour {
     public void SetLanguage(LocalizedLanguage language) {
         textMesh ??= GetComponent<TextMeshProUGUI>();
         
-        foreach (LocalizedTextLine line in Lines) {
+        foreach (LocalizedFontLine line in Lines) {
             if (line.Language == language) {
                 bool isActive = gameObject.activeSelf;
 
                 if (isActive) {
                     textMesh.gameObject.SetActive(false);
                 }
-                textMesh.text = line.Text;
                 textMesh.font = line.FontAsset;
                 textMesh.fontMaterial = line.FontMaterial;
                 if (isActive) {
@@ -41,7 +41,7 @@ public class LocalizedText : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     public void AddLanguageLine() {
-        Lines.Add(new LocalizedTextLine { Language = LocalizedLanguage.English, Text = "New String" });
+        Lines.Add(new LocalizedFontLine { Language = LocalizedLanguage.English  });
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -52,9 +52,8 @@ public class LocalizedText : MonoBehaviour {
 
 //------------------------------------------------------------------------------------------------------------
 [Serializable]
-public class LocalizedTextLine {
+public class LocalizedFontLine {
     public LocalizedLanguage Language;
-    public string Text;
     public TMP_FontAsset FontAsset;
     public Material FontMaterial;
 }
