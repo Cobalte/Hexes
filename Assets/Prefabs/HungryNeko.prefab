@@ -1071,6 +1071,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4268334422839259264}
   - component: {fileID: 4268334422839259271}
+  - component: {fileID: 1773323528234898692}
   m_Layer: 5
   m_Name: HungryNeko
   m_TagString: Untagged
@@ -1117,3 +1118,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!223 &1773323528234898692
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268334422839259265}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -658278625
+  m_SortingOrder: 0
+  m_TargetDisplay: 0

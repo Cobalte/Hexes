@@ -16,7 +16,7 @@ public class ScoreDisplay : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
         //Set the score to 0 when we start
-        ScoreCounter.text = "<mspace=100>" + ((int) displayedScore).ToString("D6") + "</mspace>";
+        ScoreCounter.text = "<mspace=110>" + ((int) displayedScore).ToString("D6") + "</mspace>";
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -39,12 +39,12 @@ public class ScoreDisplay : MonoBehaviour
             displayedScore = GameController.Score;
         }
 
-        ScoreCounter.text = "<mspace=100>" + ((int) displayedScore).ToString("D6") + "</mspace>";
+        ScoreCounter.text = "<mspace=110>" + ((int) displayedScore).ToString("D6") + "</mspace>";
     }
     
     //--------------------------------------------------------------------------------------------------------
     public void Snap() {
         displayedScore = GameController.Score;
-        ScoreCounter.text = "<mspace=100>" + ((int) displayedScore).ToString("D6") + "</mspace>";
+        ScoreCounter.text = "<mspace=110>" + ((int) displayedScore).ToString("D6") + "</mspace>";
     }
 }

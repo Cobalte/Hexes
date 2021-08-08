@@ -47,6 +47,12 @@ TagManager:
   - name: pFX
     uniqueID: 365618165
     locked: 0
+  - name: Tutorial
+    uniqueID: 1668127087
+    locked: 0
+  - name: HungryNeko
+    uniqueID: 3636688671
+    locked: 0
   - name: Popups
     uniqueID: 495146523
     locked: 0
