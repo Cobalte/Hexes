@@ -8,6 +8,8 @@ Level
 Swipe!
 Combine!
 Combines with everything!
+Privacy Policy
+Language
 
 Nuevo Juego
 ¡Buen trabajo!
@@ -19,6 +21,8 @@ Nivel
 ¡Desliza!
 ¡Combinar!
 ¡Combínalo con cualquier cosa!
+Política de privacidad
+Idioma
 
 Neues Spiel
 Gut gemacht!
@@ -30,6 +34,8 @@ Niveau
 Wischen!
 Kombinieren!
 Kombinieren Sie mit allem!
+Datenschutzbestimmungen
+Sprache
 
 Permainan Baru
 Kerja bagus!
@@ -41,3 +47,5 @@ Tingkat
 Geser!
 Menggabungkan!
 Kombinasikan dengan apa pun!
+Kebijakan pribadi
+Bahasa
