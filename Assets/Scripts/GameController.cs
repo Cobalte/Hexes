@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour {
     public Hex CenterHex;
     public List<Hex> OrderedCornerHexes;
     public bool ForceWildCardNextTurn;
+    public List<AudioClip> SwipeAudioClips;
     // this var sucks and it's here to fix a weird problem I don't know how to fix otherwise
     public List<Block> GlobalFood;
     
@@ -56,28 +57,26 @@ public class GameController : MonoBehaviour {
     private static Vector3? swipeStartPos;
     private static Vector3? swipeEndPos;
     private bool isGameOver;
+    private AudioSource audioSource;
     
     private int turnCount;
     private Localizer localizer;
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
     public bool IsFreshGame => turnCount <= 5;
 
-    private const float swipeMinDist = 50f; // feels good?
+    private const float swipeMinDist = 60f; // feels good?
     private const string playerPrefHighScoreKey = "HighScore";
     private const string playerPrefsGameCountKey = "GamesStarted";
     private const string saveFileName = "/savegame.save";
     private readonly List<BoardDirection> fullBoardCheckDirections = new List<BoardDirection>
         { BoardDirection.Down, BoardDirection.DownLeft, BoardDirection.DownRight };
-    
-    //--------------------------------------------------------------------------------------------------------
-    private void Awake() {
-    }
 
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
         blocks = new List<Block>();
         localizer = GetComponent<Localizer>();
+        audioSource = GetComponent<AudioSource>();
         Canvas.ForceUpdateCanvases();
         LoadGameStateOrStartNewGame();
     }
@@ -277,6 +276,11 @@ public class GameController : MonoBehaviour {
         }
         
         swipeDir = BoardDirection.Null;
+        
+        // pick a random swipe sound and play it
+        if (SwipeAudioClips.Count > 0) {
+            audioSource.PlayOneShot(SwipeAudioClips[Random.Range(0, SwipeAudioClips.Count)]);
+        }
     }
 
     //--------------------------------------------------------------------------------------------------------
