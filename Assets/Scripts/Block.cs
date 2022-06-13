@@ -9,6 +9,7 @@ public class Block : MonoBehaviour {
     private const float slideSpeed = 3f;
     private const float tutorialSlideSpeed = 2f;
     private const float arrivalDist = 0.1f;
+    private const float pitchPerLevel = 0.05f;
 
     public int Level;
     public BlockKind Kind;
@@ -28,6 +29,8 @@ public class Block : MonoBehaviour {
     private GameController gameController;
     private GameObject uiCanvas;
     private BoardDirection swipeDirection;
+    private AudioSource audioSource;
+    private float audioDefaultPitch;
 
     //--------------------------------------------------------------------------------------------------------
     public void Initialize(Hex dropHex, int startLevel, BlockKind blockKind) {
@@ -37,6 +40,8 @@ public class Block : MonoBehaviour {
         swipeDestNeko = null;
         Kind = blockKind;
         BlocksToEat = new List<Block>();
+        audioSource = GetComponent<AudioSource>();
+        audioDefaultPitch = audioSource.pitch;
         gameController = GameObject.Find("Game Controller").GetComponent<GameController>();
         uiCanvas = GameObject.Find("UI Canvas");
         name = "Block on " + dropHex.name + ", Level " + Level + " (" + Kind + ")";
@@ -152,6 +157,10 @@ public class Block : MonoBehaviour {
 
         BlocksToEat.Remove(food);
         gameController.GlobalFood.Remove(food);
+        
+        // play a celebratory sound
+        audioSource.pitch = audioDefaultPitch + (pitchPerLevel * Level);
+        audioSource.Play();
     }
     
     //--------------------------------------------------------------------------------------------------------
