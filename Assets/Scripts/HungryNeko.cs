@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class HungryNeko : MonoBehaviour {
 
@@ -16,10 +17,18 @@ public class HungryNeko : MonoBehaviour {
     public List<Hex> FeedingHexes;
     public List<BoardDirection> FeedingDirections;
     public List<GameObject> HelperArrows;
+    public List<AudioClip> MeowSounds;
 
     public bool IsHungry => BlocksLeft - BlocksIncoming > 0;
 
+    private AudioSource audioSource;
+
     private static int pointsForFeeding = 1000;
+
+    //--------------------------------------------------------------------------------------------------------
+    private void Start() {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     //--------------------------------------------------------------------------------------------------------
     public void Feed(Block sushiBlock) {
@@ -45,6 +54,8 @@ public class HungryNeko : MonoBehaviour {
         foreach (GameObject helperArrow in HelperArrows) {
             helperArrow.SetActive(true);
         }
+        
+        PlayRandomMeow();
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -55,6 +66,8 @@ public class HungryNeko : MonoBehaviour {
         foreach (GameObject helperArrow in HelperArrows) {
             helperArrow.SetActive(false);
         }
+        
+        PlayRandomMeow();
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -70,6 +83,13 @@ public class HungryNeko : MonoBehaviour {
         
         foreach (GameObject helperArrow in HelperArrows) {
             helperArrow.SetActive(false);
+        }
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    public void PlayRandomMeow() {
+        if (MeowSounds.Count > 0) {
+            audioSource.PlayOneShot(MeowSounds[Random.Range(0, MeowSounds.Count)]);
         }
     }
 }
