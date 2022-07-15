@@ -21,9 +21,11 @@ public class UnlockProgressBar : MonoBehaviour {
     private float scoreCeiling;
     private float progress;
     private bool finalLevelReached;
+    private AudioSource audioSource;
 
     //--------------------------------------------------------------------------------------------------------
     private void Awake() {
+        audioSource = GetComponent<AudioSource>();
         Reset();
     }
 
@@ -99,6 +101,9 @@ public class UnlockProgressBar : MonoBehaviour {
             finalLevelReached = true;
             LevelLabel.text = (CurrentUnlock + 1).ToString();
         }
+        
+        // play noise!
+        audioSource.Play();
     }
     
     //--------------------------------------------------------------------------------------------------------
