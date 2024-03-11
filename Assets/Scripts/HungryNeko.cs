@@ -88,7 +88,7 @@ public class HungryNeko : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     public void PlayRandomMeow() {
-        if (MeowSounds.Count > 0) {
+        if (MeowSounds.Count > 0 && audioSource != null) {
             audioSource.PlayOneShot(MeowSounds[Random.Range(0, MeowSounds.Count)]);
         }
     }

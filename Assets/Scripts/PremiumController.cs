@@ -15,17 +15,12 @@ public class PremiumController : MonoBehaviour {
     private BannerView bannerView;
     private bool isAdRunning;
     
-    #if UNITY_ANDROID
-        private const string adUnitId = "ca-app-pub-3940256099942544/6300978111";
-    #elif UNITY_IPHONE
-        private const string adUnitId = "unexpected_platform";
-    #else
-        private const string adUnitId = "unexpected_platform";
-    #endif
+    private const string adUnitId = "ca-app-pub-3968697709394788/6119658708";
     
     //--------------------------------------------------------------------------------------------------------
     private void Awake() {
-        IsGamePremium = false; // testing purposes only!
+        return; // disabled until we get premium payments working
+        
         VerifyPremiumStatus();
 
         if (!IsGamePremium) {
@@ -35,6 +30,8 @@ public class PremiumController : MonoBehaviour {
 
     //--------------------------------------------------------------------------------------------------------
     private void VerifyPremiumStatus() {
+        return;
+        
         Debug.Log("Premium status: " + IsGamePremium);
 
         if (IsGamePremium && isAdRunning) {
@@ -44,6 +41,8 @@ public class PremiumController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     public void GoPremium() {
+        return;
+        
         Debug.Log("Going premium!");
         IsGamePremium = true;
         VerifyPremiumStatus();
@@ -51,6 +50,8 @@ public class PremiumController : MonoBehaviour {
 
     //--------------------------------------------------------------------------------------------------------
     private void SetAdBannerVisible(bool isVisible) {
+        return;
+        
         if (isVisible) {
             MobileAds.Initialize(initStatus => { });
             bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Top); // default size: 320x50

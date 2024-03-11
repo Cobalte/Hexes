@@ -9,5 +9,5 @@ EditorBuildSettings:
     path: Assets/Scenes/SushiNekoSwipe.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects:
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4238b5b820b2ee640ac806ec3a761bfd,
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a270dba35426a10459518436f199035e,
       type: 2}

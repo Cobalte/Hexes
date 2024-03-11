@@ -40,4 +40,9 @@ public class OptionsMenuController : MonoBehaviour
         PurchasePromptText.SetActive(!PremiumController.IsGamePremium);
         PurchasePromptButton.SetActive(!PremiumController.IsGamePremium);
     }
+    
+    //--------------------------------------------------------------------------------------------------------
+    public void OpenPrivacyPolicy() {
+        Application.OpenURL("https://www.cloakquillgames.com/privacy-policy");
+    }
 }
