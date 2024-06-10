@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEngine;
+using GoogleMobileAds.Api;
 using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour {
@@ -201,6 +202,11 @@ public class GameController : MonoBehaviour {
         BoardDirection searchDir = Opposite(swipeDir);
         somethingMoved = false;
 
+        // pick a random swipe sound and play it
+        if (SwipeAudioClips.Count > 0) {
+            audioSource.PlayOneShot(SwipeAudioClips[Random.Range(0, SwipeAudioClips.Count)]);
+        }
+        
         foreach (Hex captain in captains) {
             List<Hex> column = HexesInDirection(captain, searchDir);
             HungryNeko activeNeko = AdjacentHungryNeko(captain, searchDir);
@@ -273,11 +279,6 @@ public class GameController : MonoBehaviour {
         }
         
         swipeDir = BoardDirection.Null;
-        
-        // pick a random swipe sound and play it
-        if (SwipeAudioClips.Count > 0) {
-            audioSource.PlayOneShot(SwipeAudioClips[Random.Range(0, SwipeAudioClips.Count)]);
-        }
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -629,6 +630,13 @@ public class GameController : MonoBehaviour {
             $"Premium status: {PremiumControllerObj.IsGamePremium}, " +
             $"Language: {localizer.CurrentLanguage}"
         );
+        
+        StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/log.txt", true);
+        writer.WriteLine(
+            $"Game loaded. Total games started: {PlayerPrefs.GetInt(playerPrefsGameCountKey)}, " +
+            $"Premium status: {PremiumControllerObj.IsGamePremium}, " +
+            $"Language: {localizer.CurrentLanguage}");
+        writer.Close();
     }
     
     //--------------------------------------------------------------------------------------------------------
