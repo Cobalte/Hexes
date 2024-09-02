@@ -21,5 +21,5 @@ public class SaveState {
     public int CurrentHungryNekoInterval;
     public int MovesSinceLastHungryNeko;
     public LocalizedLanguage Language;
-
+    public bool AudioEnabled;
 }

@@ -55,8 +55,8 @@ public class GameController : MonoBehaviour {
     private static Vector3? swipeStartPos;
     private static Vector3? swipeEndPos;
     private bool isGameOver;
-    private AudioSource audioSource;
-    
+    private AudioManager audioManager;
+
     private int turnCount;
     private Localizer localizer;
     private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
@@ -74,7 +74,7 @@ public class GameController : MonoBehaviour {
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
         blocks = new List<Block>();
         localizer = GetComponent<Localizer>();
-        audioSource = GetComponent<AudioSource>();
+        audioManager = GetComponent<AudioManager>();
         Canvas.ForceUpdateCanvases();
         LoadGameStateOrStartNewGame();
     }
@@ -204,9 +204,9 @@ public class GameController : MonoBehaviour {
 
         // pick a random swipe sound and play it
         if (SwipeAudioClips.Count > 0) {
-            audioSource.PlayOneShot(SwipeAudioClips[Random.Range(0, SwipeAudioClips.Count)]);
+            audioManager.Play(SwipeAudioClips[Random.Range(0, SwipeAudioClips.Count)]);
         }
-        
+
         foreach (Hex captain in captains) {
             List<Hex> column = HexesInDirection(captain, searchDir);
             HungryNeko activeNeko = AdjacentHungryNeko(captain, searchDir);
@@ -387,7 +387,7 @@ public class GameController : MonoBehaviour {
             rotation: Quaternion.identity,
             parent: SushiAnchor.transform).GetComponent<Block>();
         
-        newBlock.Initialize(location, level, kind);
+        newBlock.Initialize(location, level, kind, audioManager);
         location.Occupant = newBlock;
         blocks.Add(newBlock);
 
@@ -541,7 +541,8 @@ public class GameController : MonoBehaviour {
             MovesSinceLastHungryNeko = this.MovesSinceLastHungryNeko,
             Multiplier = ScoreMultPanel.CurrentLevel,
             IsGameOver = isGameOver,
-            Language = localizer.CurrentLanguage
+            Language = localizer.CurrentLanguage,
+            AudioEnabled = audioManager.AudioEnabled
         };
         
         for (int i = 0; i < hexes.Count; i++) {
@@ -623,20 +624,24 @@ public class GameController : MonoBehaviour {
         ScoreDisplayObj.Snap();
         swipeDir = BoardDirection.Null;
         allowInput = true;
-        HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
-
-        Debug.Log(
-            $"Game loaded. Total games started: {PlayerPrefs.GetInt(playerPrefsGameCountKey)}, " +
-            $"Premium status: {PremiumControllerObj.IsGamePremium}, " +
-            $"Language: {localizer.CurrentLanguage}"
-        );
+        audioManager.SetAudioEnabled(saveState.AudioEnabled);
         
-        StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/log.txt", true);
-        writer.WriteLine(
-            $"Game loaded. Total games started: {PlayerPrefs.GetInt(playerPrefsGameCountKey)}, " +
-            $"Premium status: {PremiumControllerObj.IsGamePremium}, " +
-            $"Language: {localizer.CurrentLanguage}");
-        writer.Close();
+        HighScore = PlayerPrefs.GetInt(playerPrefHighScoreKey);
+        CurrentHighScoreIndicator.SetActive(true);
+        CurrentHighScoreLabel.text = HighScore.ToString();
+
+        // Debug.Log(
+        //     $"Game loaded. Total games started: {PlayerPrefs.GetInt(playerPrefsGameCountKey)}, " +
+        //     $"Premium status: {PremiumControllerObj.IsGamePremium}, " +
+        //     $"Language: {localizer.CurrentLanguage}"
+        // );
+        
+        // StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/log.txt", true);
+        // writer.WriteLine(
+        //     $"Game loaded. Total games started: {PlayerPrefs.GetInt(playerPrefsGameCountKey)}, " +
+        //     $"Premium status: {PremiumControllerObj.IsGamePremium}, " +
+        //     $"Language: {localizer.CurrentLanguage}");
+        // writer.Close();
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -651,10 +656,10 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void CreateSecondBlock() {
-        // we assume the block is at one of the six corners - create a block exactly 2 corners away
-        // in a random direction so the player has to make two swipes to combine them
+        // we assume the block is at one of the six corners - create a block exactly 1 corners away
+        // in a random direction so the player has to make one swipe to combine them
         int corner1 = OrderedCornerHexes.IndexOf(GetBlockHex(blocks[0]));
-        int offset = Random.Range(0, 2) == 0 ? 2 : -2;
+        int offset = Random.Range(0, 2) == 0 ? 1 : -1;
         int corner2 = (corner1 + offset + OrderedCornerHexes.Count) % OrderedCornerHexes.Count;
         CreateBlock(OrderedCornerHexes[corner2], BlockKind.Normal, 1, true);
         
@@ -662,15 +667,10 @@ public class GameController : MonoBehaviour {
         CombineTutorial.gameObject.SetActive(true);
         CombineTutorial.transform.position = CenterHex.transform.position;
         
-        // move and rotate the combine tutorial's arrows depending on block positions
-        int middleCorner = (corner1 + (offset / 2) + OrderedCornerHexes.Count) % OrderedCornerHexes.Count;
-        Vector3 arrowSegment1 = OrderedCornerHexes[corner1].transform.position;
-        Vector3 arrowSegment2 = OrderedCornerHexes[middleCorner].transform.position;
-        Vector3 arrowSegment3 = OrderedCornerHexes[corner2].transform.position;
-        
+        // move and rotate the combine tutorial's arrow depending on block positions
+        Vector3 arrowPosition = OrderedCornerHexes[corner1].transform.position;
         CombineTutorial tutorial = CombineTutorial.GetComponent<CombineTutorial>();
-        tutorial.Arrow1.transform.position = arrowSegment1;
-        tutorial.Arrow2.transform.position = arrowSegment2;
+        tutorial.Arrow1.transform.position = arrowPosition;
         
         // I don't want to talk about this
         float angle = 0;
@@ -682,16 +682,7 @@ public class GameController : MonoBehaviour {
             case 4: angle = offset > 0 ? 150 :  30; break;
             case 5: angle = offset > 0 ?  90 : 330; break;
         }
-        tutorial.Arrow1.transform.Rotate(new Vector3(0, 0, angle));
-        switch (middleCorner) {
-            case 0: angle = offset > 0 ?  30 : 270; break;
-            case 1: angle = offset > 0 ? 330 : 210; break;
-            case 2: angle = offset > 0 ? 270 : 150; break;
-            case 3: angle = offset > 0 ? 210 :  90; break;
-            case 4: angle = offset > 0 ? 150 :  30; break;
-            case 5: angle = offset > 0 ?  90 : 330; break;
-        }
-        tutorial.Arrow2.transform.Rotate(new Vector3(0, 0, angle));
+        tutorial.Arrow1.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
     }
     
     //--------------------------------------------------------------------------------------------------------

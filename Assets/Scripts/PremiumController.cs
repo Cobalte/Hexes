@@ -27,7 +27,6 @@ public class PremiumController : MonoBehaviour {
         }
         
         try {
-            //MobileAds.Initialize(initStatus => OnAdsInitialized());
             MobileAds.Initialize(initStatus => { });
             
             bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Top); // default size: 320x50

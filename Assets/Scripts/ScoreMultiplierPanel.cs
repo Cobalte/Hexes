@@ -16,8 +16,7 @@ public class ScoreMultiplierPanel : MonoBehaviour
 
     //--------------------------------------------------------------------------------------------------------
     public void TryToIncrementLevel() {
-        if (CurrentLevel < ComboPrefabs.Count - 1)
-        {
+        if (CurrentLevel < ComboPrefabs.Count - 1) {
             CurrentLevel++;
             CreateComboPrefab();
         }

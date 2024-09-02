@@ -19,6 +19,7 @@ public class Block : MonoBehaviour {
     public Image DisplayImage;
     public Animator BlockAnimator;
     public List<GameObject> CombineCelebrationPrefabs;
+    public AudioClip combineAudioClip;
     
     public bool IsMoving => swipeDestPos != null;
 
@@ -30,18 +31,20 @@ public class Block : MonoBehaviour {
     private GameObject uiCanvas;
     private BoardDirection swipeDirection;
     private AudioSource audioSource;
+    private AudioManager audioManager;
     private float audioDefaultPitch;
 
     //--------------------------------------------------------------------------------------------------------
-    public void Initialize(Hex dropHex, int startLevel, BlockKind blockKind) {
+    public void Initialize(Hex dropHex, int startLevel, BlockKind blockKind, AudioManager audioMgr) {
         Level = startLevel;
         swipeDestHex = null;
         swipeDestPos = null;
         swipeDestNeko = null;
         Kind = blockKind;
-        BlocksToEat = new List<Block>();
+        audioManager = audioMgr;
         audioSource = GetComponent<AudioSource>();
         audioDefaultPitch = audioSource.pitch;
+        BlocksToEat = new List<Block>();
         gameController = GameObject.Find("Game Controller").GetComponent<GameController>();
         uiCanvas = GameObject.Find("UI Canvas");
         name = "Block on " + dropHex.name + ", Level " + Level + " (" + Kind + ")";
