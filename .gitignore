@@ -37,6 +37,8 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-# Other
-/Assets/Plugins.meta 
-/Assets/Plugins/
+# Native build cache
+.utmp/
+
+# Per-user editor state
+[Uu]ser[Ss]ettings/
