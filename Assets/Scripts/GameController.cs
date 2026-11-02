@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEngine;
-using GoogleMobileAds.Api;
+//using GoogleMobileAds.Api;
 using Random = UnityEngine.Random;
 
 public class GameController : MonoBehaviour {
@@ -41,6 +41,9 @@ public class GameController : MonoBehaviour {
     public List<Hex> OrderedCornerHexes;
     public bool ForceWildCardNextTurn;
     public List<AudioClip> SwipeAudioClips;
+    public GameObject CelebrationShookObj;
+    public AudioClip CelebrationAudioClip;
+    public List<ParticleSystem> CelebrationParticles;
     // this var sucks and it's here to fix a weird problem I don't know how to fix otherwise
     public List<Block> GlobalFood;
     
@@ -121,7 +124,7 @@ public class GameController : MonoBehaviour {
         UnlockProgressBar.Reset();
         ScoreMultPanel.ResetLevel();
         UnlockProgressBar.LevelLabel.text = (UnlockProgressBar.CurrentUnlock + 1).ToString();
-        
+
         // record number of games started on this device
         int gamesStarted = PlayerPrefs.GetInt(playerPrefsGameCountKey) + 1;
         PlayerPrefs.SetInt(playerPrefsGameCountKey, gamesStarted);
@@ -739,5 +742,20 @@ public class GameController : MonoBehaviour {
         WildCardTutorial.transform.position = CenterHex.transform.position;
         WildcardTutorial theActualTutorial = WildCardTutorial.GetComponent<WildcardTutorial>();
         theActualTutorial.Circle.transform.position = wildcardHex.transform.position;
+    }
+    
+    //--------------------------------------------------------------------------------------------------------
+    public void PlayCelebration() {
+        if (CelebrationShookObj != null) {
+            CelebrationShookObj.GetComponent<Animator>().Play("CameraShake", -1, 0f);
+        }
+
+        if (CelebrationAudioClip != null) {
+            audioManager.Play(CelebrationAudioClip);
+        }
+
+        foreach (ParticleSystem particlesys in CelebrationParticles) {
+            particlesys.Play();
+        }
     }
 }

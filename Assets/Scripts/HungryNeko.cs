@@ -62,6 +62,7 @@ public class HungryNeko : MonoBehaviour {
     public void GetFull() {
         NekoAnimator.Play("NekoFull");
         GameController.ChangeScore(pointsForFeeding);
+        GameController.PlayCelebration();
         
         foreach (GameObject helperArrow in HelperArrows) {
             helperArrow.SetActive(false);
