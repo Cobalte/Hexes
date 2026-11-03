@@ -12,11 +12,12 @@ public class ScoreDisplay : MonoBehaviour
     private float displayedScore;
     private float newAnimTime;
     private float lastAnimTime;
+    private int shownScore = -1;
 
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
         //Set the score to 0 when we start
-        ScoreCounter.text = "<mspace=110>" + ((int) displayedScore).ToString("D6") + "</mspace>";
+        UpdateCounterText();
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -35,16 +36,30 @@ public class ScoreDisplay : MonoBehaviour
         //Add that number to the display score each frame.
         displayedScore += scoreIncrementAmt;
 
-        if (displayedScore > GameController.Score) {
+        //Snap once we're close. Otherwise float rounding can leave us stuck a hair below the score forever,
+        //rebuilding the text every frame.
+        if (displayedScore > GameController.Score || Mathf.Abs(GameController.Score - displayedScore) < 0.5f) {
             displayedScore = GameController.Score;
         }
 
-        ScoreCounter.text = "<mspace=110>" + ((int) displayedScore).ToString("D6") + "</mspace>";
+        UpdateCounterText();
     }
-    
+
     //--------------------------------------------------------------------------------------------------------
     public void Snap() {
         displayedScore = GameController.Score;
-        ScoreCounter.text = "<mspace=110>" + ((int) displayedScore).ToString("D6") + "</mspace>";
+        UpdateCounterText();
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    private void UpdateCounterText() {
+        //Only rebuild the string when the number on screen actually changes.
+        int score = (int) displayedScore;
+        if (score == shownScore) {
+            return;
+        }
+
+        shownScore = score;
+        ScoreCounter.text = "<mspace=110>" + score.ToString("D6") + "</mspace>";
     }
 }

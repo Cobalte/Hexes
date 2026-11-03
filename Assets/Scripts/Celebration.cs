@@ -16,9 +16,15 @@ public class Celebration : MonoBehaviour {
 
     //--------------------------------------------------------------------------------------------------------
     private void Update() {
-        if (allSystems.All(sys => !sys.IsAlive())) {
-            Destroy(gameObject);
+        // plain loop instead of linq - this runs every frame
+        foreach (ParticleSystem system in allSystems) {
+            if (system.IsAlive()) {
+                return;
+            }
         }
+
+        // all done - hand this effect back to the pool for reuse
+        PrefabPool.Release(gameObject);
     }
     
 }

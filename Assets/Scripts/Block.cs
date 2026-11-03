@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,44 +27,53 @@ public class Block : MonoBehaviour {
     private HungryNeko swipeDestNeko;
     private bool isInitialized;
     private GameController gameController;
-    private GameObject uiCanvas;
+    private Transform uiCanvas;
     private BoardDirection swipeDirection;
     private AudioSource audioSource;
     private AudioManager audioManager;
     private float audioDefaultPitch;
 
     //--------------------------------------------------------------------------------------------------------
-    public void Initialize(Hex dropHex, int startLevel, BlockKind blockKind, AudioManager audioMgr) {
+    private void Awake() {
+        // blocks get reused, so grab the untouched pitch once before eating starts changing it
+        audioSource = GetComponent<AudioSource>();
+        audioDefaultPitch = audioSource.pitch;
+        AnimatorSleeper.Attach(BlockAnimator);
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    public void Initialize(GameController controller, Hex dropHex, int startLevel, BlockKind blockKind,
+        AudioManager audioMgr) {
+
         Level = startLevel;
         swipeDestHex = null;
         swipeDestPos = null;
         swipeDestNeko = null;
         Kind = blockKind;
         audioManager = audioMgr;
-        audioSource = GetComponent<AudioSource>();
-        audioDefaultPitch = audioSource.pitch;
-        BlocksToEat = new List<Block>();
-        gameController = GameObject.Find("Game Controller").GetComponent<GameController>();
-        uiCanvas = GameObject.Find("UI Canvas");
+        audioSource.pitch = audioDefaultPitch;
+        BlocksToEat.Clear();
+        gameController = controller;
+        uiCanvas = controller.UICanvas;
         name = "Block on " + dropHex.name + ", Level " + Level + " (" + Kind + ")";
         UpdateDisplayImage();
         RandomizeSpeed();
         isInitialized = true;
     }
-    
+
     //--------------------------------------------------------------------------------------------------------
     private void Update() {
         if (!isInitialized) {
             return;
         }
 
-        Block food = BlocksToEat.FirstOrDefault( 
-            b => Vector3.Distance(transform.position, b.transform.position) < arrivalDist);
-
-        if (food != null) {
-            Eat(food);
+        if (BlocksToEat.Count > 0) {
+            Block food = FoodInReach();
+            if (food != null) {
+                Eat(food);
+            }
         }
-        
+
         if (swipeDestPos != null) {
             if (Vector3.Distance(transform.position, (Vector3)swipeDestPos) < arrivalDist) {
                 Arrive();
@@ -76,6 +84,18 @@ public class Block : MonoBehaviour {
                 transform.position = Vector3.MoveTowards(transform.position, (Vector3)swipeDestPos, speed);
             }
         }
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    public void ResetPose() {
+        // called right before the block goes back in the pool. if it's put away mid-animation, the animator
+        // would treat that off-center pose as the resting pose when the block gets reused.
+        if (!gameObject.activeInHierarchy) {
+            return;
+        }
+
+        AnimatorSleeper.WakeUp(BlockAnimator);
+        BlockAnimator.WriteDefaultValues();
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -113,11 +133,12 @@ public class Block : MonoBehaviour {
         
         // do we die now?
         if (SuicideAfterEating || SuicideOnArrival) {
-            Destroy(gameObject);
+            gameController.ReleaseBlock(this);
             return;
         }
 
         // play arrival anim
+        AnimatorSleeper.WakeUp(BlockAnimator);
         switch (swipeDirection) {
             case BoardDirection.UpLeft:
                 BlockAnimator.Play("Block_NW");
@@ -141,16 +162,25 @@ public class Block : MonoBehaviour {
     }
     
     //--------------------------------------------------------------------------------------------------------
-    private void Eat(Block food) {
-        Destroy(food.gameObject);
-        //DestroyImmediate(food.gameObject);
+    private Block FoodInReach() {
+        // plain loop instead of linq - this runs every frame
+        foreach (Block food in BlocksToEat) {
+            if (Vector3.Distance(transform.position, food.transform.position) < arrivalDist) {
+                return food;
+            }
+        }
+        return null;
+    }
 
-        //Instantiate the correct combo pfx based on the current combo multiplier.
-        Celebration celebration = Instantiate(
-            original: CombineCelebrationPrefabs[gameController.ScoreMultPanel.CurrentLevel],
-            parent: uiCanvas.transform,
-            worldPositionStays: false).GetComponent<Celebration>();
-        celebration.transform.position = (Vector3)swipeDestPos;
+    //--------------------------------------------------------------------------------------------------------
+    private void Eat(Block food) {
+        gameController.ReleaseBlock(food);
+
+        // spawn the correct combo pfx based on the current combo multiplier
+        PrefabPool.Get(
+            prefab: CombineCelebrationPrefabs[gameController.ScoreMultPanel.CurrentLevel],
+            parent: uiCanvas,
+            position: (Vector3)swipeDestPos);
 
         gameController.ChangeScore(Level * gameController.ScoreMultPanel.GetCurrentMultiplier());
         gameController.ScoreMultPanel.TryToIncrementLevel();
@@ -178,6 +208,7 @@ public class Block : MonoBehaviour {
         // Fun bit of code that sets a multiplier to be applied to the animator's playback speed.
         // Adds some visual variety.
         float speed = UnityEngine.Random.Range(0.9f, 1.4f);
+        AnimatorSleeper.WakeUp(BlockAnimator);
         BlockAnimator.SetFloat("speedMultiplier", speed);
     }
 }

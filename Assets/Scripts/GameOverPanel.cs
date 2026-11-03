@@ -30,6 +30,7 @@ public class GameOverPanel : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------
     public void ShowResultsMenu() {
         ResultMenuObj.SetActive(true);
+        AnimatorSleeper.WakeUp(ResultsMenuAnimator);
         ResultsMenuAnimator.SetBool(statusHash, !ResultsMenuAnimator.GetBool(statusHash));
     }
     

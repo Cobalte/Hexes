@@ -62,8 +62,19 @@ public class GameController : MonoBehaviour {
 
     private int turnCount;
     private Localizer localizer;
-    private bool IsAnyBlockMoving => blocks.Any(b => b.IsMoving);
+    private bool IsAnyBlockMoving {
+        get {
+            // plain loop instead of linq - this is checked every frame while blocks move
+            foreach (Block block in blocks) {
+                if (block.IsMoving) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
     public bool IsFreshGame => turnCount <= 5;
+    public Transform UICanvas { get; private set; }
 
     private const float swipeMinDist = 60f; // feels good?
     private const string playerPrefHighScoreKey = "HighScore";
@@ -74,6 +85,21 @@ public class GameController : MonoBehaviour {
 
     //--------------------------------------------------------------------------------------------------------
     private void Start() {
+        // mobile defaults to 30fps; swipes look much smoother at 60
+        Application.targetFrameRate = 60;
+
+        // let one-shot animators switch themselves off when idle. buttons are skipped because unity's
+        // button code only triggers their animations while the animator is enabled. this runs before any
+        // blocks or combo prefabs exist - blocks attach their own sleepers.
+        Animator[] sceneAnimators =
+            FindObjectsByType<Animator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (Animator animator in sceneAnimators) {
+            if (animator.GetComponent<UnityEngine.UI.Selectable>() == null) {
+                AnimatorSleeper.Attach(animator);
+            }
+        }
+
+        UICanvas = GameObject.Find("UI Canvas").transform;
         hexes = BoardObj.transform.GetComponentsInChildren<Hex>().ToList();
         blocks = new List<Block>();
         localizer = GetComponent<Localizer>();
@@ -85,9 +111,10 @@ public class GameController : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     private void StartNewGame() {
         foreach (Block block in blocks) {
-            Destroy(block.gameObject);
+            block.ResetPose();
+            PrefabPool.Release(block.gameObject);
         }
-        
+
         // reset the sim
         blocks.Clear();
         swipeDir = BoardDirection.Null;
@@ -159,8 +186,6 @@ public class GameController : MonoBehaviour {
             return;
         }
         
-        blocks.RemoveAll(b => b == null);
-        
         if (!allowInput && !IsAnyBlockMoving) {
             // blocks just finished moving to their destinations
             if (!SomethingJustPromoted) {
@@ -169,7 +194,7 @@ public class GameController : MonoBehaviour {
 
             // this part sucks - somehow there's food left over from last frame?
             foreach (Block food in GlobalFood) {
-                Destroy(food.gameObject);
+                ReleaseBlock(food);
             }
             GlobalFood.Clear();
 
@@ -384,23 +409,31 @@ public class GameController : MonoBehaviour {
             ForceWildCardNextTurn = false;
         }
         
-        newBlock = Instantiate(
-            original: BlockPrefab,
+        newBlock = PrefabPool.Get(
+            prefab: BlockPrefab,
+            parent: SushiAnchor.transform,
             position: location.transform.position,
-            rotation: Quaternion.identity,
-            parent: SushiAnchor.transform).GetComponent<Block>();
-        
-        newBlock.Initialize(location, level, kind, audioManager);
+            rotation: Quaternion.identity).GetComponent<Block>();
+
+        newBlock.Initialize(this, location, level, kind, audioManager);
         location.Occupant = newBlock;
         blocks.Add(newBlock);
 
         if (celebrate) {
-            Instantiate(
-                original: CreateCelebrationPrefab,
+            PrefabPool.Get(
+                prefab: CreateCelebrationPrefab,
+                parent: SushiAnchor.transform,
                 position: newBlock.transform.position,
-                rotation: Quaternion.identity,
-                parent: SushiAnchor.transform);
+                rotation: Quaternion.identity);
         }
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    public void ReleaseBlock(Block block) {
+        // takes a block off the board and puts it back in the pool for reuse
+        blocks.Remove(block);
+        block.ResetPose();
+        PrefabPool.Release(block.gameObject);
     }
     
     //--------------------------------------------------------------------------------------------------------
@@ -747,7 +780,9 @@ public class GameController : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     public void PlayCelebration() {
         if (CelebrationShookObj != null) {
-            CelebrationShookObj.GetComponent<Animator>().Play("CameraShake", -1, 0f);
+            Animator shakeAnimator = CelebrationShookObj.GetComponent<Animator>();
+            AnimatorSleeper.WakeUp(shakeAnimator);
+            shakeAnimator.Play("CameraShake", -1, 0f);
         }
 
         if (CelebrationAudioClip != null) {

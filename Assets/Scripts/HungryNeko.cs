@@ -32,7 +32,7 @@ public class HungryNeko : MonoBehaviour {
 
     //--------------------------------------------------------------------------------------------------------
     public void Feed(Block sushiBlock) {
-        Destroy(sushiBlock.gameObject);
+        GameController.ReleaseBlock(sushiBlock);
         BlocksLeft--;
         BlocksIncoming--;
         BlockCounters[BlocksLeft].gameObject.SetActive(false);
@@ -44,6 +44,7 @@ public class HungryNeko : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     public void GetHungry(int level) {
+        AnimatorSleeper.WakeUp(NekoAnimator);
         NekoAnimator.Play("NekoHungry");
         BlockLevel = level;
         BlocksLeft = 1;
@@ -60,6 +61,7 @@ public class HungryNeko : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     public void GetFull() {
+        AnimatorSleeper.WakeUp(NekoAnimator);
         NekoAnimator.Play("NekoFull");
         GameController.ChangeScore(pointsForFeeding);
         GameController.PlayCelebration();
@@ -73,6 +75,7 @@ public class HungryNeko : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     public void Reset() {
+        AnimatorSleeper.WakeUp(NekoAnimator);
         NekoAnimator.Play("NekoNotHungry");
         BlockLevel = 0;
         BlocksLeft = 0;

@@ -48,8 +48,12 @@ public class UnlockProgressBar : MonoBehaviour {
 
         if (progress < 1f) {
             float scoreDifference = progress - ProgressSlider.value;
-            float progressIncrementAmt = scoreDifference / sliderMoveSpeed;
-            ProgressSlider.value += progressIncrementAmt * 2;
+
+            // stop nudging once we're basically there - every change to the slider rebuilds the canvas
+            if (Mathf.Abs(scoreDifference) > 0.001f) {
+                float progressIncrementAmt = scoreDifference / sliderMoveSpeed;
+                ProgressSlider.value += progressIncrementAmt * 2;
+            }
         }
         else {
             IncrementUnlock();

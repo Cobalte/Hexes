@@ -37,9 +37,9 @@ public class LocalizedTextInspector : Editor {
             language.enumValueIndex = (int)(LocalizedLanguage)EditorGUILayout.EnumPopup(
                 targetScript.Lines[i].Language, GUILayout.Width(100));
             fontAsset.objectReferenceValue = EditorGUILayout.ObjectField(
-                fontAsset.objectReferenceValue, typeof(TMP_FontAsset));
+                fontAsset.objectReferenceValue, typeof(TMP_FontAsset), false);
             fontMaterial.objectReferenceValue = EditorGUILayout.ObjectField(
-                fontMaterial.objectReferenceValue, typeof(Material));
+                fontMaterial.objectReferenceValue, typeof(Material), false);
             if(GUILayout.Button("Set", GUILayout.Width(40))){
                 targetScript.SetLanguage((LocalizedLanguage)language.enumValueIndex);
             }

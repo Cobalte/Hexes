@@ -24,6 +24,7 @@ public class OptionsMenuController : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------
     public void ToggleOptionsMenu() {
         OptionsMenuObj.SetActive(true);
+        AnimatorSleeper.WakeUp(OptionsMenuAnimator);
 
         bool isVisible = OptionsMenuAnimator.GetBool(statusHash);
         OptionsMenuAnimator.SetBool(statusHash, !isVisible);

@@ -13,6 +13,16 @@ public class ScoreMultiplierPanel : MonoBehaviour
     public int CurrentLevel;
     
     private Image displayImage;
+    private GameObject background;
+
+    //--------------------------------------------------------------------------------------------------------
+    private void Awake() {
+        // the red disc behind the combo badges - only the x1 badge lines up with it exactly
+        Transform backgroundTransform = transform.Find("BG");
+        if (backgroundTransform != null) {
+            background = backgroundTransform.gameObject;
+        }
+    }
 
     //--------------------------------------------------------------------------------------------------------
     public void TryToIncrementLevel() {
@@ -38,6 +48,11 @@ public class ScoreMultiplierPanel : MonoBehaviour
         RectTransform rect = ActiveComboObj.GetComponent<RectTransform>();
         rect.offsetMax = Vector2.zero;
         rect.offsetMin = Vector2.zero;
+
+        // higher badges don't fully cover the disc, so hide it whenever we're above x1
+        if (background != null) {
+            background.SetActive(CurrentLevel == 0);
+        }
     }
     
     //--------------------------------------------------------------------------------------------------------
