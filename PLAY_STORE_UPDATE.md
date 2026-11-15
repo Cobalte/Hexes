@@ -71,7 +71,9 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
 - [x] Application entry point: Activity (already set); custom `AndroidManifest.xml` removed
 - [x] Consider dropping ARMv7 (ARM64 only) — decided to keep ARMv7 + ARM64: no extra cost to players (Play serves each device only its own architecture) and it keeps 32-bit-only low-end phones supported. Revisit if an SDK drops 32-bit support
 - [x] Remove unused engine modules and packages (AI, cloth, terrain, umbra, Unity Analytics, vehicles, video, VR, wind, XR, XR Management + `Assets/XR/`, Multiplayer Center)
-- [ ] Bump version (e.g. 1.1.0, code 32+). Note: old build files are named `SNS-Ver109-Pkg26` (v1.0.9, code 26) while the project says 1.0.3 / code 31 — check Play Console for the highest version code ever uploaded and go above it
+- [x] Bump version: **1.1.0, code 32** (Play Console highest was 1.0.2 / code 31)
+- [x] Turn off the Unity splash screen ("Made with Unity")
+- [ ] Adaptive app icon: Android has no platform icons set, so it uses the flat 1024px `Assets/Art/SplashScreens/AppIcon.png` (same file as jim files/Working/SushiNekoSwipe_Assets/AppIcon.png). Android 8+ launchers shrink a flat icon into a white circle. Needs separate background (teal pattern) and foreground (cat + sushi, transparent, key art inside the middle 2/3) layers
 
 ## 6. Mobile optimization
 
@@ -83,8 +85,8 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
 - [x] Pool blocks and celebration effects (new `PrefabPool`) instead of Instantiate/Destroy; `Block` gets `GameController`/`UI Canvas` passed in instead of `GameObject.Find`. Blocks reset their animated pose (`Block.ResetPose`) before going back in the pool — without this, a block pooled mid-bounce came back with its sushi permanently off-center. Combo badges (`ScoreMultiplierPanel`) are **not** pooled: some of their particle systems destroy themselves when finished, so reused copies would be missing effects
 - [x] Fix: red combo background disc (`ScoreMultiplierGroup/BG`, `Combo_BG.png`) peeked out from behind the x2–x16 badges — `ScoreMultiplierPanel` now shows it only at x1. The badges were also off-center from the meter's round end cap (`Meter_BG.png`): badge `Anchor` nudge (-2, 3) zeroed in all 5 combo prefabs, and `ScoreMultiplierGroup` moved from (5, 2) to (4.25, 0.25) so it's centered on the cap (measured from the sprite: center 114.5, 114.5 px at 0.5 units/px)
 - [ ] Play-test the above in the editor and on a device: block spawn/merge/arrival animations, neko hungry/full, options + results menus open/close, camera shake, results screen board copy, a second game after game over
-- [ ] Replace per-turn `BinaryFormatter` save with `JsonUtility` (keep reading the old binary save once so existing players keep their games)
-- [ ] Battery: lower the render rate while the board is idle (`OnDemandRendering.renderFrameInterval`), full 60 fps while blocks move
+- [ ] (Later update, not this release) Replace per-turn `BinaryFormatter` save with `JsonUtility` (keep reading the old binary save once so existing players keep their games)
+- [x] Battery: render at 30fps when idle (`OnDemandRendering.renderFrameInterval = 2` after 3 s with no touches or moving blocks; tutorials always full speed). Input is still read at 60fps
 - [ ] Profile on a low-end device (memory, frame time, startup time)
 - [ ] Verify safe-area handling on modern aspect ratios and edge-to-edge display (enforced when targeting API 35+)
 

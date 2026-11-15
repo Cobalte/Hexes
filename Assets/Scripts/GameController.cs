@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 //using GoogleMobileAds.Api;
 using Random = UnityEngine.Random;
 
@@ -77,6 +78,11 @@ public class GameController : MonoBehaviour {
     public Transform UICanvas { get; private set; }
 
     private const float swipeMinDist = 60f; // feels good?
+    // battery: when nothing has happened for a few seconds, only render every other frame (30fps). input is
+    // still read every frame, and any touch brings back full speed immediately.
+    private const float fullFrameRateHoldTime = 3f;
+    private const int idleRenderFrameInterval = 2;
+    private float lastActivityTime;
     private const string playerPrefHighScoreKey = "HighScore";
     private const string playerPrefsGameCountKey = "GamesStarted";
     private const string saveFileName = "/savegame.save";
@@ -167,6 +173,7 @@ public class GameController : MonoBehaviour {
     //--------------------------------------------------------------------------------------------------------
     private void EnterGameOverState() {
         isGameOver = true;
+        lastActivityTime = Time.unscaledTime; // let the results screen animate at full speed
         GameOverPanelObj.ShowResultsMenu();
         GameOverPanelObj.SushiBoatResults = SushiAnchor;
         GameOverPanelObj.ScoreResult = Score;
@@ -182,6 +189,8 @@ public class GameController : MonoBehaviour {
     
     //--------------------------------------------------------------------------------------------------------
     private void Update() {
+        UpdateRenderRate();
+
         if (isGameOver) {
             return;
         }
@@ -221,6 +230,22 @@ public class GameController : MonoBehaviour {
         ClearTutorials();
     }
     
+    //--------------------------------------------------------------------------------------------------------
+    private void UpdateRenderRate() {
+        // anything going on? (touches, mouse/keys in the editor, blocks sliding or merging)
+        if (Input.touchCount > 0 || Input.anyKey || !allowInput || IsAnyBlockMoving) {
+            lastActivityTime = Time.unscaledTime;
+        }
+
+        // the tutorials animate continuously, so keep them smooth
+        bool isTutorialShowing = SwipeTutorial.activeInHierarchy
+            || CombineTutorial.activeInHierarchy
+            || WildCardTutorial.activeInHierarchy;
+
+        bool isIdle = !isTutorialShowing && Time.unscaledTime - lastActivityTime > fullFrameRateHoldTime;
+        OnDemandRendering.renderFrameInterval = isIdle ? idleRenderFrameInterval : 1;
+    }
+
     //--------------------------------------------------------------------------------------------------------
     private void ExecuteSwipe(out bool somethingMoved) {
         // 'captains' are the five hexes at the edge of the board in the swiped direction. this whole
