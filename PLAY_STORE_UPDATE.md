@@ -20,7 +20,8 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
 - [x] Stop ignoring `Assets/Plugins/` in `.gitignore` so the Android manifest and Gradle templates are versioned
 - [x] Ignore `.utmp/` (native build cache) and `UserSettings/` and remove them from the index
 - [x] Back up the release keystore somewhere off this machine
-- [ ] Confirm in Play Console whether the app is enrolled in Play App Signing
+- [x] Confirm in Play Console whether the app is enrolled in Play App Signing — yes ("App signing key in use"); Google holds the app signing key
+- [x] Confirm the local keystore is the registered **upload** key (SHA-1 matches): compare its SHA-1 (`keytool -list -v -keystore sushinekoswipe.keystore`) with "Upload key certificate" on Play Console's App signing page
 
 ## 2. Remove the Kwalee SDK
 
@@ -48,11 +49,18 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
 - [x] Enter the AdMob Android app ID (`ca-app-pub-…~…`) in **Assets → Google Mobile Ads → Settings**
 - [x] Tick **Custom Main Gradle Template** and **Custom Gradle Properties Template** (Player Settings → Publishing Settings), then **Assets → External Dependency Manager → Android Resolver → Force Resolve** (needs Android as the active platform in File → Build Profiles). Resolved: `play-services-ads` 25.5.0, `user-messaging-platform` 4.0.0, AndroidX constraintlayout/fragment/lifecycle-process; AndroidX + Jetifier enabled
 - [x] Turn on "Resolve on build" in the Android Resolver settings (auto-resolution on file change stays off)
-- [ ] Implement UMP consent (required for EEA/UK) before initializing ads
-- [ ] Restore and modernize banner code in `PremiumController.cs` (real ad unit ID is in the comments; use test IDs during development)
+- [x] Implement UMP consent (required for EEA/UK) before initializing ads — `PremiumController` refreshes consent every launch, shows the form if required, and only then starts `MobileAds`
+- [x] Restore and modernize banner code in `PremiumController.cs` — fixed 320x50 banner at the top; development builds use Google's test unit, release builds the real one; `CanvasHelper.SetTopInset` pushes the UI down by the banner's height
+- [x] Child safety in code: all ad requests capped at `MaxAdContentRating.G`. Not tagged child-directed (the game doesn't target under-13s)
+- [x] Add a **Privacy Options** button: `PrivacyOptionsButtonAnchor`, a long flat button under the Privacy Policy / sound row in the Language (settings) panel, styled like the Privacy Policy button, labels in all 8 languages using only glyphs already in the static font atlases (Chinese "隐私与广告" and Korean "광고 개인 정보" mean "privacy & ads" / "ad privacy"). Shown only when UMP says it's required; the settings panel then stretches by one row (`OptionsMenuController.PrivacyRowHeight` / `SettingsGrowUpward`) and the Credits and New Game panels move down to make room
+- [ ] Test the Privacy Options button: tick **Test Consent As EEA** on `PremiumController` (Game Controller object), play, open the options menu. On a real phone also add the hashed device ID from logcat. Untick before release (it's ignored in release builds anyway). Note: in the editor, Google's stand-in consent SDK always reports privacy options as required, so the editor shows the button only when the test checkbox is ticked. The real show/hide decision can only be checked on a phone
+- [ ] Play-test ads: test banner appears at top without covering the score/settings; consent form shows when testing with an EEA debug geography
+- [x] AdMob console: set the app's maximum ad content rating to **G**
+- [ ] AdMob console: block sensitive ad categories (Blocking controls → Sensitive categories), e.g. gambling, dating, alcohol
+- [x] "Go Premium" button stays hidden: its whole panel (`IAPAnchor`) is inactive in the scene, so it never shows regardless of `UpdatePremiumText`
 - [ ] After the first AdMob build, check the merged manifest's permissions. The game itself needs none; the last release (v1.0.9, 2024) had only AdMob's set: `INTERNET`, `ACCESS_NETWORK_STATE`, `com.google.android.gms.permission.AD_ID`, `ACCESS_ADSERVICES_AD_ID` / `_ATTRIBUTION` / `_TOPICS`, `WAKE_LOCK`, `FOREGROUND_SERVICE` (via WorkManager). Anything beyond that list should be investigated
 - [ ] Set up `app-ads.txt` on the developer website listed in Play Console
-- [ ] Decide whether to offer a "remove ads" IAP (would need Unity IAP / Play Billing Library)
+- [x] Decide whether to offer a "remove ads" IAP — not for this release (would need Unity IAP / Play Billing Library)
 
 ## 5. Engine and Android target upgrade
 
@@ -82,8 +90,7 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
 
 ## 7. Build and verify
 
-- [ ] Open the project in Unity and confirm it still compiles and plays after the module removal and Android settings changes
-
+- [x] Open the project in Unity and confirm it still compiles and plays after the module removal and Android settings changes
 - [ ] Build an Android App Bundle (AAB)
 - [ ] Verify 16 KB page size compliance for all native libraries (APK Analyzer / Play Console)
 - [ ] Test on physical devices (low-end and current Android version)
@@ -92,10 +99,17 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
 ## 8. Play Console compliance
 
 - [ ] Confirm developer account status and identity verification are current
-- [ ] Update Data safety form to match the remaining SDKs and data collection
-- [ ] Update or create privacy policy (URL in store listing and in-app)
-- [ ] Ads declaration (contains ads: yes/no)
+- [x] Update Data safety form (saved in Play Console) to match the remaining SDKs and data collection. The form covers SDK data too; the game's own save files stay on the device, so they're not "collected". Answers, based on Google's disclosure for Mobile Ads SDK 25.5.0 (re-check it if the SDK is updated):
+  - Collects or shares required user data: **Yes**. All data encrypted in transit: **Yes** (TLS). Way to request deletion: **No** (no accounts; users reset their ad ID in Android settings)
+  - **Location → Approximate location** (estimated from IP address)
+  - **App activity → App interactions** (app launches, taps, video views)
+  - **App info and performance → Diagnostics** (launch time, hang rate, energy use)
+  - **Device or other IDs** (advertising ID, app set ID)
+  - For each: **Collected: yes, Shared: yes**, not processed ephemerally, collection required, purposes **Advertising or marketing**, **Analytics**, **Fraud prevention, security, and compliance**
+- [x] Draft updated privacy policy: [Docs/PrivacyPolicy.md](Docs/PrivacyPolicy.md) — covers AdMob and what it collects (sent to Google, not to Cloak & Quill), consent + Privacy options, children (G-rated ads only), contact
+- [ ] Fill in the contact email in `Docs/PrivacyPolicy.md`, then publish it at https://www.cloakquillgames.com/privacy-policy (the URL the in-game Privacy Policy button and Play Console use)
+- [ ] Ads declaration: **contains ads — yes**
 - [ ] Re-do content rating questionnaire (IARC)
-- [ ] Target audience and content settings
+- [ ] Target audience and content settings: pick age groups 13+ only (the game isn't designed for under-13s), and answer the "could the app unintentionally appeal to children?" question honestly — Google reviews this, and if it decides the app appeals to kids it may require the Families policy (child-directed ad treatment)
 - [ ] Refresh store listing: screenshots, feature graphic, description
 - [ ] Release to production (staged rollout)

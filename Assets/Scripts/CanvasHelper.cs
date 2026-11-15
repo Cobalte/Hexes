@@ -13,7 +13,8 @@ public class CanvasHelper : MonoBehaviour
     private static ScreenOrientation lastOrientation = ScreenOrientation.LandscapeLeft;
     private static Vector2 lastResolution = Vector2.zero;
     private static Rect lastSafeArea = Rect.zero;
- 
+    private static float topInsetPixels = 0f; // extra space kept clear at the top, e.g. for the banner ad
+
     private Canvas canvas;
     private RectTransform rectTransform;
     private RectTransform safeAreaTransform;
@@ -65,6 +66,7 @@ public class CanvasHelper : MonoBehaviour
    
         var anchorMin = safeArea.position;
         var anchorMax = safeArea.position + safeArea.size;
+        anchorMax.y -= topInsetPixels;
         anchorMin.x /= canvas.pixelRect.width;
         anchorMin.y /= canvas.pixelRect.height;
         anchorMax.x /= canvas.pixelRect.width;
@@ -101,6 +103,17 @@ public class CanvasHelper : MonoBehaviour
         OnResolutionOrOrientationChanged.Invoke();
     }
  
+    public static void SetTopInset(float pixels)
+    {
+        // keeps the ui clear of something drawn over the top of the screen, like the banner ad
+        topInsetPixels = pixels;
+
+        for (int i = 0; i < helpers.Count; i++)
+        {
+            helpers[i].ApplySafeArea();
+        }
+    }
+
     private static void SafeAreaChanged()
     {
         // Debug.Log("Safe Area changed from " + lastSafeArea + " to " + Screen.safeArea.size + " at " + Time.time);
