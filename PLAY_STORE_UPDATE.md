@@ -73,7 +73,7 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
 - [x] Remove unused engine modules and packages (AI, cloth, terrain, umbra, Unity Analytics, vehicles, video, VR, wind, XR, XR Management + `Assets/XR/`, Multiplayer Center)
 - [x] Bump version: **1.1.0, code 32** (Play Console highest was 1.0.2 / code 31)
 - [x] Turn off the Unity splash screen ("Made with Unity")
-- [ ] Adaptive app icon: Android has no platform icons set, so it uses the flat 1024px `Assets/Art/SplashScreens/AppIcon.png` (same file as jim files/Working/SushiNekoSwipe_Assets/AppIcon.png). Android 8+ launchers shrink a flat icon into a white circle. Needs separate background (teal pattern) and foreground (cat + sushi, transparent, key art inside the middle 2/3) layers
+- [x] Adaptive app icon (stand-in): `Assets/Art/Icons/AppIconAdaptiveBackground.png` is the original flat icon art at 92% of the visible area, bottom-aligned so the sushi runs off the edge, on #2AB5C5 teal; the foreground layer is transparent. Set for all 6 Android adaptive sizes. Replace with real separate background/foreground layers from the artist if they turn up
 
 ## 6. Mobile optimization
 
