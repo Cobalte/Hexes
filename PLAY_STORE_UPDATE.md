@@ -53,8 +53,9 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
 - [x] Restore and modernize banner code in `PremiumController.cs` — fixed 320x50 banner at the top; development builds use Google's test unit, release builds the real one; `CanvasHelper.SetTopInset` pushes the UI down by the banner's height
 - [x] Child safety in code: all ad requests capped at `MaxAdContentRating.G`. Not tagged child-directed (the game doesn't target under-13s)
 - [x] Add a **Privacy Options** button: `PrivacyOptionsButtonAnchor`, a long flat button under the Privacy Policy / sound row in the Language (settings) panel, styled like the Privacy Policy button, labels in all 8 languages using only glyphs already in the static font atlases (Chinese "隐私与广告" and Korean "광고 개인 정보" mean "privacy & ads" / "ad privacy"). Shown only when UMP says it's required; the settings panel then stretches by one row (`OptionsMenuController.PrivacyRowHeight` / `SettingsGrowUpward`) and the Credits and New Game panels move down to make room
-- [ ] Test the Privacy Options button: tick **Test Consent As EEA** on `PremiumController` (Game Controller object), play, open the options menu. On a real phone also add the hashed device ID from logcat. Untick before release (it's ignored in release builds anyway). Note: in the editor, Google's stand-in consent SDK always reports privacy options as required, so the editor shows the button only when the test checkbox is ticked. The real show/hide decision can only be checked on a phone
-- [ ] Play-test ads: test banner appears at top without covering the score/settings; consent form shows when testing with an EEA debug geography
+- [x] (Done 2026-11-23 on the Galaxy S26: consent form, Manage options, consent stored, banner after consent, Privacy Options button reopens the form.) Test the Privacy Options button: tick **Test Consent As EEA** on `PremiumController` (Game Controller object), play, open the options menu. On a real phone also add the hashed device ID from logcat. Untick before release (it's ignored in release builds anyway). Note: in the editor, Google's stand-in consent SDK always reports privacy options as required, so the editor shows the button only when the test checkbox is ticked. The real show/hide decision can only be checked on a phone
+- [x] Play-test ads: test banner appears at top without covering the score/settings; consent form shows when testing with an EEA debug geography (Galaxy S26, 2026-11-23)
+- [x] AdMob Privacy & messaging: European regulations (GDPR) consent message created and published for the app (without it the UMP SDK reports "no form(s) configured" and EEA/UK players only get limited ads). Galaxy S26 hashed test ID `855D38F45B76EB8805960F9F105E7855` is saved in `PremiumController.ConsentTestDeviceIds`; tick Test Consent As EEA to re-test
 - [x] AdMob console: set the app's maximum ad content rating to **G**
 - [x] AdMob console: block sensitive ad categories (Blocking controls → Sensitive categories): dating, references to sex, social casino games, alcohol, gambling & betting, get rich quick
 - [x] "Go Premium" button stays hidden: its whole panel (`IAPAnchor`) is inactive in the scene, so it never shows regardless of `UpdatePremiumText`
@@ -89,7 +90,7 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
 - [ ] (Later update, not this release) Replace per-turn `BinaryFormatter` save with `JsonUtility` (keep reading the old binary save once so existing players keep their games)
 - [x] Battery: render at 30fps when idle (`OnDemandRendering.renderFrameInterval = 2` after 3 s with no touches or moving blocks; tutorials always full speed). Input is still read at 60fps
 - [ ] Profile on a low-end device (memory, frame time, startup time)
-- [ ] Verify safe-area handling on modern aspect ratios and edge-to-edge display (enforced when targeting API 35+)
+- [x] Verify safe-area handling on modern aspect ratios and edge-to-edge display (enforced when targeting API 35+) — Galaxy S26: layout, notch and banner all correct
 
 ## 7. Build and verify
 
