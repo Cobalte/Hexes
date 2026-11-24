@@ -1,0 +1,3 @@
+# The Google Mobile Ads plugin includes wrappers for the GMA Next-Gen SDK, but this game uses the
+# legacy SDK, so the Next-Gen classes they reference are intentionally not included.
+-dontwarn com.google.android.libraries.ads.mobile.sdk.**
