@@ -18,7 +18,6 @@ public class PremiumController : MonoBehaviour {
     [Tooltip("On a real phone, also add its hashed device ID (printed in logcat by the UMP SDK).")]
     public List<string> ConsentTestDeviceIds = new List<string>();
 
-    // players covered by privacy rules (e.g. in the EEA/UK) must be able to change their consent later
     public bool IsPrivacyOptionsRequired {
         get {
 #if UNITY_EDITOR
@@ -47,7 +46,6 @@ public class PremiumController : MonoBehaviour {
         // note: ad sdk callbacks can arrive off the main thread, so anything touching unity objects goes
         // through MobileAdsEventExecutor.ExecuteInUpdate
         MobileAds.SetRequestConfiguration(new RequestConfiguration {
-            // plenty of kids play this, so only allow ads that are suitable for all ages
             MaxAdContentRating = MaxAdContentRating.G
         });
 

@@ -56,9 +56,9 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
 - [ ] Test the Privacy Options button: tick **Test Consent As EEA** on `PremiumController` (Game Controller object), play, open the options menu. On a real phone also add the hashed device ID from logcat. Untick before release (it's ignored in release builds anyway). Note: in the editor, Google's stand-in consent SDK always reports privacy options as required, so the editor shows the button only when the test checkbox is ticked. The real show/hide decision can only be checked on a phone
 - [ ] Play-test ads: test banner appears at top without covering the score/settings; consent form shows when testing with an EEA debug geography
 - [x] AdMob console: set the app's maximum ad content rating to **G**
-- [ ] AdMob console: block sensitive ad categories (Blocking controls → Sensitive categories), e.g. gambling, dating, alcohol
+- [x] AdMob console: block sensitive ad categories (Blocking controls → Sensitive categories): dating, references to sex, social casino games, alcohol, gambling & betting, get rich quick
 - [x] "Go Premium" button stays hidden: its whole panel (`IAPAnchor`) is inactive in the scene, so it never shows regardless of `UpdatePremiumText`
-- [ ] After the first AdMob build, check the merged manifest's permissions. The game itself needs none; the last release (v1.0.9, 2024) had only AdMob's set: `INTERNET`, `ACCESS_NETWORK_STATE`, `com.google.android.gms.permission.AD_ID`, `ACCESS_ADSERVICES_AD_ID` / `_ATTRIBUTION` / `_TOPICS`, `WAKE_LOCK`, `FOREGROUND_SERVICE` (via WorkManager). Anything beyond that list should be investigated
+- [x] After the first AdMob build, check the merged manifest's permissions (checked on the 1.1.0 dev APK: exactly the AdMob list below, plus AndroidX's internal `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`, which is app-private and not user-facing). The game itself needs none; the last release (v1.0.9, 2024) had only AdMob's set: `INTERNET`, `ACCESS_NETWORK_STATE`, `com.google.android.gms.permission.AD_ID`, `ACCESS_ADSERVICES_AD_ID` / `_ATTRIBUTION` / `_TOPICS`, `WAKE_LOCK`, `FOREGROUND_SERVICE` (via WorkManager). Anything beyond that list should be investigated
 - [ ] Set up `app-ads.txt` on the developer website listed in Play Console
 - [x] Decide whether to offer a "remove ads" IAP — not for this release (would need Unity IAP / Play Billing Library)
 
@@ -94,8 +94,9 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
 
 - [x] Open the project in Unity and confirm it still compiles and plays after the module removal and Android settings changes
 - [ ] Build an Android App Bundle (AAB)
-- [ ] Verify 16 KB page size compliance for all native libraries (APK Analyzer / Play Console)
-- [ ] Test on physical devices (low-end and current Android version)
+- [x] Verify 16 KB page size compliance for all native libraries — 1.1.0 dev APK: zipalign -P 16 passes and libil2cpp, libmain, libunity (arm64) all have 0x4000 LOAD alignment. Re-check the release AAB in Play Console
+- [ ] Test on physical devices (low-end and current Android version). Galaxy S26, 1.1.0 dev build (2026-11-16): test banner, layout (incl. hungry neko and combo badge), frame rate and adaptive icon all good. Still to do: a low-end device, and the EEA consent form + Privacy Options button on a phone
+- [x] Launcher label: "Sushi Neko Swipe" was cut off as "Sushi Neko Swi..." on the Galaxy S26 home screen (apps can't control line breaks). Product Name is now **Sushi Neko**; the Play Store title stays "Sushi Neko Swipe"
 - [ ] Upload to internal testing track and review the pre-launch report
 
 ## 8. Play Console compliance
@@ -109,9 +110,9 @@ Policy dates below are from Google's published schedule as of late 2026 — conf
   - **Device or other IDs** (advertising ID, app set ID)
   - For each: **Collected: yes, Shared: yes**, not processed ephemerally, collection required, purposes **Advertising or marketing**, **Analytics**, **Fraud prevention, security, and compliance**
 - [x] Draft updated privacy policy: [Docs/PrivacyPolicy.md](Docs/PrivacyPolicy.md) — covers AdMob and what it collects (sent to Google, not to Cloak & Quill), consent + Privacy options, children (G-rated ads only), contact
-- [ ] Fill in the contact email in `Docs/PrivacyPolicy.md`, then publish it at https://www.cloakquillgames.com/privacy-policy (the URL the in-game Privacy Policy button and Play Console use)
-- [ ] Ads declaration: **contains ads — yes**
-- [ ] Re-do content rating questionnaire (IARC)
-- [ ] Target audience and content settings: pick age groups 13+ only (the game isn't designed for under-13s), and answer the "could the app unintentionally appeal to children?" question honestly — Google reviews this, and if it decides the app appeals to kids it may require the Families policy (child-directed ad treatment)
+- [ ] Finish the privacy policy (the working draft is now kept outside the repo). Still needed as of 2026-11-23: the app set ID next to the advertising ID; Google's cross-app tracking plus a Do Not Track line (CalOPPA); our own retention line (saves stay on the device until uninstall, we keep nothing); a short EEA/UK paragraph (legal bases, rights, complaint to a data protection authority, transfer to the US); a one-line "not directed to children under 13" statement; and "significant changes" instead of "any changes" (the in-app notice has to ship in an app update). Then publish it at https://www.cloakquillgames.com/privacy-policy (the URL the in-game Privacy Policy button and Play Console use) and copy the final text into `Docs/PrivacyPolicy.md`
+- [x] Ads declaration: **contains ads — yes**
+- [ ] Re-do content rating questionnaire (IARC) — Play's rating comes from this questionnaire (App content → Content rating), not from AdMob's G setting; tick off once it shows a completed questionnaire with regional ratings (ESRB Everyone, PEGI 3, …)
+- [x] Target audience and content (Monitor and improve → Policy and programs → App content): age groups 13+ only (the game isn't designed for under-13s). Google reviews this, and if it decides the app appeals to kids it may require the Families policy (child-directed ad treatment) — watch Policy status after submitting
 - [ ] Refresh store listing: screenshots, feature graphic, description
 - [ ] Release to production (staged rollout)
